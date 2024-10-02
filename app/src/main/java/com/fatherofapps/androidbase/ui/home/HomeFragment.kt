@@ -40,79 +40,30 @@ class HomeFragment : BaseFragment() {
         return dataBinding.root
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        registerAllExceptionEvent(viewModel, viewLifecycleOwner)
-//        registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
-//
-//        viewModel.postPromotional.observe(viewLifecycleOwner) { postPromotional ->
-//            // Kiểm tra nếu postPromotional không phải là null
-//            postPromotional?.let {
-//                // Cập nhật UI với dữ liệu từ PostData
-//                dataBinding.txtResult.text = it.data.toString()// hoặc bất kỳ trường nào bạn muốn hiển thị
-//                // Nếu bạn có nhiều trường muốn hiển thị, bạn có thể thêm vào đây
-//                // dataBinding.txtDescription.text = it.description
-//                // Hoặc bất kỳ trường nào khác từ PostData
-//            } ?: run {
-//                // Xử lý trường hợp không có dữ liệu
-//                dataBinding.txtResult.text = "Không có dữ liệu"
-//            }
-//        }
-//    }
-//override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//    super.onViewCreated(view, savedInstanceState)
-//    registerAllExceptionEvent(viewModel, viewLifecycleOwner)
-//    registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
-
-//    viewModel.postPromotional.observe(viewLifecycleOwner) { postPromotional ->
-//        // Kiểm tra nếu postPromotional không phải là null
-//        postPromotional?.let {
-//            // Cập nhật UI với dữ liệu từ PostData
-//            dataBinding.txtResult.text = it.data.toString() // hoặc bất kỳ trường nào bạn muốn hiển thị
-//
-//            // Lấy danh sách PostImage từ dữ liệu
-//            val postImages = it.data[0].roomInfo.postImages
-//
-//            // Hiển thị PostImage trong RecyclerView (giả sử bạn đã có RecyclerView)
-//            setupRecyclerView(postImages)
-//        } ?: run {
-//            // Xử lý trường hợp không có dữ liệu
-//            dataBinding.txtResult.text = "Không có dữ liệu"
-//        }
-////    }
-//    viewModel.postPromotional.observe(viewLifecycleOwner) { postPromotional ->
-//        postPromotional?.let {
-//            val image = it.data[0].roomInfo.postImages
-//            val adapter = PostImageAdapter(image) // Lấy danh sách hình ảnh từ Post
-//            dataBinding.recyclerView.adapter = adapter // Gán adapter cho RecyclerView
-//            Log.d("Hinh anh", listOf(image).toString())
-//        } ?: run {
-//            dataBinding.txtResult.text = "Không có dữ liệu"
-//        }
-//    }
-//
-//}
-
-//    // Hàm setup RecyclerView để hiển thị PostImage
-//    private fun setupRecyclerView(postImages: List<PostImage>) {
-//        // Giả sử bạn đã định nghĩa RecyclerView trong layout của bạn và tạo Adapter
-//        val adapter = PostImageAdapter(postImages)
-//        dataBinding.recyclerView.adapter = adapter
-//        dataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//    }
 override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     registerAllExceptionEvent(viewModel, viewLifecycleOwner)
     registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
+    // Quan sát sự thay đổi trong postPromotional
     viewModel.postPromotional.observe(viewLifecycleOwner) { postPromotional ->
         postPromotional?.let {
             // Lấy danh sách hình ảnh từ PostImage
             val postImages = it.data[0].roomInfo.postImages
-
             setupRecyclerView(postImages) // Gọi hàm setupRecyclerView
         } ?: run {
             dataBinding.txtResult.text = "Không có dữ liệu"
+        }
+    }
+
+    // quan sat loading
+    viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+        if (isLoading?.peekContent() == true) {
+            // Hiển thị loading indicator
+            showLoading(true)
+        } else {
+            // Ẩn loading indicator
+            showLoading(false)
         }
     }
 }
@@ -123,6 +74,4 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dataBinding.recyclerView.adapter = adapter // Gán adapter cho RecyclerView
         dataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // Định nghĩa LayoutManager
     }
-
-
 }

@@ -16,7 +16,7 @@
     <color name="regular_price_color">#cbcbcb</color>
     <color name="inactive_text_color">#8D8D8D</color>
     <color name="background_splash_color">#FF6C2F</color>
-
+    <color name="color_main">#FFBA02</color>
     <color name="background_header_color">@color/primaryColor</color>
 
     <color name="icon_color_bottom_normal">@color/primaryLightColor</color>

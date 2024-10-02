@@ -34,7 +34,7 @@ class PostPromotionalRepository @Inject constructor(
             is NetworkResult.Success -> {
                 // Giả sử result.data là PromotionalPostResponse
                 val promotionalPostResponse = result.data
-                promotionalPostResponse.data // Trả về PostData từ response
+                promotionalPostResponse.data// Trả về PostData từ response
             }
             is NetworkResult.Error -> {
                 throw result.exception

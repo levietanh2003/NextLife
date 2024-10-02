@@ -17,7 +17,7 @@ class PromotionalPostJson(
     val lastModifiedDate: Double,
     val createdBy: String,
     val modifiedBy: String,
-    val fixPrice: Int
+    val fixPrice: Int?
 ) {
 
     fun toPromotional(): PromotionalPost {
