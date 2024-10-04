@@ -10,3 +10,4 @@ data class PostData(
     val totalElements: Int,
     val data: List<PromotionalPost>
 )
+

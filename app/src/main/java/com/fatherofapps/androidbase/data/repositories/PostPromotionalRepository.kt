@@ -5,6 +5,7 @@ import com.fatherofapps.androidbase.data.modelJson.PostDataJson
 import com.fatherofapps.androidbase.data.modelJson.PromotionalPostJson
 import com.fatherofapps.androidbase.data.models.PostData
 import com.fatherofapps.androidbase.data.models.PromotionalPost
+import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
 import com.fatherofapps.androidbase.data.services.PostPromotionalRemoteService
 import com.fatherofapps.androidbase.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -41,4 +42,28 @@ class PostPromotionalRepository @Inject constructor(
             }
         }
     }
+
+
+    suspend fun fetchPromotionalPostsData2(): PostData = withContext(dispatcher) {
+        when (val result = postPromotionalRemoteService.getAllPostPromotional()) {
+            is NetworkResult.Success -> {
+                // Giả sử result.data là PromotionalPostResponse, trong đó chứa danh sách PromotionalPost
+                val promotionalPostResponse = result.data.data
+
+                // Tạo PostData bằng cách sử dụng dữ liệu từ phản hồi API
+                PostData(
+                    currentPage = promotionalPostResponse.currentPage,
+                    totalPages = promotionalPostResponse.totalPages,
+                    pageSize = promotionalPostResponse.pageSize,
+                    totalElements = promotionalPostResponse.totalElements,
+                    data = promotionalPostResponse.data // Đây là List<PromotionalPost>
+                )
+            }
+            is NetworkResult.Error -> {
+                throw result.exception
+            }
+        }
+    }
+
+
 }

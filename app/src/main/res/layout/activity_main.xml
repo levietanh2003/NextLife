@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/color_main"
-        android:padding="8dp"
+        android:paddingTop="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,11 +33,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:background="@android:color/transparent"
-                android:hint="Tìm kiếm"
+                android:hint="Tìm kiếm trên Next Life"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:inputType="text"
-                android:minHeight="48dp"
+                android:minHeight="30dp"
                 android:padding="8dp"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/imageView2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,14 +59,14 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_notion"
+            android:src="@drawable/icon_bell"
             android:padding="8dp"
             android:scaleType="centerInside"/>
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_cart"
+            android:src="@drawable/icon_chat"
             android:padding="8dp"
             android:scaleType="centerInside"/>
     </LinearLayout>
@@ -80,6 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/homeHeader"
         app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/main_nav" />
+
 
     <FrameLayout
         android:id="@+id/loadingLayout"

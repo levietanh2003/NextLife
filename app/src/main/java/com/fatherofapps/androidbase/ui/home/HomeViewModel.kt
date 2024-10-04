@@ -18,22 +18,28 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val postPromotionalRepository: PostPromotionalRepository) : BaseViewModel() {
 
-    private var _listPostPromotional = MutableLiveData<List<PostData>>() // Sử dụng List<PostData>
-
-    val listPostPromotional: LiveData<List<PostData>>
-        get() = _listPostPromotional
+//    private var _listPostPromotional = MutableLiveData<List<PostData>>() // Sử dụng List<PostData>
+//
+//    val listPostPromotional: LiveData<List<PostData>>
+//        get() = _listPostPromotional
 
     private var _postPromotional = MutableLiveData<PostData>() // Sử dụng PostData
 
     val postPromotional: LiveData<PostData>
         get() = _postPromotional
+
+    private var _promotionalPost = MutableLiveData<List<PromotionalPost>>() // Sử dụng PostData
+
+    val promotionalPost: LiveData<List<PromotionalPost>>
+        get() = _promotionalPost
+
     // fetchData
     override fun fetchData() {
         // hiện loading
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
-            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData()
 
+            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData()
             // Gán danh sách PromotionalPost từ postPromotionalResponse.data vào LiveData
 //            _listPostPromotional.postValue(listOf(postPromotionalResponse.data))
             _postPromotional.postValue(postPromotionalResponse)
@@ -42,5 +48,15 @@ class HomeViewModel @Inject constructor(private val postPromotionalRepository: P
 
         }
         registerJobFinish()
+    }
+
+    fun fetchPromotionalPosts() {
+        showLoading(true)
+
+        viewModelScope.launch(handler) {
+            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
+            _promotionalPost.postValue(postPromotionalResponse.data)
+            Log.d("Data PromotionalPost", postPromotionalResponse.data.toString())
+        }
     }
 }

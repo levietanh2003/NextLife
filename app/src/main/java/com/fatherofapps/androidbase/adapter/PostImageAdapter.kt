@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.databinding.ItemPostImageBinding // Import cho ItemPostImageBinding
 
+@Suppress("DEPRECATION")
 class PostImageAdapter(private val postImages: List<PostImage>) : RecyclerView.Adapter<PostImageAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemPostImageBinding) : RecyclerView.ViewHolder(binding.root)

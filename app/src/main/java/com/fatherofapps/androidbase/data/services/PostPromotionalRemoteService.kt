@@ -11,6 +11,6 @@ class PostPromotionalRemoteService @Inject constructor(private val postPromotion
     BaseRemoteService() {
 
         suspend fun getAllPostPromotional() : NetworkResult<PromotionalPostResponse>{
-            return callApi { postPromotionalAPI.getPostPromotional(1,2) }
+            return callApi { postPromotionalAPI.getPostPromotional(1,10) }
         }
 }
