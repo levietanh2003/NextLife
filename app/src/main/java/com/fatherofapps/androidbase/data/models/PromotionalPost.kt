@@ -18,6 +18,7 @@ data class PromotionalPost(
     val lastModifiedDate: Double,
     val createdBy: String,
     val modifiedBy: String,
-    val fixPrice: Int?
+    val fixPrice: Int?,
+//    val created: String?
 )
 

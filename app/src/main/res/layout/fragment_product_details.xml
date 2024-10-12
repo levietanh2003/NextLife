@@ -1,0 +1,56 @@
+<!-- res/layout/fragment_product_details.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fatherofapps.androidbase.ui.details.ProductDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#fff">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCarousel"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.promotionalPost.data.title}"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.promotionalPost.data.description}"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Giá: ${viewModel.promotionalPost.data.pricingDetails.basePrice} VNĐ`}"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liên hệ"/>
+    </LinearLayout>
+</layout>

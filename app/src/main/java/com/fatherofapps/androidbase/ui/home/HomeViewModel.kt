@@ -39,24 +39,27 @@ class HomeViewModel @Inject constructor(private val postPromotionalRepository: P
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
 
-            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData()
-            // Gán danh sách PromotionalPost từ postPromotionalResponse.data vào LiveData
-//            _listPostPromotional.postValue(listOf(postPromotionalResponse.data))
-            _postPromotional.postValue(postPromotionalResponse)
-
-            Log.d("Data", postPromotionalResponse.toString())
+//            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData()
+//            // Gán danh sách PromotionalPost từ postPromotionalResponse.data vào LiveData
+////            _listPostPromotional.postValue(listOf(postPromotionalResponse.data))
+//            _postPromotional.postValue(postPromotionalResponse)
+//
+//            Log.d("Data", postPromotionalResponse.toString())
+            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
+            _promotionalPost.postValue(postPromotionalResponse.data)
+            Log.d("Data PromotionalPost", postPromotionalResponse.data.toString())
 
         }
         registerJobFinish()
     }
 
-    fun fetchPromotionalPosts() {
-        showLoading(true)
-
-        viewModelScope.launch(handler) {
-            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
-            _promotionalPost.postValue(postPromotionalResponse.data)
-            Log.d("Data PromotionalPost", postPromotionalResponse.data.toString())
-        }
-    }
+//    fun fetchPromotionalPosts() {
+//        showLoading(true)
+//
+//        viewModelScope.launch(handler) {
+//            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
+//            _promotionalPost.postValue(postPromotionalResponse.data)
+//            Log.d("Data PromotionalPost", postPromotionalResponse.data.toString())
+//        }
+//    }
 }

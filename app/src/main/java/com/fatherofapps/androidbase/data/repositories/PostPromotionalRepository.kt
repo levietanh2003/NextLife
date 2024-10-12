@@ -1,11 +1,9 @@
 package com.fatherofapps.androidbase.data.repositories
 
+import android.util.Log
 import com.fatherofapps.androidbase.base.network.NetworkResult
-import com.fatherofapps.androidbase.data.modelJson.PostDataJson
-import com.fatherofapps.androidbase.data.modelJson.PromotionalPostJson
 import com.fatherofapps.androidbase.data.models.PostData
 import com.fatherofapps.androidbase.data.models.PromotionalPost
-import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
 import com.fatherofapps.androidbase.data.services.PostPromotionalRemoteService
 import com.fatherofapps.androidbase.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,19 +28,18 @@ class PostPromotionalRepository @Inject constructor(
         }
     }
 
-    suspend fun fetchPromotionalPostsData(): PostData = withContext(dispatcher) {
+    suspend fun fetchPromotionalPostsData() = withContext(dispatcher) {
         when (val result = postPromotionalRemoteService.getAllPostPromotional()) {
             is NetworkResult.Success -> {
                 // Giả sử result.data là PromotionalPostResponse
-                val promotionalPostResponse = result.data
-                promotionalPostResponse.data// Trả về PostData từ response
+                 result.data.data.data
+                // Trả về PostData từ response
             }
             is NetworkResult.Error -> {
                 throw result.exception
             }
         }
     }
-
 
     suspend fun fetchPromotionalPostsData2(): PostData = withContext(dispatcher) {
         when (val result = postPromotionalRemoteService.getAllPostPromotional()) {
@@ -65,5 +62,32 @@ class PostPromotionalRepository @Inject constructor(
         }
     }
 
-
+    // get theo id
+//    suspend fun fetchPromotionalPostsById(id: String): PromotionalPost = withContext(dispatcher) {
+//        when (val result = postPromotionalRemoteService.getPostPromotionalById(id)) {
+//            is NetworkResult.Success -> {
+//
+//                result.data
+//                // Giả sử result.data là PromotionalPostResponse, trong đó chứa danh sách PromotionalPost
+//                // Tạo PostData bằng cách sử dụng dữ liệu từ phản hồi API
+//            }
+//            is NetworkResult.Error -> {
+//                Log.d("PromotionalRepository", "Error fetching promotional post by ID: ${result.exception.message}")
+//                throw result.exception
+//            }
+//        }
+//    }
+//    suspend fun fetchPromotionalPostsById(id: String): PromotionalPost = withContext(dispatcher) {
+//        if (id.isEmpty()) {
+//            throw IllegalArgumentException("ID cannot be empty")
+//        }
+//
+//        when (val result = postPromotionalRemoteService.getPostPromotionalById(id)) {
+//            is NetworkResult.Success -> result.data
+//            is NetworkResult.Error -> {
+//                Log.d("PromotionalRepository", "Error fetching promotional post by ID: ${result.exception.message}")
+//                throw result.exception
+//            }
+//        }
+//    }
 }

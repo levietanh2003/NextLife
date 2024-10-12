@@ -92,4 +92,7 @@ open class BaseViewModel : ViewModel() {
 
     }
 
+    open fun fetchData(idProduct: String) {
+
+    }
 }

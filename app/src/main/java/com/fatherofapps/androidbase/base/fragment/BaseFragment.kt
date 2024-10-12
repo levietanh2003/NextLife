@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.base.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,11 @@ import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.common.EventObserver
 
 open class BaseFragment : Fragment() {
+
+    // Điều hướng đến trang với bundle
+    protected fun navigateToPage(actionId: Int, bundle: Bundle){
+        findNavController().navigate(actionId, bundle)
+    }
 
     // Điều hướng đến trang
     protected fun navigateToPage(actionId: Int){

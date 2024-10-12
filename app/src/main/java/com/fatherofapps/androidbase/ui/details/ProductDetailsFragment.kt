@@ -1,0 +1,93 @@
+package com.fatherofapps.androidbase.ui.details
+
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.fatherofapps.androidbase.adapter.ImageAdapter
+import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.data.models.PostImage
+import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class ProductDetailsFragment : BaseFragment() {
+
+    private lateinit var dataBinding: FragmentProductDetailsBinding
+    private var productId : String? = null
+    private val viewModel by viewModels<ProductDetailsViewModel>()
+    private lateinit var imageAdapter: ImageAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // fetch data
+        productId = arguments?.getString("productId")
+        if(productId != null) {
+            viewModel.fetchData(productId!!)
+        } else {
+            Log.d("ProductId", "productId is null")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        dataBinding = FragmentProductDetailsBinding.inflate(inflater)
+        dataBinding.lifecycleOwner = viewLifecycleOwner
+        dataBinding.viewModel = viewModel
+        return dataBinding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        registerAllExceptionEvent(viewModel, viewLifecycleOwner)
+        registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
+
+        viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
+            Log.d("ProductDetailsFragment", "Received promotional post: $promotionalPost")
+            promotionalPost?.let {
+                dataBinding.txtTitle.text = it.data.title
+                dataBinding.txtDescription.text = it.data.description
+                dataBinding.txtPrice.text = "Giá: ${it.data.pricingDetails.basePrice} VNĐ"
+
+                // Hiển thị hình ảnh
+                setupImageCarousel(it.data.roomInfo.postImages)
+            }
+        }
+
+
+//        // Observe promotional post data
+//        viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
+//            promotionalPost?.let {
+//                // Hiển thị thông tin lấy từ API lên UI
+//
+//                dataBinding.txtTitle.text = it.data.id
+//            }
+//        }
+
+        // quan sat loading
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading?.peekContent() == true) {
+                // Hiển thị loading indicator
+                showLoading(true)
+            } else {
+                // Ẩn loading indicator
+                showLoading(false)
+            }
+        }
+    }
+
+    private fun setupImageCarousel(postImages: List<PostImage>) {
+        // Khởi tạo adapter và gán dữ liệu
+//        imageAdapter = ImageAdapter(requireContext(), ArrayList(postImages.map { it.urlImagePost }))
+        imageAdapter = ImageAdapter(requireActivity(), ArrayList(postImages.map { it.urlImagePost }))
+        dataBinding.recyclerCarousel.adapter = imageAdapter
+    }
+}

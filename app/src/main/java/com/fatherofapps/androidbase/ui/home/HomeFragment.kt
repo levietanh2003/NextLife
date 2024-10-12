@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.fatherofapps.androidbase.R
-import com.fatherofapps.androidbase.adapter.PostImageAdapter
 import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
-import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.PromotionalPost
-import com.fatherofapps.androidbase.data.models.RoomInfo
 import com.fatherofapps.androidbase.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,13 +25,14 @@ class HomeFragment : BaseFragment() {
 
     // anh xa HomeViewModel
     private val viewModel by viewModels<HomeViewModel>()
+    private var promotionalPostsList: List<PromotionalPost> = emptyList() // Thay thế PromotionalPost bằng kiểu dữ liệu thực tế của bạn
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // khi vua khoi tao se fetch data len
         viewModel.fetchData()
-        viewModel.fetchPromotionalPosts()
+//        viewModel.fetchPromotionalPosts()
     }
 
     override fun onCreateView(
@@ -63,54 +61,12 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     imagesSlider.setImageList(imageListt)
     imagesSlider.setImageList(imageListt, ScaleTypes.FIT)
 
-
-//    viewModel.fetchData()
-    // Quan sát sự thay đổi trong postPromotional
-//    viewModel.postPromotional.observe(viewLifecycleOwner) { postPromotional ->
-//        postPromotional?.let {
-//            // Lấy danh sách hình ảnh từ PostImage
-//            val postImages = it.data[0].roomInfo.postImages
-//            setupRecyclerView(postImages) // Gọi hàm setupRecyclerView
-//        } ?: run {
-////            dataBinding.txtResult.text = "Không có dữ liệu"
-//        }
-//    }
-
-    // quan sat loading
-    viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-        if (isLoading?.peekContent() == true) {
-            // Hiển thị loading indicator
-            showLoading(true)
-        } else {
-            // Ẩn loading indicator
-            showLoading(false)
-        }
-    }
-
-//    viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
-//        promotionalPost?.let {
-//            val roomId = it[0].roomId
-//            val title = it[0].title
-//            val description = it[0].description
-//            val basePrice = it[0].pricingDetails.basePrice
-//            val images = it[0].roomInfo.postImages.map { image -> image.urlImagePost }
-//
-//
-//            val productIitem = ProductAdapter(title.)
-//
-//
-//            // Ví dụ: Log các giá trị hoặc hiển thị chúng trên UI
-//            Log.d("PromotionalPost", "Room ID: $roomId")
-//            Log.d("PromotionalPost", "Title: $title")
-//            Log.d("PromotionalPost", "Description: $description")
-//            Log.d("PromotionalPost", "Base Price: $basePrice")
-//            images.forEach { imageUrl ->
-//                Log.d("PromotionalPost", "Image URL: $imageUrl")
-//            }
-//        }
-//    }
     viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPosts ->
         promotionalPosts?.let {
+            promotionalPostsList = it
+            Log.d("Size List", it.size.toString())
+
+
             // Tạo các danh sách rỗng để chứa dữ liệu
             val productNames = mutableListOf<String>()
             val productPrices = mutableListOf<String>()
@@ -127,7 +83,6 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 val images = post.roomInfo.postImages.map { image -> image.urlImagePost }
                 val address = post.roomInfo.address
                 val lastModified = post.lastModifiedDate
-
                 val quantityImage = images.size
 
 
@@ -156,7 +111,19 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             }
 
             // Khởi tạo adapter với danh sách sản phẩm
-            val productAdapter = ProductAdapter(productNames, productPrices ,productImages ,productAddress , productLastModified , productQuantityImage,requireContext())
+            val productAdapter = ProductAdapter(productNames, productPrices ,productImages ,productAddress , productLastModified , productQuantityImage,requireContext(),  object : ProductAdapter.OnItemClickListener {
+                override fun onItemClick(position: Int) {
+                    // Khi người dùng nhấn vào item, chuyển đến trang chi tiết sản phẩm
+                    val productId = promotionalPostsList[position].id
+                    val bundle = Bundle().apply {
+                        putString("productId", productId) // Thêm productId vào bundle
+                    }
+                    Log.d("ProductId", "productId: $productId")
+//                    navigateToPage(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+                    // Trực tiếp điều hướng mà không sử dụng hàm navigateToPage
+                    findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+                }
+            })
 
             val gridLayoutManager = GridLayoutManager(requireContext(), 2) // 2 là số cột
             dataBinding.rvOfferProducts.apply {
@@ -166,12 +133,15 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         }
     }
 
+    // quan sat loading
+    viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+        if (isLoading?.peekContent() == true) {
+            // Hiển thị loading indicator
+            showLoading(true)
+        } else {
+            // Ẩn loading indicator
+            showLoading(false)
+        }
+    }
 }
-
-    // Hàm setup RecyclerView để hiển thị PostImage
-//    private fun setupRecyclerView(postImages: List<PostImage>) {
-//        val adapter = PostImageAdapter(postImages) // Tạo adapter với danh sách hình ảnh
-//        dataBinding.recyclerView.adapter = adapter // Gán adapter cho RecyclerView
-//        dataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // Định nghĩa LayoutManager
-//    }
 }

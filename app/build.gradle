@@ -47,6 +47,9 @@ android {
             }
         }
     }
+    viewBinding {
+        enabled = true
+    }
 
     buildTypes {
         release {
@@ -100,6 +103,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
     // constraint layout
@@ -141,6 +145,10 @@ dependencies {
 
     implementation "androidx.activity:activity-ktx:1.4.0"
 
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
+    // Sliding-Carousel
+    implementation 'com.github.akshaaatt:Sliding-Carousel:1.0.4'
+
     //circle image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
@@ -170,6 +178,8 @@ dependencies {
     //Slider image
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
 
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     //Navigation component
     def nav_version = "2.5.2"

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.fatherofapps.androidbase.R // Đây là model của sản phẩm
+import com.fatherofapps.androidbase.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -20,7 +20,8 @@ class ProductAdapter(
     private val locationProducts: List<String>,
     private val lastModifiedTimestamps: List<Double>,
     private val quantityImage: List<Int>,
-    private val context: Context
+    private val context: Context,
+    private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     // ViewHolder class chứa các view từ layout
@@ -31,6 +32,10 @@ class ProductAdapter(
         val productLocation: TextView = itemView.findViewById(R.id.product_location)
         val productLastModified: TextView = itemView.findViewById(R.id.product_last_modified)
         val productQuantity: TextView = itemView.findViewById(R.id.quantityImage)
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 
     // Hàm này để tạo ra ViewHolder mới khi RecyclerView cần
@@ -50,10 +55,10 @@ class ProductAdapter(
         val quantityImage = quantityImage[position]
         val lastModifiedDate = Date((lastModifiedTimestamp * 1000).toLong())
 
-// Định dạng đối tượng Date thành chuỗi
-        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Bạn có thể thay đổi định dạng theo ý muốn
+        // Định dạng đối tượng Date thành chuỗi
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val formattedDate = format.format(lastModifiedDate)
-        // Gán tên sản phẩm và giá vào TextView
+
         holder.productName.text = nameProduct
         holder.productPrice.text = price
         holder.productLocation.text = locationProduct
@@ -63,6 +68,11 @@ class ProductAdapter(
         Glide.with(context)
             .load(imageUrl)
             .into(holder.productImage)
+
+
+        holder.itemView.setOnClickListener {
+            itemClickListener.onItemClick(position) // Gọi listener với position và productId
+        }
     }
 
     // Trả về số lượng item trong danh sách sản phẩm

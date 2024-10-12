@@ -31,6 +31,17 @@ class NetworkModule {
         return retrofit.create(PostPromotionalAPI::class.java)
     }
 
+    @Provides
+    fun providePromotionalPostDetailAPI(@Named("MainSite") retrofit: Retrofit): PromotionalPostDetailAPI {
+        return retrofit.create(PromotionalPostDetailAPI::class.java)
+    }
+
+
+    @Provides
+    fun provideCarouselAPI(@Named("MainSite") retrofit: Retrofit): CarouselAPI {
+        return retrofit.create(CarouselAPI::class.java)
+    }
+
 
     @Provides
     @Singleton

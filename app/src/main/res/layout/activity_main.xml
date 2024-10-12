@@ -85,7 +85,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/main_nav" />
 
-
     <FrameLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
@@ -101,7 +100,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
-
-
     </FrameLayout>
+
+    <!-- BottomAppBar -->
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
