@@ -53,9 +53,25 @@ class ProductDetailsFragment : BaseFragment() {
         viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
             Log.d("ProductDetailsFragment", "Received promotional post: $promotionalPost")
             promotionalPost?.let {
-                dataBinding.txtTitle.text = it.data.title
-                dataBinding.txtDescription.text = it.data.description
-                dataBinding.txtPrice.text = "Giá: ${it.data.pricingDetails.basePrice} VNĐ"
+                dataBinding.tvTitle.text = it.data.title
+                dataBinding.tvDescription.text = it.data.description
+                dataBinding.tvAddress.text = it.data.roomInfo.address
+                dataBinding.tvPricePerMeter.text = it.data.roomInfo.type
+                if (it.data.status == "active") {
+                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
+                }else{
+                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
+                }
+
+                dataBinding.txtCapacity.text = "Dung tích: ${it.data.roomInfo.capacity}"
+                dataBinding.txtWidthRoom.text = "Chiều rộng: ${it.data.roomInfo.width}"
+                dataBinding.txtHeightRoom.text = "Chiều dài: ${it.data.roomInfo.height}"
+                dataBinding.productPrice.text = "Giá: ${it.data.pricingDetails.basePrice} VNĐ"
+                dataBinding.txtFloor.text = "Tầng: ${promotionalPost.data.roomInfo.floor}"
+                dataBinding.txtTotalArea.text = "Diện tích: ${it.data.roomInfo.totalArea} m²"
+                dataBinding.txtNumberOfBedrooms.text = "Số phòng ngủ: ${it.data.roomInfo.numberOfBedrooms}"
+                dataBinding.txtNumberOfBathrooms.text = "Số phòng tắm: ${it.data.roomInfo.numberOfBathrooms}"
+
 
                 // Hiển thị hình ảnh
                 setupImageCarousel(it.data.roomInfo.postImages)

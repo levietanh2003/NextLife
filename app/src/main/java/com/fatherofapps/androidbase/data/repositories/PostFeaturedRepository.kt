@@ -1,22 +1,20 @@
 package com.fatherofapps.androidbase.data.repositories
 
-import android.util.Log
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PostData
-import com.fatherofapps.androidbase.data.models.PromotionalPost
-import com.fatherofapps.androidbase.data.services.PostPromotionalRemoteService
+import com.fatherofapps.androidbase.data.services.PostFeatureRemoteService
 import com.fatherofapps.androidbase.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class PostPromotionalRepository @Inject constructor(
-    private val postPromotionalRemoteService: PostPromotionalRemoteService,
+class PostFeaturedRepository @Inject constructor(
+    private val postFeaturedRemoteService: PostFeatureRemoteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun fetchPromotionalPostsData2(): PostData = withContext(dispatcher) {
-        when (val result = postPromotionalRemoteService.getAllPostPromotional()) {
+    suspend fun fetchPostFeatured(): PostData = withContext(dispatcher) {
+        when (val result = postFeaturedRemoteService.getAllPostFeatured()) {
             is NetworkResult.Success -> {
                 // Giả sử result.data là PromotionalPostResponse, trong đó chứa danh sách PromotionalPost
                 val promotionalPostResponse = result.data.data

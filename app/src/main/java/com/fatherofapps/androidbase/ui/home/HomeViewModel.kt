@@ -7,26 +7,32 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.data.modelJson.PostDataJson
+import com.fatherofapps.androidbase.data.models.Carousel
 import com.fatherofapps.androidbase.data.models.PostData
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
+import com.fatherofapps.androidbase.data.repositories.PostFeaturedRepository
 import com.fatherofapps.androidbase.data.repositories.PostPromotionalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val postPromotionalRepository: PostPromotionalRepository) : BaseViewModel() {
+class HomeViewModel @Inject constructor(
+    private val postPromotionalRepository: PostPromotionalRepository,
+    private val postFeaturedRepository: PostFeaturedRepository
 
-//    private var _listPostPromotional = MutableLiveData<List<PostData>>() // Sử dụng List<PostData>
+) : BaseViewModel() {
+
+    // product featured
+    private var _postFeatured = MutableLiveData<List<PromotionalPost>>() // Sử dụng PostData
+    val postFeatured: LiveData<List<PromotionalPost>>
+        get() = _postFeatured
+
+//    private var _postPromotional = MutableLiveData<PostData>() // Sử dụng PostData
 //
-//    val listPostPromotional: LiveData<List<PostData>>
-//        get() = _listPostPromotional
-
-    private var _postPromotional = MutableLiveData<PostData>() // Sử dụng PostData
-
-    val postPromotional: LiveData<PostData>
-        get() = _postPromotional
+//    val postPromotional: LiveData<PostData>
+//        get() = _postPromotional
 
     private var _promotionalPost = MutableLiveData<List<PromotionalPost>>() // Sử dụng PostData
 
@@ -39,27 +45,13 @@ class HomeViewModel @Inject constructor(private val postPromotionalRepository: P
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
 
-//            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData()
-//            // Gán danh sách PromotionalPost từ postPromotionalResponse.data vào LiveData
-////            _listPostPromotional.postValue(listOf(postPromotionalResponse.data))
-//            _postPromotional.postValue(postPromotionalResponse)
-//
-//            Log.d("Data", postPromotionalResponse.toString())
             val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
-            _promotionalPost.postValue(postPromotionalResponse.data)
+            val postFeaturedResponse = postFeaturedRepository.fetchPostFeatured()
+            Log.d("Data PostFeatured", postFeaturedResponse.toString())
             Log.d("Data PromotionalPost", postPromotionalResponse.data.toString())
-
+            _postFeatured.postValue(postFeaturedResponse.data)
+            _promotionalPost.postValue(postPromotionalResponse.data)
         }
         registerJobFinish()
     }
-
-//    fun fetchPromotionalPosts() {
-//        showLoading(true)
-//
-//        viewModelScope.launch(handler) {
-//            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
-//            _promotionalPost.postValue(postPromotionalResponse.data)
-//            Log.d("Data PromotionalPost", postPromotionalResponse.data.toString())
-//        }
-//    }
 }
