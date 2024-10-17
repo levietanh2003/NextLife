@@ -21,25 +21,6 @@ class ProductDetailsViewModel @Inject constructor(
     val promotionalPost: LiveData<ProductDetails>
         get() = _promotionalPost
 
-//    override fun fetchData(idProduct : String) {
-//        // hiện loading
-//        showLoading(true)
-//        parentJob = viewModelScope.launch(handler) {
-//
-//            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsById(idProduct)
-//            Log.d("ProductDetailsViewModel", "API Response: $postPromotionalResponse")
-//
-//
-//            // Gán danh sách PromotionalPost từ postPromotionalResponse.data vào LiveData
-////            _listPostPromotional.postValue(listOf(postPromotionalResponse.data))
-//            _promotionalPost.postValue(listOf(postPromotionalResponse))
-//
-//            Log.d("Data when GET API by ID", postPromotionalResponse.toString())
-//
-//        }
-//        registerJobFinish()
-//    }
-
     override fun fetchData(idProduct: String) {
         // Hiện loading
         showLoading(true)
@@ -57,33 +38,4 @@ class ProductDetailsViewModel @Inject constructor(
         }
         registerJobFinish()
     }
-
-
-//    override fun fetchData(idProduct : String) {
-//        // hiện loading
-//        showLoading(true)
-//        parentJob = viewModelScope.launch(handler) {
-//
-//            val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsById(idProduct)
-//            Log.d("ProductDetailsViewModel", "API Response: $postPromotionalResponse")
-//
-//
-//            if (postPromotionalResponse != null) {
-//
-//                // Cập nhật giá trị cho LiveData
-//                _promotionalPost.postValue(postPromotionalResponse)
-//                Log.d("Filtered Posts", "Filtered Posts: $postPromotionalResponse")
-//            } else {
-//                Log.e("ProductDetailsViewModel", "Response data is null")
-//            }
-//            // Gán danh sách PromotionalPost từ postPromotionalResponse.data vào LiveData
-////            _listPostPromotional.postValue(listOf(postPromotionalResponse.data))
-////            _promotionalPost.postValue(postPromotionalResponse)
-////
-////            Log.d("Data when GET API by ID", postPromotionalResponse.toString())
-//
-//        }
-//        registerJobFinish()
-//    }
-
 }

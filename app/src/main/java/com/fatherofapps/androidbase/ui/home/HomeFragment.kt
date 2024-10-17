@@ -31,6 +31,7 @@ class HomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         // khi vua khoi tao se fetch data len
         viewModel.fetchData()
+
     }
 
     override fun onCreateView(
@@ -41,6 +42,11 @@ class HomeFragment : BaseFragment() {
         dataBinding = FragmentHomeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         dataBinding.viewModel = viewModel
+
+        dataBinding.btnTypeOfDishBreads.setOnClickListener {
+            // Điều hướng đến SearchFragment
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
         return dataBinding.root
     }
 
@@ -58,6 +64,11 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     val imagesSlider = dataBinding.imageSlider
     imagesSlider.setImageList(imageListt)
     imagesSlider.setImageList(imageListt, ScaleTypes.FIT)
+
+
+    dataBinding.btnTypeOfDishBreads.setOnClickListener{
+        findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+    }
 
     viewModel.postFeatured.observe(viewLifecycleOwner) { featuredPosts ->
         featuredPosts?.let {

@@ -42,6 +42,11 @@ class NetworkModule {
     }
 
     @Provides
+    fun providePostFilterAPI(@Named("MainSite") retrofit: Retrofit): PostFilterAPI {
+        return retrofit.create(PostFilterAPI::class.java)
+    }
+
+    @Provides
     @Singleton
     @Named("MainSite")
     fun provideRetrofit(

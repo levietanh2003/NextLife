@@ -12,6 +12,7 @@ import com.fatherofapps.androidbase.data.models.PostData
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
 import com.fatherofapps.androidbase.data.repositories.PostFeaturedRepository
+import com.fatherofapps.androidbase.data.repositories.PostFilterRepository
 import com.fatherofapps.androidbase.data.repositories.PostPromotionalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val postPromotionalRepository: PostPromotionalRepository,
-    private val postFeaturedRepository: PostFeaturedRepository
+    private val postFeaturedRepository: PostFeaturedRepository,
+
 
 ) : BaseViewModel() {
 
@@ -28,11 +30,6 @@ class HomeViewModel @Inject constructor(
     private var _postFeatured = MutableLiveData<List<PromotionalPost>>() // Sử dụng PostData
     val postFeatured: LiveData<List<PromotionalPost>>
         get() = _postFeatured
-
-//    private var _postPromotional = MutableLiveData<PostData>() // Sử dụng PostData
-//
-//    val postPromotional: LiveData<PostData>
-//        get() = _postPromotional
 
     private var _promotionalPost = MutableLiveData<List<PromotionalPost>>() // Sử dụng PostData
 

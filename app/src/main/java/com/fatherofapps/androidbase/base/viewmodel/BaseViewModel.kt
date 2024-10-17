@@ -95,4 +95,12 @@ open class BaseViewModel : ViewModel() {
     open fun fetchData(idProduct: String) {
 
     }
+
+    open fun fetchData(minPrice: Double? = null,
+                           maxPrice: Double? = null,
+                           district: String? = null,
+                           type: String? = null,
+                           hasPromotion: Boolean? = null) {
+
+    }
 }

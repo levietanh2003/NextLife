@@ -36,10 +36,9 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@{viewModel.promotionalPost.data.title}"
+                    android:text="Nhà rộng đẹp thật đấy anh em ạ"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -51,22 +50,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="108,57 triệu/m²"
-                    android:textColor="#FF0000"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_main"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/llPropertyDetails"
                     app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
                 <!-- Property Details -->
                 <LinearLayout
                     android:id="@+id/llPropertyDetails"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:elevation="@dimen/cardview_default_radius"
                     android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="@+id/glFeatures"
-                    app:layout_constraintStart_toStartOf="@+id/tvFeaturesTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvPricePerMeter">
 
                     <!-- Address -->
@@ -74,6 +76,7 @@
                         android:id="@+id/tvDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="@{viewModel.promotionalPost.data.description}"
                         android:textColor="#000000"
                         android:textSize="14sp" />
@@ -81,22 +84,23 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="8dp"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <!-- Logo cho vị trí -->
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/icon_loaction"
-                            android:layout_marginRight="4dp" /> <!-- Khoảng cách giữa icon và text -->
+                            android:layout_marginRight="4dp"
+                            android:src="@drawable/icon_loaction" /> <!-- Khoảng cách giữa icon và text -->
 
                         <!-- Địa chỉ -->
                         <TextView
                             android:id="@+id/tvAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Quận"
                             android:textColor="#000000"
                             android:textSize="14sp" />
@@ -106,46 +110,61 @@
                         android:id="@+id/product_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="@{`Giá: ${viewModel.promotionalPost.data.pricingDetails.basePrice} VNĐ`}"
                         android:textColor="#FF0000"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <!-- Time -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/icon_timer"
-                        android:layout_marginRight="4dp"/>
-
-                    <TextView
-                        android:id="@+id/tvTime"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3 phút trước"
-                        android:textColor="#888888"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginRight="4dp"
+                            android:src="@drawable/icon_timer" />
+
+                        <TextView
+                            android:id="@+id/tvTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="3 phút trước"
+                            android:textColor="#888888"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <!-- Title for Features -->
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/g_gray700"
+                    android:backgroundTint="@color/g_blue_gray200"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llPropertyDetails" />
+
                 <TextView
                     android:id="@+id/tvFeaturesTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="Đặc điểm phòng"
+                    android:textColor="@color/color_main"
+                    android:layout_marginTop="8dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/glFeatures"
-                    app:layout_constraintTop_toBottomOf="@+id/llPropertyDetails" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
                 <!-- Real Estate Features -->
                 <GridLayout
@@ -188,6 +207,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginBottom="3dp"
                             android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="@{`Tầng: ${viewModel.promotionalPost.data.roomInfo.floor}`}"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -212,6 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Số phòng ngủ: 2"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -236,6 +257,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Diện tích: 70 m²"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -260,6 +282,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Số phòng tắm: 2"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -286,6 +309,7 @@
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
                             android:text="Chiều rộng: 2"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_marginBottom="3dp"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -298,6 +322,7 @@
                         android:orientation="horizontal"
                         android:layout_columnWeight="1"
                         android:layout_marginBottom="3dp"
+                        android:textSize="14sp"
                         android:gravity="center_vertical">
 
                         <ImageView
@@ -313,11 +338,13 @@
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
                             android:text="Dung tích: 2"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_marginBottom="3dp"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
 
+                    <!--  Width Room-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -339,6 +366,7 @@
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
                             android:text="Chiều dài: 2"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_marginBottom="3dp"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -366,6 +394,7 @@
                             android:layout_columnWeight="1"
                             android:text="Trạng thái: Hoạt động"
                             android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_marginBottom="3dp"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -373,25 +402,124 @@
                 </GridLayout>
 
 
+                <!-- Furniture and Amenities Section -->
                 <TextView
-                    android:id="@+id/tvServiceTitle"
+                    android:id="@+id/tvRoomUtilityTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đặc điểm dịch vụ"
-                    android:layout_marginTop="8dp"
+                    android:text="Tiện ích trong phòng"
                     android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_main"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/glFeatures"
                     app:layout_constraintTop_toBottomOf="@+id/glFeatures" />
 
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/rounded_background"
+                    android:elevation="@dimen/cardview_default_radius"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvRoomUtilityTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRoomUtilityTitle">
 
-                <!-- Contact options -->
+                    <TextView
+                        android:id="@+id/tvFurnitureAvailability"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="start"
+                        android:paddingStart="20dp"
+                        android:text="Nội thất:"
+                        android:textColor="@color/black" />
 
-                <!-- Contact options -->
+                    <TextView
+                        android:id="@+id/tvAmenitiesAvailability"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="start"
+                        android:text="Tiện nghi:"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
-                <!-- Room Utilities -->
+                <TextView
+                    android:id="@+id/tv_detailed_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mô tả chi tiết"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background"
+                    android:elevation="@dimen/cardview_default_radius"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detailed_description">
+
+                    <TextView
+                        android:id="@+id/txt_detailed_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
 
+                    <View
+                        android:id="@+id/divider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/g_gray700"
+                        android:backgroundTint="@color/g_blue_gray200"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/btnToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_main"
+                        android:text="Xem thêm"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mô tả chi tiết"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayoutDetails"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetails" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

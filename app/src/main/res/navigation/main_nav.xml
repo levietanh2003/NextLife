@@ -11,9 +11,17 @@
         <action
             android:id="@+id/action_homeFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.fatherofapps.androidbase.ui.details.ProductDetailsFragment"
         android:label="ProductDetailsFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.fatherofapps.androidbase.ui.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

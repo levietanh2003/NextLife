@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Home Header, luôn cố định -->
     <LinearLayout
         android:id="@+id/homeHeader"
         android:layout_width="match_parent"
@@ -13,62 +14,38 @@
         android:paddingTop="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Search Bar ConstraintLayout -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- MaterialSearchBar -->
+        <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/searchBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@drawable/search_box_background"
-            android:padding="8dp">
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@android:color/transparent"
-                android:hint="Tìm kiếm trên Next Life"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:inputType="text"
-                android:minHeight="30dp"
-                android:padding="8dp"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/imageView2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:mt_hint="Tìm kiếm trên Next Life"
+            app:mt_speechMode="false"
+            app:mt_navIconEnabled="true"
+            app:mt_roundedSearchBarEnabled="true"
+            app:mt_maxSuggestionsCount="10"
+            style="@style/MaterialSearchBarLight" />
 
         <ImageView
+            android:id="@+id/btn_bell"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src="@drawable/icon_bell"
             android:padding="8dp"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside" />
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src="@drawable/icon_chat"
             android:padding="8dp"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside" />
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
@@ -79,12 +56,13 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeHeader"
-        app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/main_nav" />
 
+    <!-- ListView sẽ nằm trên (overlay) các thành phần khác -->
+
+    <!-- FrameLayout loading -->
     <FrameLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
@@ -101,8 +79,5 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
     </FrameLayout>
-
-    <!-- BottomAppBar -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

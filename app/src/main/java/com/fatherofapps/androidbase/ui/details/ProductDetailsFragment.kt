@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.ui.details
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.fatherofapps.androidbase.adapter.ImageAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PostImage
+import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +21,8 @@ class ProductDetailsFragment : BaseFragment() {
     private var productId : String? = null
     private val viewModel by viewModels<ProductDetailsViewModel>()
     private lateinit var imageAdapter: ImageAdapter
+    private var isExpanded = false
+    private val MAX_WORD_COUNT = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,8 @@ class ProductDetailsFragment : BaseFragment() {
         dataBinding = FragmentProductDetailsBinding.inflate(inflater)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         dataBinding.viewModel = viewModel
+
+        dataBinding.btnToggle.paintFlags = dataBinding.btnToggle.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         return dataBinding.root
     }
 
@@ -56,6 +62,7 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.tvTitle.text = it.data.title
                 dataBinding.tvDescription.text = it.data.description
                 dataBinding.tvAddress.text = it.data.roomInfo.address
+                dataBinding.tvAddress.paintFlags = dataBinding.tvAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                 dataBinding.tvPricePerMeter.text = it.data.roomInfo.type
                 if (it.data.status == "active") {
                     dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
@@ -63,6 +70,11 @@ class ProductDetailsFragment : BaseFragment() {
                     dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
                 }
 
+                handleDescriptionText("- Nhà cách phố đi bộ Nguyễn Huệ Quận 1 chỉ 1,9 km di chuyển từ nhà đến trung tâm Quận 1 không quá 7 phút. Nhà mới xây dựng xong mua là có nhà ở trước tết.\n" +
+                        "- Hẻm cực rộng thoáng mát, khu sang trọng, dân trí cao đường Huỳnh Tấn Phát, đoạn chân cầu Tân Thuận.\n" +
+                        "- Khu vực gần vị trí cầu Thủ Thiêm 4 (Cầu Bến Nghé, sẽ khởi công trong năm 2025) rất đáng tiền để đầu tư sinh lợi.\n" +
+                        "- Nhà rộng 5,4m dài 9m diện tích trên sổ công nhận 49m2 thực tế trên 50m2.\n" +
+                        "- Đường trước nhà mới làm xong không lo lộ giới, quy hoạch đất ở đô thị, sổ hồng, hoàn công đầy đủ, dễ dàng công chứng, vay trả góp ngân hàng.")
                 dataBinding.txtCapacity.text = "Dung tích: ${it.data.roomInfo.capacity}"
                 dataBinding.txtWidthRoom.text = "Chiều rộng: ${it.data.roomInfo.width}"
                 dataBinding.txtHeightRoom.text = "Chiều dài: ${it.data.roomInfo.height}"
@@ -72,21 +84,14 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.txtNumberOfBedrooms.text = "Số phòng ngủ: ${it.data.roomInfo.numberOfBedrooms}"
                 dataBinding.txtNumberOfBathrooms.text = "Số phòng tắm: ${it.data.roomInfo.numberOfBathrooms}"
 
+                // Hiển thị thông tin Nội thất và Tiện nghi
+                displayFurnitureInfo(it.data.roomUtility)
+                displayAmenitiesInfo(it.data.roomUtility)
 
                 // Hiển thị hình ảnh
                 setupImageCarousel(it.data.roomInfo.postImages)
             }
         }
-
-
-//        // Observe promotional post data
-//        viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
-//            promotionalPost?.let {
-//                // Hiển thị thông tin lấy từ API lên UI
-//
-//                dataBinding.txtTitle.text = it.data.id
-//            }
-//        }
 
         // quan sat loading
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -105,5 +110,49 @@ class ProductDetailsFragment : BaseFragment() {
 //        imageAdapter = ImageAdapter(requireContext(), ArrayList(postImages.map { it.urlImagePost }))
         imageAdapter = ImageAdapter(requireActivity(), ArrayList(postImages.map { it.urlImagePost }))
         dataBinding.recyclerCarousel.adapter = imageAdapter
+    }
+
+    private fun displayFurnitureInfo(roomUtility: RoomUtility) {
+        val furnitureBuilder = StringBuilder()
+        roomUtility.furnitureAvailability.forEach { (furniture, available) ->
+            furnitureBuilder.append("$furniture: ${if (available) "Có" else "Không"}\n")
+        }
+        dataBinding.tvFurnitureAvailability.text = furnitureBuilder.toString()
+    }
+
+    private fun displayAmenitiesInfo(roomUtility: RoomUtility) {
+        val amenitiesBuilder = StringBuilder()
+        roomUtility.amenitiesAvailability.forEach { (amenity, available) ->
+            amenitiesBuilder.append("$amenity: ${if (available) "Có" else "Không"}\n")
+        }
+        dataBinding.tvAmenitiesAvailability.text = amenitiesBuilder.toString()
+    }
+
+    private fun handleDescriptionText(description: String) {
+        val words = description.split(" ")
+
+        if (words.size > MAX_WORD_COUNT) {
+            val shortText = words.take(MAX_WORD_COUNT).joinToString(" ") + "..."
+            dataBinding.txtDetailedDescription.text = shortText
+
+            dataBinding.btnToggle.visibility = View.VISIBLE
+            dataBinding.btnToggle.setOnClickListener {
+                isExpanded = !isExpanded
+                toggleDescription(description, shortText)
+            }
+        } else {
+            dataBinding.txtDetailedDescription.text = description
+            dataBinding.btnToggle.visibility = View.GONE
+        }
+    }
+
+    private fun toggleDescription(fullText: String, shortText: String) {
+        if (isExpanded) {
+            dataBinding.txtDetailedDescription.text = fullText
+            dataBinding.btnToggle.text = "Thu gọn"
+        } else {
+            dataBinding.txtDetailedDescription.text = shortText
+            dataBinding.btnToggle.text = "Xem thêm"
+        }
     }
 }

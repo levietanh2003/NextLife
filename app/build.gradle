@@ -152,6 +152,9 @@ dependencies {
     //circle image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    // Material SearchBar Android
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
+
     def room_version = "2.4.2"
     implementation("androidx.room:room-runtime:$room_version")
     // Kotlin annotation processing tool (kapt)
