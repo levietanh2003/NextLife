@@ -1,7 +1,6 @@
 package com.fatherofapps.androidbase.data.apis
 
-import com.fatherofapps.androidbase.data.modelJson.PromotionalPostResponseJson
-import com.fatherofapps.androidbase.data.models.PromotionalPost
+
 import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
 import retrofit2.Response
 import retrofit2.http.GET

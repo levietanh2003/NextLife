@@ -6,13 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
-import com.fatherofapps.androidbase.data.modelJson.PostDataJson
-import com.fatherofapps.androidbase.data.models.Carousel
-import com.fatherofapps.androidbase.data.models.PostData
+
 import com.fatherofapps.androidbase.data.models.PromotionalPost
-import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
+
 import com.fatherofapps.androidbase.data.repositories.PostFeaturedRepository
-import com.fatherofapps.androidbase.data.repositories.PostFilterRepository
+
 import com.fatherofapps.androidbase.data.repositories.PostPromotionalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

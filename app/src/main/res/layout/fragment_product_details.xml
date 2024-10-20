@@ -513,7 +513,7 @@
                     android:id="@+id/tv_"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mô tả chi tiết"
+                    android:text="Phòng liên quan"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/color_main"
                     android:textSize="16sp"

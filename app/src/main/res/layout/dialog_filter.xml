@@ -129,7 +129,7 @@
                     android:text="Tìm theo khu vực"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" /> <!-- Thêm khoảng cách giữa ImageView và TextView -->
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,62 +137,21 @@
                 android:layout_height="wrap_content"
                 android:background="#ffff"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/tvTitle_category_address"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewCategories"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="0.5"
-
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Phổ biến: "
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/spinner_category1"
-                    android:layout_width="75dp"
-                    android:layout_height="35dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/spinner_background"
-                    android:fontFamily="@font/roboto_regular"
-                    android:gravity="center"
-                    android:text="Quận 1"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/spinner_category2"
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-
-                    android:background="@drawable/spinner_background"
-                    android:fontFamily="@font/roboto_regular"
-                    android:gravity="center"
-                    android:text="Quận Gò Vấp"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/spinner_category3"
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/spinner_background"
-                    android:fontFamily="@font/roboto_regular"
-                    android:gravity="center"
-                    android:text="Quận Thủ Đức"
-                    android:textColor="@android:color/black" />
-
-
-            <!--       content         -->
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    tools:listitem="@layout/item_district"
+                    android:clipToPadding="false"
+                    android:scrollbars="horizontal"
+                    app:layoutManager="LinearLayoutManager"/>
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/linearLayout2"

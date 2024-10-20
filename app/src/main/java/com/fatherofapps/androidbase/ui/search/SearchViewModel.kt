@@ -16,21 +16,21 @@ class SearchViewModel @Inject constructor(
 
 ) : BaseViewModel() {
 
-//    private var _postFilter = MutableLiveData<List<PromotionalPost>>()
-//    val postFilter: LiveData<List<PromotionalPost>>
-//        get() = _postFilter
-//
-//    override fun fetchData(minPrice: Double?,
-//                           maxPrice: Double?,
-//                           district: String?,
-//                           type: String?,
-//                           hasPromotion: Boolean?) {
-//        showLoading(true)
-//
-//        parentJob = viewModelScope.launch(handler) {
-//            val postFilterResponse = postFilterRepository.fetchPostFilter(minPrice, maxPrice, district, type, hasPromotion)
-//            _postFilter.postValue(postFilterResponse.data)
-//        }
-//        registerJobFinish()
-//    }
+    private var _postFilter = MutableLiveData<List<PromotionalPost>>()
+    val postFilter: LiveData<List<PromotionalPost>>
+        get() = _postFilter
+
+    override fun fetchData(minPrice: Double?,
+                           maxPrice: Double?,
+                           district: String?,
+                           type: String?,
+                           hasPromotion: Boolean?) {
+        showLoading(true)
+
+        parentJob = viewModelScope.launch(handler) {
+            val postFilterResponse = postFilterRepository.fetchPostFilter(minPrice, maxPrice, district, type, hasPromotion)
+            _postFilter.postValue(postFilterResponse.data)
+        }
+        registerJobFinish()
+    }
 }

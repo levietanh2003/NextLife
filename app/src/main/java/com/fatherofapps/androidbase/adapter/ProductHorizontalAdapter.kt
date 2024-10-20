@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.adapter.ProductAdapter.OnItemClickListener
+import com.fatherofapps.androidbase.adapter.ProductAdapter.ProductViewHolder
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ProductAdapter(
+class ProductHorizontalAdapter(
     private val nameProducts: List<String>,
     private val prices: List<String>,
     private val imageUrls: List<String>,
@@ -23,9 +24,8 @@ class ProductAdapter(
     private val quantityImage: List<Int>,
     private val context: Context,
     private val itemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+) : RecyclerView.Adapter<ProductHorizontalAdapter.ProductViewHolder>() {
 
-    // ViewHolder class chứa các view từ layout
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productImage: ImageView = itemView.findViewById(R.id.product_image)
         val productName: TextView = itemView.findViewById(R.id.product_name)
@@ -35,19 +35,20 @@ class ProductAdapter(
         val productQuantity: TextView = itemView.findViewById(R.id.quantityImage)
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    // Hàm này để tạo ra ViewHolder mới khi RecyclerView cần
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.product_rv_item, parent, false)
+            .inflate(R.layout.product_item_filter, parent, false)
         return ProductViewHolder(view)
     }
 
-    // Gán dữ liệu cho các view trong ViewHolder
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+
+    override fun onBindViewHolder(
+        holder: ProductHorizontalAdapter.ProductViewHolder,
+        position: Int
+    ) {
         val nameProduct = nameProducts[position]
         val price = prices[position]
         val imageUrl = imageUrls[position]
@@ -76,8 +77,8 @@ class ProductAdapter(
         }
     }
 
-    // Trả về số lượng item trong danh sách sản phẩm
     override fun getItemCount(): Int {
         return nameProducts.size
     }
+
 }

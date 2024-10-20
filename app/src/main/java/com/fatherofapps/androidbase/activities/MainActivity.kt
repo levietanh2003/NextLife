@@ -24,6 +24,8 @@ class MainActivity : BaseActivity() {
         loadingLayout = findViewById(R.id.loadingLayout)
 
         showLoading(false)
+
+
     }
 
     override fun showLoading(isShow: Boolean) {

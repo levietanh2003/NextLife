@@ -23,8 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#f4f4f4"
-            >
+            android:background="#f4f4f4">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -208,6 +207,18 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"/>
 
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFF"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rvOfferProducts"
+                    app:layout_constraintStart_toStartOf="parent" />
+
                 <TextView
                     android:id="@+id/tvBestProducts"
                     android:layout_width="wrap_content"
@@ -219,7 +230,7 @@
                     android:textColor="@color/color_main"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="@id/rvOfferProducts"
-                    app:layout_constraintTop_toBottomOf="@id/rvOfferProducts"/>
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout4"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
