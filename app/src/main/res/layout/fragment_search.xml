@@ -43,6 +43,7 @@
 
                 <!-- Địa điểm -->
                 <TextView
+                    android:id="@+id/title_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -160,11 +161,23 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
             android:text="Tìm phòng"
+            android:layout_marginStart="15dp"
             android:textColor="@color/color_main"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/rv_product_filter"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+        <ImageView
+            android:id="@+id/no_results_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_result"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvOfferProducts"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_filter"

@@ -27,7 +27,6 @@
             android:layout_weight="1"
             app:mt_hint="Tìm kiếm trên Next Life"
             app:mt_speechMode="false"
-            app:mt_navIconEnabled="true"
             app:mt_roundedSearchBarEnabled="true"
             app:mt_maxSuggestionsCount="10"
             style="@style/MaterialSearchBarLight" />

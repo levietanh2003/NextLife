@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.setFragmentResult
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
@@ -60,6 +59,7 @@ class FilterAreaDialogFragment : BottomSheetDialogFragment() {
             updateSelectedArea(selectedDistrict) // Cập nhật quận đã chọn
         }
 
+
         // Thiết lập layout manager
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = districtsFilterAdapter
@@ -87,16 +87,16 @@ class FilterAreaDialogFragment : BottomSheetDialogFragment() {
 
     private fun updateSelectedArea(selectedArea: String) {
         address = selectedArea
-
-        // Cập nhật lại background cho từng quận trong danh sách
-        for (i in 0 until districts.size) {
-            val textView = recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.findViewById<TextView>(R.id.spinner_category)
-            textView?.setBackgroundResource(R.drawable.default_background) // Đặt lại background mặc định
-        }
-
-        // Làm sáng layout cho quận đã chọn
-        val selectedTextView = recyclerView.findViewHolderForAdapterPosition(districts.indexOf(selectedArea))?.itemView?.findViewById<TextView>(R.id.spinner_category)
-        selectedTextView?.setBackgroundResource(R.drawable.selected_background) // Đặt background sáng cho quận đã chọn
+//
+//        // Cập nhật lại background cho từng quận trong danh sách
+//        for (i in 0 until districts.size) {
+//            val textView = recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.findViewById<TextView>(R.id.spinner_category)
+//            textView?.setBackgroundResource(R.drawable.default_background) // Đặt lại background mặc định
+//        }
+//
+//        // Làm sáng layout cho quận đã chọn
+//        val selectedTextView = recyclerView.findViewHolderForAdapterPosition(districts.indexOf(selectedArea))?.itemView?.findViewById<TextView>(R.id.spinner_category)
+//        selectedTextView?.setBackgroundResource(R.drawable.selected_background) // Đặt background sáng cho quận đã chọn
     }
 
     override fun onDestroyView() {

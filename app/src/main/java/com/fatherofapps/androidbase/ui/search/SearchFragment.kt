@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,6 +27,8 @@ class SearchFragment : BaseFragment() {
     private var district: String? = null
     private var type: String? = null
     private var hasPromotion: Boolean? = null
+    private lateinit var noResultsImage: ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,7 @@ class SearchFragment : BaseFragment() {
         parentFragmentManager.setFragmentResultListener("filter_request_key", this) { _, bundle ->
             district = bundle.getString("selected_address")
             // Cập nhật UI hoặc thực hiện các thao tác cần thiết với selectedAddress
+            dataBinding.titleAddress.text = district
             viewModel.fetchData(district = district)
         }
         // Initial data fetch
@@ -48,6 +52,8 @@ class SearchFragment : BaseFragment() {
         dataBinding.lifecycleOwner = viewLifecycleOwner
         dataBinding.viewModel = viewModel
 
+        // Khởi tạo ImageView thông báo
+        noResultsImage = dataBinding.noResultsImage
 
         // Thiết lập sự kiện nhấn cho btn_filter_area
         dataBinding.btnFilterArea.setOnClickListener {
@@ -60,15 +66,15 @@ class SearchFragment : BaseFragment() {
         return dataBinding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
-        dataBinding.spinnerCategory.setOnClickListener {
-            viewModel.fetchData(district = "Phú Nhuận")
-        }
+//        dataBinding.spinnerCategory.setOnClickListener {
+//
+//        }
+
 
         viewModel.postFilter.observe(viewLifecycleOwner) { posFilter ->
             Log.d("Address_SearchFragment", "Received filtered posts. Count: ${posFilter.size}")
@@ -94,14 +100,23 @@ class SearchFragment : BaseFragment() {
 
     private fun handleFilteredPosts(posts: List<PromotionalPost>) {
         Log.d("Address_SearchFragment", "Handling filtered posts. Count: ${posts.size}")
-        posts.let {
+
+        if (posts.isEmpty()) {
+            // Hiển thị hình ảnh thông báo khi không có kết quả
+            noResultsImage.visibility = View.VISIBLE
+            dataBinding.rvProductFilter.visibility = View.GONE
+        } else {
+            // Ẩn hình ảnh thông báo khi có kết quả
+            noResultsImage.visibility = View.GONE
+            dataBinding.rvProductFilter.visibility = View.VISIBLE
+
             val productAdapter = ProductHorizontalAdapter(
-                it.map { post -> post.title },
-                it.map { post -> post.pricingDetails.basePrice.toString() },
-                it.map { post -> post.roomInfo.postImages.getOrNull(0)?.urlImagePost ?: "" },
-                it.map { post -> post.roomInfo.address },
-                it.map { post -> post.lastModifiedDate },
-                it.map { post -> post.roomInfo.postImages.size },
+                posts.map { it.title },
+                posts.map { it.pricingDetails.basePrice.toString() },
+                posts.map { it.roomInfo.postImages.getOrNull(0)?.urlImagePost ?: "" },
+                posts.map { it.roomInfo.address },
+                posts.map { it.lastModifiedDate },
+                posts.map { it.roomInfo.postImages.size },
                 requireContext(),
                 object : ProductAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
@@ -115,10 +130,40 @@ class SearchFragment : BaseFragment() {
                     }
                 }
             )
+
             dataBinding.rvProductFilter.apply {
                 layoutManager = GridLayoutManager(requireContext(), 1)
                 adapter = productAdapter
             }
         }
     }
+//    private fun handleFilteredPosts(posts: List<PromotionalPost>) {
+//        Log.d("Address_SearchFragment", "Handling filtered posts. Count: ${posts.size}")
+//        posts.let {
+//            val productAdapter = ProductHorizontalAdapter(
+//                it.map { post -> post.title },
+//                it.map { post -> post.pricingDetails.basePrice.toString() },
+//                it.map { post -> post.roomInfo.postImages.getOrNull(0)?.urlImagePost ?: "" },
+//                it.map { post -> post.roomInfo.address },
+//                it.map { post -> post.lastModifiedDate },
+//                it.map { post -> post.roomInfo.postImages.size },
+//                requireContext(),
+//                object : ProductAdapter.OnItemClickListener {
+//                    override fun onItemClick(position: Int) {
+//                        val productId = posts[position].id
+//                        val bundle = Bundle().apply {
+//                            putString("productId", productId)
+//                        }
+//                        findNavController().navigate(
+//                            R.id.action_searchFragment_to_productDetailsFragment, bundle
+//                        )
+//                    }
+//                }
+//            )
+//            dataBinding.rvProductFilter.apply {
+//                layoutManager = GridLayoutManager(requireContext(), 1)
+//                adapter = productAdapter
+//            }
+//        }
+//    }
 }
