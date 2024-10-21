@@ -47,6 +47,11 @@ class NetworkModule {
     }
 
     @Provides
+    fun providePostSearchAPI(@Named("MainSite") retrofit: Retrofit): PostSearchAPI {
+        return retrofit.create(PostSearchAPI::class.java)
+    }
+
+    @Provides
     @Singleton
     @Named("MainSite")
     fun provideRetrofit(

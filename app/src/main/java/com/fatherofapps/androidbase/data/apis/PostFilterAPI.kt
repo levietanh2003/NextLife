@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface PostFilterAPI {
     @GET("post/post-filter")
-    suspend fun getPostPromotional(
+    suspend fun filterPost(
         @Query("minPrice") minPrice: Double? = null,
         @Query("maxPrice") maxPrice: Double? = null,
         @Query("district") district: String? = null,
