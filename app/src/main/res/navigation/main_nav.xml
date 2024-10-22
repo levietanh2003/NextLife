@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.fatherofapps.androidbase.ui.home.HomeFragment"
-
+        tools:layout="@layout/fragment_home"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_productDetailsFragment"
@@ -20,21 +21,15 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.fatherofapps.androidbase.ui.details.ProductDetailsFragment"
-        android:label="ProductDetailsFragment" />
+        android:label="ProductDetailsFragment"
+        tools:layout="@layout/fragment_product_details" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.fatherofapps.androidbase.ui.search.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/filterAreaDialogFragment"
-        android:name="com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment"
-        android:label="FilterAreaDialogFragment" >
-        <action
-            android:id="@+id/action_filterAreaDialogFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-    </dialog>
 </navigation>

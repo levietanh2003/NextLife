@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Hình tròn -->
+    <path
+        android:fillColor="@color/color_main"
+        android:pathData="M100,0
+                a100,100 0 1,0 100,100
+                a100,100 0 1,0 -100,-100" />
+
+    <!-- Chữ Next -->
+    <group
+        android:translateX="30"
+        android:translateY="110">
+        <path
+            android:fillColor="#FFFFFF"
+            android:textSize="40sp"
+            android:pathData="M0,0h10v40h10v-40h10v40h10v-40h10v40h10v-40h10v40h10v-40h10" />
+    </group>
+
+    <!-- Chữ Life -->
+    <group
+        android:translateX="30"
+        android:translateY="150">
+        <path
+            android:fillColor="#FFFFFF"
+            android:textSize="40sp"
+            android:pathData="M0,0h10v40h10v-40h10v40h10v-40h10v40h10v-40h10v40h10v-40h10" />
+    </group>
+
+</vector>

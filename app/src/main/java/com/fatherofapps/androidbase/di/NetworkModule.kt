@@ -65,6 +65,27 @@ class NetworkModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    @Named("UserAPI")
+    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI {
+        return retrofit.create(UserAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @Named("UserAPI")
+    fun provideUserAPIRetrofit(
+        okHttpClient: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+            .addConverterFactory(moshiConverterFactory)
+            .baseUrl(BuildConfig.URL_USER)
+            .client(okHttpClient)
+            .build()
+    }
+
 //    @Provides
 //    @Singleton
 //    @Named("FatherOfApps")

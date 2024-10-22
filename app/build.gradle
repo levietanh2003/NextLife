@@ -70,17 +70,17 @@ android {
 
         dev {
             buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL_DEV'])
-//            buildConfigField("String", "ACCESS_TOKEN", apikeyProperties['ACCESS_TOKEN_DEV'])
+            buildConfigField("String", "URL_USER", apikeyProperties['URL_USER_DEV'])
         }
 
         staging {
             buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL_STAGING'])
-//            buildConfigField("String", "ACCESS_TOKEN", apikeyProperties['ACCESS_TOKEN_STAGING'])
+            buildConfigField("String", "URL_USER", apikeyProperties['URL_USER_STAGING'])
         }
 
         live {
             buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL_LIVE'])
-//            buildConfigField("String", "ACCESS_TOKEN", apikeyProperties['ACCESS_TOKEN_LIVE'])
+            buildConfigField("String", "URL_USER", apikeyProperties['URL_USER_LIVE'])
         }
 
     }
@@ -131,6 +131,9 @@ dependencies {
     // glide library
     def glide_version = '4.12.0'
     implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    //circular image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
