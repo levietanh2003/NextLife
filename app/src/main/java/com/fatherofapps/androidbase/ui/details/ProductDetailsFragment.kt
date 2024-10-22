@@ -13,6 +13,7 @@ import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import formatCurrencyFromString
 
 @AndroidEntryPoint
 class ProductDetailsFragment : BaseFragment() {
@@ -78,7 +79,7 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.txtCapacity.text = "Dung tích: ${it.data.roomInfo.capacity}"
                 dataBinding.txtWidthRoom.text = "Chiều rộng: ${it.data.roomInfo.width}"
                 dataBinding.txtHeightRoom.text = "Chiều dài: ${it.data.roomInfo.height}"
-                dataBinding.productPrice.text = "Giá: ${it.data.pricingDetails.basePrice} VNĐ"
+                dataBinding.productPrice.text = "Giá: ${formatCurrencyFromString(it.data.pricingDetails.basePrice.toString())}"
                 dataBinding.txtFloor.text = "Tầng: ${promotionalPost.data.roomInfo.floor}"
                 dataBinding.txtTotalArea.text = "Diện tích: ${it.data.roomInfo.totalArea} m²"
                 dataBinding.txtNumberOfBedrooms.text = "Số phòng ngủ: ${it.data.roomInfo.numberOfBedrooms}"

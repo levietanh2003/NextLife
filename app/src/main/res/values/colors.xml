@@ -16,6 +16,9 @@
     <color name="regular_price_color">#cbcbcb</color>
     <color name="inactive_text_color">#8D8D8D</color>
     <color name="background_splash_color">#FF6C2F</color>
+    <color name="blue_main">#1E3A8A</color>
+    <color name="blue_dark">#003366</color>
+    <color name="blue_light">#90A4AE</color>
     <color name="color_main">#1E3A8A</color>
     <color name="background_header_color">@color/primaryColor</color>
     <color name="g_gray700">#666666</color>

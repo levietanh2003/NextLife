@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.activities.BaseActivity

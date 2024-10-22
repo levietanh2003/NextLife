@@ -93,6 +93,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Tìm kiếm quanh bạn"
                 android:inputType="text"
+                android:minHeight="48dp"
                 android:padding="8dp" />
 
             <LinearLayout

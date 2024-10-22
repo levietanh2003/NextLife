@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,11 +14,13 @@ import com.fatherofapps.androidbase.databinding.DialogFilterBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class FilterAreaDialogFragment : BottomSheetDialogFragment() {
+class FilterAreaBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding: DialogFilterBinding? = null
     private val binding get() = _binding!!
     private var address: String? = null
+    private var minPrice: Double? = null
+    private var maxPrice: Double? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var districtsFilterAdapter: DistrictFilterAdapter
 
@@ -36,6 +37,8 @@ class FilterAreaDialogFragment : BottomSheetDialogFragment() {
         "Quận 10",
         "Quận 11",
         "Quận 12",
+        "Tân Bình",
+        "Bình Tân",
         "Gò Vấp",
         "Phú Nhuận",
         "Thủ Đức"
@@ -66,7 +69,7 @@ class FilterAreaDialogFragment : BottomSheetDialogFragment() {
 
         // Thiết lập sự kiện cho các nút trong Dialog
         binding.btnNegative.setOnClickListener {
-            dismiss() // Đóng dialog khi nhấn nút Hủy bỏ
+            dismiss()
         }
 
         binding.ivClose.setOnClickListener {
@@ -87,16 +90,6 @@ class FilterAreaDialogFragment : BottomSheetDialogFragment() {
 
     private fun updateSelectedArea(selectedArea: String) {
         address = selectedArea
-//
-//        // Cập nhật lại background cho từng quận trong danh sách
-//        for (i in 0 until districts.size) {
-//            val textView = recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.findViewById<TextView>(R.id.spinner_category)
-//            textView?.setBackgroundResource(R.drawable.default_background) // Đặt lại background mặc định
-//        }
-//
-//        // Làm sáng layout cho quận đã chọn
-//        val selectedTextView = recyclerView.findViewHolderForAdapterPosition(districts.indexOf(selectedArea))?.itemView?.findViewById<TextView>(R.id.spinner_category)
-//        selectedTextView?.setBackgroundResource(R.drawable.selected_background) // Đặt background sáng cho quận đã chọn
     }
 
     override fun onDestroyView() {

@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
+import formatCurrencyFromString
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -61,7 +62,7 @@ class ProductAdapter(
         val formattedDate = format.format(lastModifiedDate)
 
         holder.productName.text = nameProduct
-        holder.productPrice.text = price
+        holder.productPrice.text = formatCurrencyFromString(price)
         holder.productLocation.text = locationProduct
         holder.productLastModified.text = formattedDate
         holder.productQuantity.text = quantityImage.toString()

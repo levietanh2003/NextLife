@@ -31,7 +31,7 @@
     </fragment>
     <dialog
         android:id="@+id/filterAreaDialogFragment"
-        android:name="com.fatherofapps.androidbase.ui.search.dialog.FilterAreaDialogFragment"
+        android:name="com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment"
         android:label="FilterAreaDialogFragment" >
         <action
             android:id="@+id/action_filterAreaDialogFragment_to_searchFragment"

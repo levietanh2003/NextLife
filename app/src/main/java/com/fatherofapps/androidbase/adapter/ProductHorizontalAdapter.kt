@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.adapter.ProductAdapter.OnItemClickListener
 import com.fatherofapps.androidbase.adapter.ProductAdapter.ProductViewHolder
+import formatCurrencyFromString
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,7 +63,7 @@ class ProductHorizontalAdapter(
         val formattedDate = format.format(lastModifiedDate)
 
         holder.productName.text = nameProduct
-        holder.productPrice.text = price
+        holder.productPrice.text = formatCurrencyFromString(price)
         holder.productLocation.text = locationProduct
         holder.productLastModified.text = formattedDate
         holder.productQuantity.text = quantityImage.toString()

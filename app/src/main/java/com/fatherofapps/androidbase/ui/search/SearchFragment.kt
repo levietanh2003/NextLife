@@ -15,7 +15,8 @@ import com.fatherofapps.androidbase.adapter.ProductHorizontalAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
-import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaDialogFragment
+import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment
+import com.fatherofapps.androidbase.ui.search.dialog.FilterPriceBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,23 +35,42 @@ class SearchFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        titleSearch = arguments?.getString("search_query").toString()
-//         xu lý fetch data theo titleSearch
-        viewModel.fetchData(titleSearch)
-        if(titleSearch.isEmpty()){
-            viewModel.fetchData(titleSearch)
+        // Nhận search query từ MainActivity
+        val titleSearchMainActivity = arguments?.getString("search_query").toString()
+
+        if (!titleSearchMainActivity.isNullOrEmpty()) {
+            titleSearch = titleSearchMainActivity
+            Log.d("Title_SearchFragment", "Search query received: $titleSearch")
+
+            // Fetch dữ liệu theo từ khóa tìm kiếm
+            viewModel.fetchData(titleSearch = titleSearch)
+        }else{
+            viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
         }
 
+        // Listener cho filter dialog
         parentFragmentManager.setFragmentResultListener("filter_request_key", this) { _, bundle ->
-            district = bundle.getString("selected_address")
-            // Cập nhật UI hoặc thực hiện các thao tác cần thiết với selectedAddress
-            dataBinding.titleAddress.text = district
-            Log.d("Title_SearchFragment", titleSearch)
-            viewModel.fetchData(district = district)
+            // Xử lý district
+            val selectedDistrict = bundle.getString("selected_address")
+            if (selectedDistrict != null) {
+                district = selectedDistrict
+                dataBinding.titleAddress.text = district
+                Log.d("District_SearchFragment", district.toString())
+                viewModel.fetchData(district = district)
+            }
+
+            // Xử lý minPrice và maxPrice
+            val minPriceValue = bundle.getString("min_price")?.toDoubleOrNull()
+            val maxPriceValue = bundle.getString("max_price")?.toDoubleOrNull()
+            if (minPriceValue != null && maxPriceValue != null) {
+                minPrice = minPriceValue
+                maxPrice = maxPriceValue
+                Log.d("Min_Max_SearchFragment", "minPrice: $minPrice, maxPrice: $maxPrice")
+                viewModel.fetchData(minPrice = minPrice, maxPrice = maxPrice)
+            }
         }
-        // Initial data fetch
-//        viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,13 +81,16 @@ class SearchFragment : BaseFragment() {
         dataBinding.lifecycleOwner = viewLifecycleOwner
         dataBinding.viewModel = viewModel
 
-        // Khởi tạo ImageView thông báo
+
         noResultsImage = dataBinding.noResultsImage
 
-        // Thiết lập sự kiện nhấn cho btn_filter_area
-        dataBinding.btnFilterArea.setOnClickListener {
+        dataBinding.btnFilterPrice.setOnClickListener{
+            openBottomSheetFilterPrice()
+        }
 
-            openBottomSheet()
+
+        dataBinding.btnFilterArea.setOnClickListener {
+            openBottomSheetFilterArea()
         }
 
         return dataBinding.root
@@ -78,10 +101,9 @@ class SearchFragment : BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
-//        dataBinding.spinnerCategory.setOnClickListener {
-//        }
+        dataBinding.spinnerCategory.setOnClickListener {
 
-
+        }
 
         viewModel.getPost.observe(viewLifecycleOwner) { posFilter ->
             Log.d("Address_SearchFragment", "Received filtered posts. Count: ${posFilter.size}")
@@ -100,8 +122,13 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    private fun openBottomSheet() {
-        val bottomSheetFragment = FilterAreaDialogFragment()
+    private fun openBottomSheetFilterArea() {
+        val bottomSheetFragment = FilterAreaBottomSheetFragment()
+        bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun openBottomSheetFilterPrice() {
+        val bottomSheetFragment = FilterPriceBottomSheetFragment()
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 
@@ -144,33 +171,4 @@ class SearchFragment : BaseFragment() {
             }
         }
     }
-//    private fun handleFilteredPosts(posts: List<PromotionalPost>) {
-//        Log.d("Address_SearchFragment", "Handling filtered posts. Count: ${posts.size}")
-//        posts.let {
-//            val productAdapter = ProductHorizontalAdapter(
-//                it.map { post -> post.title },
-//                it.map { post -> post.pricingDetails.basePrice.toString() },
-//                it.map { post -> post.roomInfo.postImages.getOrNull(0)?.urlImagePost ?: "" },
-//                it.map { post -> post.roomInfo.address },
-//                it.map { post -> post.lastModifiedDate },
-//                it.map { post -> post.roomInfo.postImages.size },
-//                requireContext(),
-//                object : ProductAdapter.OnItemClickListener {
-//                    override fun onItemClick(position: Int) {
-//                        val productId = posts[position].id
-//                        val bundle = Bundle().apply {
-//                            putString("productId", productId)
-//                        }
-//                        findNavController().navigate(
-//                            R.id.action_searchFragment_to_productDetailsFragment, bundle
-//                        )
-//                    }
-//                }
-//            )
-//            dataBinding.rvProductFilter.apply {
-//                layoutManager = GridLayoutManager(requireContext(), 1)
-//                adapter = productAdapter
-//            }
-//        }
-//    }
 }
