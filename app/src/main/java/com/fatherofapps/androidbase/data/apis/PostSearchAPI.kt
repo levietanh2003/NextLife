@@ -3,11 +3,11 @@ package com.fatherofapps.androidbase.data.apis
 import com.fatherofapps.androidbase.data.models.PromotionalPostResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface PostSearchAPI {
-    @GET("post/post-filter")
+    @GET("search/{tile}")
     suspend fun getPostsSearch(
-        @Query("tile") type: String? = null,
+        @Path("tile") type: String? = null,
     ): Response<PromotionalPostResponse>
 }

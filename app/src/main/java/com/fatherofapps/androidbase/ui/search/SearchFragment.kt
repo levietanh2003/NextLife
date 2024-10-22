@@ -27,20 +27,29 @@ class SearchFragment : BaseFragment() {
     private var district: String? = null
     private var type: String? = null
     private var hasPromotion: Boolean? = null
+    private lateinit var titleSearch: String
     private lateinit var noResultsImage: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        titleSearch = arguments?.getString("search_query").toString()
+//         xu lý fetch data theo titleSearch
+        viewModel.fetchData(titleSearch)
+        if(titleSearch.isEmpty()){
+            viewModel.fetchData(titleSearch)
+        }
+
         parentFragmentManager.setFragmentResultListener("filter_request_key", this) { _, bundle ->
             district = bundle.getString("selected_address")
             // Cập nhật UI hoặc thực hiện các thao tác cần thiết với selectedAddress
             dataBinding.titleAddress.text = district
+            Log.d("Title_SearchFragment", titleSearch)
             viewModel.fetchData(district = district)
         }
         // Initial data fetch
-        viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
+//        viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
     }
 
     override fun onCreateView(
@@ -57,9 +66,7 @@ class SearchFragment : BaseFragment() {
 
         // Thiết lập sự kiện nhấn cho btn_filter_area
         dataBinding.btnFilterArea.setOnClickListener {
-            // Khởi tạo và hiển thị dialog
-//            val filterDialog = FilterAreaDialogFragment()
-//            filterDialog.show(childFragmentManager, "FilterAreaDialogFragment")
+
             openBottomSheet()
         }
 
@@ -72,11 +79,11 @@ class SearchFragment : BaseFragment() {
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
 //        dataBinding.spinnerCategory.setOnClickListener {
-//
 //        }
 
 
-        viewModel.postFilter.observe(viewLifecycleOwner) { posFilter ->
+
+        viewModel.getPost.observe(viewLifecycleOwner) { posFilter ->
             Log.d("Address_SearchFragment", "Received filtered posts. Count: ${posFilter.size}")
             handleFilteredPosts(posFilter)
         }
