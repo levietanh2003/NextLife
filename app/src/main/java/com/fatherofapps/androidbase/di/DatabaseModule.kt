@@ -3,7 +3,7 @@ package com.fatherofapps.androidbase.di
 import android.content.Context
 import androidx.room.Room
 import com.fatherofapps.androidbase.data.database.AppDatabase
-import com.fatherofapps.androidbase.data.database.daos.CustomerDao
+import com.fatherofapps.androidbase.data.database.daos.ProductDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,12 +19,18 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase{
-        return Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
+        return Room.databaseBuilder(context,AppDatabase::class.java,"app_db")
+            .fallbackToDestructiveMigration() // Để Room tự động làm mới database khi có thay đổi
+            .build()
     }
+
+//    @Provides
+//    fun provideCustomerDao(appDatabase: AppDatabase): CustomerDao{
+//        return appDatabase.customerDao()
+//    }
 
     @Provides
-    fun provideCustomerDao(appDatabase: AppDatabase): CustomerDao{
-        return appDatabase.customerDao()
+    fun provideProductDao(appDatabase: AppDatabase): ProductDao {
+        return appDatabase.productDao()
     }
-
 }

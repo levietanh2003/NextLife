@@ -2,8 +2,6 @@ package com.fatherofapps.androidbase.data.repositories
 
 import android.util.Log
 import com.fatherofapps.androidbase.base.network.NetworkResult
-import com.fatherofapps.androidbase.data.apis.PromotionalPostDetailAPI
-import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.services.PromotionalPostDetailRemoteService
 import com.fatherofapps.androidbase.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher

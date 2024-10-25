@@ -50,6 +50,7 @@ class HomeFragment : BaseFragment() {
         return dataBinding.root
     }
 
+
 override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     registerAllExceptionEvent(viewModel, viewLifecycleOwner)
@@ -223,6 +224,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         }
     }
 
+
     // quan sat loading
     viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
         if (isLoading?.peekContent() == true) {
@@ -233,5 +235,6 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             showLoading(false)
         }
     }
-}
+
+    }
 }

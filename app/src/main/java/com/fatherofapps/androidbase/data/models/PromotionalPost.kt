@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.data.models
 
+import com.fatherofapps.androidbase.data.database.entities.ProductEntity
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -21,4 +22,25 @@ data class PromotionalPost(
     val fixPrice: Int?,
 //    val created: String?
 )
+{
+    fun toProductEntity(): ProductEntity {
+        return ProductEntity(
+            id = id,
+            title = title,
+            description = description,
+            roomId = roomId,
+            contactInfo = contactInfo,
+            additionalDetails = additionalDetails,
+            status = status,
+            createdDate = createdDate,
+            lastModifiedDate = lastModifiedDate,
+            createdBy = createdBy,
+            modifiedBy = modifiedBy,
+            fixPrice = fixPrice,
+            roomInfo = roomInfo.toRoomInfoEntity(),
+            roomUtility = roomUtility.toRoomUtilityEntity(),
+            pricingDetails = pricingDetails.toPricingDetailsEntity()
+        )
+    }
+}
 

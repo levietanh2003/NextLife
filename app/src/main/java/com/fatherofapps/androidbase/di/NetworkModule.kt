@@ -20,11 +20,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-//    @Provides
-//    fun provideCustomerAPI(@Named("MainSite") retrofit: Retrofit): CustomerAPI {
-//        return retrofit.create(CustomerAPI::class.java)
-//    }
-
     // provides PostPromotionalAPI
     @Provides
     fun providePostPromotionalAPI(@Named("MainSite") retrofit: Retrofit): PostPromotionalAPI {
@@ -65,12 +60,12 @@ class NetworkModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    @Named("UserAPI")
-    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI {
-        return retrofit.create(UserAPI::class.java)
-    }
+//    @Provides
+//    @Singleton
+//    @Named("UserAPI")
+//    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI {
+//        return retrofit.create(UserAPI::class.java)
+//    }
 
     @Provides
     @Singleton
