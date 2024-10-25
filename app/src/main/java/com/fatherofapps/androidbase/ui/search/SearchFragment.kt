@@ -15,6 +15,7 @@ import com.fatherofapps.androidbase.adapter.ProductHorizontalAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
+import com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterPriceBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +89,10 @@ class SearchFragment : BaseFragment() {
             openBottomSheetFilterPrice()
         }
 
+        dataBinding.btnFilterAdvanced.setOnClickListener {
+
+        }
+
 
         dataBinding.btnFilterArea.setOnClickListener {
             openBottomSheetFilterArea()
@@ -101,8 +106,8 @@ class SearchFragment : BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
-        dataBinding.spinnerCategory.setOnClickListener {
-
+        dataBinding.btnFilterAdvanced.setOnClickListener {
+            openBottomSheetFilterAdvanced()
         }
 
         viewModel.getPost.observe(viewLifecycleOwner) { posFilter ->
@@ -129,6 +134,11 @@ class SearchFragment : BaseFragment() {
 
     private fun openBottomSheetFilterPrice() {
         val bottomSheetFragment = FilterPriceBottomSheetFragment()
+        bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun openBottomSheetFilterAdvanced() {
+        val bottomSheetFragment = FilterAdvancedBottomSheetFragment()
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 

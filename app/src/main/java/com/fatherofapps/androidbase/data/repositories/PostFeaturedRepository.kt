@@ -1,8 +1,6 @@
 package com.fatherofapps.androidbase.data.repositories
 
-import android.util.Log
 import com.fatherofapps.androidbase.base.network.NetworkResult
-import com.fatherofapps.androidbase.data.models.PostData
 import com.fatherofapps.androidbase.data.services.PostFeatureRemoteService
 import com.fatherofapps.androidbase.data.services.ProductLocalService
 import com.fatherofapps.androidbase.di.IoDispatcher
@@ -20,14 +18,15 @@ class PostFeaturedRepository @Inject constructor(
         when (val result = postFeaturedRemoteService.getAllPostFeatured()) {
             is NetworkResult.Success -> {
                 // Giả sử result.data là PromotionalPostResponse, trong đó chứa danh sách PromotionalPost
-//                val featuredPostResponse = result.data.data.data
+                val featuredPostResponse = result.data.data.data
 //
 //                val productEntities = featuredPostResponse.map { product -> product.toProductEntity() }
 //                productLocalService.insertProducts(productEntities)
                 // lay du lieu tu database SQLite
-                val fetchProductDatabase = productLocalService.getProductsWithNotNullFixPrice().map { to -> to.toPromotionalPost() }
-                Log.d("PostFeatureRepo", "Converted ProductEntities: $fetchProductDatabase")
-                fetchProductDatabase
+//                val fetchProductDatabase = productLocalService.getProductsWithNotNullFixPrice().map { to -> to.toPromotionalPost() }
+//                Log.d("PostFeatureRepo", "Converted ProductEntities: $fetchProductDatabase")
+//                fetchProductDatabase
+                featuredPostResponse
             }
             is NetworkResult.Error -> {
                 throw result.exception

@@ -9,7 +9,6 @@ import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class FullScreenImageDialogFragment : DialogFragment() {

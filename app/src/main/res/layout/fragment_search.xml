@@ -78,6 +78,7 @@
 
                 <!-- Thanh lọc -->
                 <LinearLayout
+                    android:id="@+id/btn_filter_Advanced"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
