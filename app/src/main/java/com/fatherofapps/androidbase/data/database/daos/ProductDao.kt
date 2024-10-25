@@ -9,8 +9,8 @@ import com.fatherofapps.androidbase.data.database.entities.ProductEntity
 @Dao
 interface ProductDao {
 
-//    @Query("SELECT * FROM product")
-//    fun getAll(): List<ProductEntity>
+    @Query("SELECT * FROM product")
+    fun getAll(): List<ProductEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPost(product: ProductEntity)
@@ -26,4 +26,12 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProducts(products: List<ProductEntity>)
+
+    // Phương thức lấy sản phẩm có fixPrice = null
+    @Query("SELECT * FROM product WHERE fixPrice IS NULL")
+    suspend fun getProductsWithNullFixPrice(): List<ProductEntity>
+
+    // Phương thức lấy sản phẩm có fixPrice != null
+    @Query("SELECT * FROM product WHERE fixPrice IS NOT NULL")
+    suspend fun getProductsWithNotNullFixPrice(): List<ProductEntity>
 }

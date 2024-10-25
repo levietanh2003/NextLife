@@ -45,7 +45,7 @@ class HomeViewModel @Inject constructor(
             val postFeaturedResponse = postFeaturedRepository.fetchPostFeatured()
             Log.d("Data PostFeatured", postFeaturedResponse.toString())
             Log.d("Data PromotionalPost", postPromotionalResponse.toString())
-            _postFeatured.postValue(postFeaturedResponse.data)
+            _postFeatured.postValue(postFeaturedResponse)
             _promotionalPost.postValue(postPromotionalResponse)
         }
         registerJobFinish()

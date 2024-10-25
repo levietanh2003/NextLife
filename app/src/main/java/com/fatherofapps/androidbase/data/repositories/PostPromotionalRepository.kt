@@ -21,26 +21,17 @@ class PostPromotionalRepository @Inject constructor(
                 val promotionalPosts = result.data.data.data
                 // Tạo ProductEntity từ dữ liệu API và lưu vào database
                 val productEntities = promotionalPosts.map { product -> product.toProductEntity() }
-                Log.d("PostPromotionalRepo", "Converted ProductEntities: $productEntities")
-
-                productLocalService.insertProducts(productEntities)
-                promotionalPosts
+                // doc du lieu tu database len SQLite
+                val productDataBase = productLocalService.getProductsWithNotNullFixPrice().map { to -> to.toPromotionalPost() }
+                Log.d("PostPromotionalRepo", "Converted ProductEntities: $productDataBase")
+//
+//                productLocalService.insertProducts(productEntities)
+//                promotionalPosts
+                productDataBase
             }
             is NetworkResult.Error -> {
                 throw result.exception
             }
         }
     }
-
-//    suspend fun fetchPromotionalPostsData(): List<ProductEntity> = withContext(dispatcher) {
-//        when (val result = postPromotionalRemoteService.getAllPostPromotional()) {
-//            is NetworkResult.Success -> {
-//                val promotionalPosts = result.data.data.data
-//                val productEntities = promotionalPosts.map { post -> post.toProductEntity() }
-//                productLocalService.saveProduct(productEntities)
-//                productEntities
-//            }
-//            is NetworkResult.Error -> throw result.exception
-//        }
-//    }
 }
