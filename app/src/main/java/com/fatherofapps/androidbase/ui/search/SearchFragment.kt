@@ -49,7 +49,7 @@ class SearchFragment : BaseFragment() {
             viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
         }
 
-        // Listener cho filter dialog
+        // Listener cho filter dialog:
         parentFragmentManager.setFragmentResultListener("filter_request_key", this) { _, bundle ->
             // Xử lý district
             val selectedDistrict = bundle.getString("selected_address")

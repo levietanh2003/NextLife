@@ -14,5 +14,5 @@ fun formatCurrencyFromString(input: String?): String {
     // Định dạng theo đơn vị tiền tệ
     val formattedValue = String.format("%,.0f", value)
 
-    return "$formattedValue đ"
+    return "$formattedValue đ/tháng"
 }

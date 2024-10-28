@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.fatherofapps.androidbase.adapter.ImageAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.common.formatPrice
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
@@ -65,6 +66,9 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.tvAddress.text = it.data.roomInfo.address
                 dataBinding.tvAddress.paintFlags = dataBinding.tvAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                 dataBinding.tvPricePerMeter.text = it.data.roomInfo.type
+                dataBinding.txtWaterMoney.text = "Nước: ${formatPrice().formatPriceWaterFromString(it.data.pricingDetails.waterCost.toString())}"
+                dataBinding.txtElectricMoney.text = "Điện: ${formatPrice().formatPriceElectricFromString(it.data.pricingDetails.electricityCost.toString())}"
+
                 if (it.data.status == "active") {
                     dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
                 }else{

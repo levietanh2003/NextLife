@@ -510,16 +510,87 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_"
+                    android:id="@+id/tv_amenities"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phòng liên quan"
+                    android:text="Giá tiện nghi"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/color_main"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/linearLayoutDetails"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetails" />
+
+                <GridLayout
+                    android:id="@+id/glCharacteristic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:elevation="@dimen/cardview_default_radius"
+                    android:background="@drawable/rounded_background"
+                    android:columnCount="2"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_amenities">
+
+                    <!-- Number of Bedrooms -->
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_columnWeight="1"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_electric"
+                            android:layout_marginRight="4dp" />
+
+
+                        <TextView
+                            android:id="@+id/txt_electricMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_marginBottom="3dp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Giá điện: 60 VNĐ / Kwh"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_columnWeight="1"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_shower"
+                            android:layout_marginRight="4dp" />
+
+                        <TextView
+                            android:id="@+id/txt_WaterMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Giá nước: 40 VNĐ / m³"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </GridLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

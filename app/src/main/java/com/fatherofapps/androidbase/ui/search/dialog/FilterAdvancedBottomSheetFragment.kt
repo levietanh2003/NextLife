@@ -5,18 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.adapter.DistrictFilterAdapter
 import com.fatherofapps.androidbase.databinding.FragmentFilterAdvancedBinding
+import com.fatherofapps.androidbase.ui.search.SearchViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class FilterAdvancedBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentFilterAdvancedBinding? = null
     private val binding get() = _binding!!
     private var address: String? = null
-
+    private val viewModel by viewModels<SearchViewModel>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var districtsFilterAdapter: DistrictFilterAdapter
 
@@ -54,7 +56,8 @@ class FilterAdvancedBottomSheetFragment : BottomSheetDialogFragment() {
         recyclerView = view.findViewById(R.id.recyclerViewFilterAdvanced)
         // Danh sách các danh mục
         districtsFilterAdapter = DistrictFilterAdapter(districts) { selectedDistrict ->
-            updateSelectedArea(selectedDistrict) // Cập nhật quận đã chọn
+            // Cập nhật quận đã chọn
+            updateSelectedArea(selectedDistrict)
         }
         // Thiết lập layout manager
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -72,6 +75,15 @@ class FilterAdvancedBottomSheetFragment : BottomSheetDialogFragment() {
         adapterCreatedDay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.sortByCreatedSpinner.adapter = adapterCreatedDay
 
+        binding.btnPositive.setOnClickListener {
+            val minPrice = binding.minPrice.text.toString().toDoubleOrNull()
+            val maxPrice = binding.maxPrice.text.toString().toDoubleOrNull()
+            val selectedDistrict = address
+            val hasPromotion = binding.hasPromotionCheckbox.isChecked
+
+            viewModel.fetchData(minPrice, maxPrice, selectedDistrict, null, hasPromotion)
+            dismiss()
+        }
     }
 
     private fun updateSelectedArea(selectedArea: String) {
