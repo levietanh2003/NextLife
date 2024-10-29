@@ -1,0 +1,33 @@
+<!-- item_additional_fee.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/checkmarkIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_check"/>
+
+    <TextView
+        android:id="@+id/feeType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/black"
+        android:text="Fee Type" />
+
+    <TextView
+        android:id="@+id/feeAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto_regular"/>
+
+</LinearLayout>

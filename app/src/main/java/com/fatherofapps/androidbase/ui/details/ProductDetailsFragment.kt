@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.fatherofapps.androidbase.adapter.AdditionalFeeAdapter
 import com.fatherofapps.androidbase.adapter.ImageAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.common.formatPrice
+import com.fatherofapps.androidbase.data.models.AdditionalFee
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
@@ -68,6 +72,12 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.tvPricePerMeter.text = it.data.roomInfo.type
                 dataBinding.txtWaterMoney.text = "Nước: ${formatPrice().formatPriceWaterFromString(it.data.pricingDetails.waterCost.toString())}"
                 dataBinding.txtElectricMoney.text = "Điện: ${formatPrice().formatPriceElectricFromString(it.data.pricingDetails.electricityCost.toString())}"
+                // hien gia dich vu
+                val additionalFees = it.data.pricingDetails.additionalFees
+                val additionalFeeAdapter = AdditionalFeeAdapter(additionalFees)
+                Log.d("TestAdditionalFees", "Received additional fees: $additionalFees")
+                dataBinding.rvAvailability.layoutManager = LinearLayoutManager(context)
+                dataBinding.rvAvailability.adapter = additionalFeeAdapter
 
                 if (it.data.status == "active") {
                     dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
@@ -112,7 +122,6 @@ class ProductDetailsFragment : BaseFragment() {
 
     private fun setupImageCarousel(postImages: List<PostImage>) {
         // Khởi tạo adapter và gán dữ liệu
-//        imageAdapter = ImageAdapter(requireContext(), ArrayList(postImages.map { it.urlImagePost }))
         imageAdapter = ImageAdapter(requireActivity(), ArrayList(postImages.map { it.urlImagePost }))
         dataBinding.recyclerCarousel.adapter = imageAdapter
     }
