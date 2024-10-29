@@ -18,6 +18,8 @@ class SearchViewModel @Inject constructor(
 
 ) : BaseViewModel() {
 
+    private var hasShownEndOfListToast= false
+
     // post fillter
     private var _listPost = MutableLiveData<List<PromotionalPost>>()
     val getPost: LiveData<List<PromotionalPost>>
@@ -38,10 +40,11 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun fetchData(titleSearch: String){
+        if (hasShownEndOfListToast) return
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
             val postSearchResponse = postSearchRepository.fetchPostSearch(titleSearch)
-            _listPost.postValue(postSearchResponse.data)
+            _listPost.postValue(postSearchResponse)
         }
         registerJobFinish()
     }

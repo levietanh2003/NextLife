@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment() {
     private lateinit var dataBinding : FragmentRegisterBinding
     private val viewModel by viewModels<RegisterViewModel>()
@@ -32,6 +34,7 @@ class RegisterFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
+
 
     }
 }

@@ -13,8 +13,11 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.adapter.ProductHorizontalAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PromotionalPost
+import com.fatherofapps.androidbase.data.models.user.RegisterRequest
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
+import com.fatherofapps.androidbase.ui.customer.register.RegisterViewModel
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterPriceBottomSheetFragment
@@ -24,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : BaseFragment() {
     private lateinit var dataBinding: FragmentSearchBinding
     private val viewModel by viewModels<SearchViewModel>()
+    private val viewModel1 by viewModels<RegisterViewModel>()
     private var minPrice: Double? = null
     private var maxPrice: Double? = null
     private var district: String? = null
@@ -89,10 +93,37 @@ class SearchFragment : BaseFragment() {
             openBottomSheetFilterPrice()
         }
 
-        dataBinding.btnFilterAdvanced.setOnClickListener {
 
+        dataBinding.btnFilterAdvanced.setOnClickListener {
+            openBottomSheetFilterAdvanced()
         }
 
+        dataBinding.spinnerCategory.setOnClickListener {
+            // Gọi hàm đăng ký với dữ liệu cứng
+            val registerRequest = RegisterRequest(
+                email = "avanh090@gmail.com",
+                password = "01082003",
+                firstName = "Le",
+                lastName = "Anh",
+                dayOfBirth = "2003-08-01"
+            )
+
+            viewModel1.registerUser(registerRequest)
+
+            // Đăng ký observer cho registerResult
+            viewModel1.registerResult.observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is NetworkResult.Success -> {
+                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
+                        showNotify("Đăng ký thành công","Thông báo")
+                    }
+                    is NetworkResult.Error -> {
+                        // Xử lý lỗi, ví dụ hiển thị thông báo lỗi
+                        showErrorMessage("Đăng ký thất bại: ${result.exception?.message ?: "Có lỗi xảy ra."}")
+                    }
+                }
+            }
+        }
 
         dataBinding.btnFilterArea.setOnClickListener {
             openBottomSheetFilterArea()

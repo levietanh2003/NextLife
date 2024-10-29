@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.activities.BaseActivity
 import com.mancj.materialsearchbar.MaterialSearchBar
@@ -17,7 +18,6 @@ class MainActivity : BaseActivity() {
 
     private var loadingLayout: FrameLayout? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.e("Frank","MainActivity")
         super.onCreate(savedInstanceState)
@@ -25,7 +25,6 @@ class MainActivity : BaseActivity() {
         loadingLayout = findViewById(R.id.loadingLayout)
 
         showLoading(false)
-
         // Thiết lập listener cho MaterialSearchBar
         val searchBar = findViewById<MaterialSearchBar>(R.id.searchBar)
         searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {

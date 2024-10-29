@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/h3"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/logo_nextlife"
                 android:drawablePadding="6dp"
                 android:textStyle="bold"
@@ -101,12 +101,24 @@
                 android:layout_marginTop="10dp"/>
 
             <EditText
-                android:id="@+id/edPasswordRegister"
+                android:id="@+id/edDayOfBirth"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edittextHeight"
                 app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 app:layout_constraintTop_toBottomOf="@id/edEmailRegister"
+                style="@style/editText"
+                android:hint="Ngày sinh"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/edPasswordRegister"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittextHeight"
+                app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
+                app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
+                app:layout_constraintTop_toBottomOf="@id/edDayOfBirth"
                 style="@style/editText"
                 android:hint="Mật Khẩu"
                 android:inputType="textPassword"
@@ -122,45 +134,6 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 android:layout_marginTop="15dp"
                 android:text="Đăng ký"/>
-
-            <ImageView
-                android:id="@+id/facebookRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-                app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister"
-                android:src="@drawable/facebook_login"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Facebook"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@id/facebookRegister"
-                app:layout_constraintTop_toTopOf="@id/facebookRegister"
-                app:layout_constraintBottom_toBottomOf="@id/facebookRegister"
-                app:layout_constraintEnd_toEndOf="@id/facebookRegister"/>
-
-
-            <ImageView
-                android:id="@+id/googleRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-                app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister"
-                android:src="@drawable/google_login"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Google"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@id/googleRegister"
-                app:layout_constraintTop_toTopOf="@id/googleRegister"
-                app:layout_constraintBottom_toBottomOf="@id/googleRegister"
-                app:layout_constraintEnd_toEndOf="@id/googleRegister"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineRegisterLeft"

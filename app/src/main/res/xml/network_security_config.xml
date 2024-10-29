@@ -3,4 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com</domain>
     </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com</domain>
+    </domain-config>
 </network-security-config>

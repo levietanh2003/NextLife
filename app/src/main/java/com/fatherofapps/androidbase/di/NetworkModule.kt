@@ -60,12 +60,6 @@ class NetworkModule {
             .build()
     }
 
-//    @Provides
-//    @Singleton
-//    @Named("UserAPI")
-//    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI {
-//        return retrofit.create(UserAPI::class.java)
-//    }
 
     @Provides
     @Singleton
@@ -79,6 +73,11 @@ class NetworkModule {
             .baseUrl(BuildConfig.URL_USER)
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): RegisterAPI {
+        return retrofit.create(RegisterAPI::class.java)
     }
 
 //    @Provides
