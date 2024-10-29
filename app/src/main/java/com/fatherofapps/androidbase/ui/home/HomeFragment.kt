@@ -45,7 +45,9 @@ class HomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // khi vua khoi tao se fetch data len
-        viewModel.fetchData()
+//        viewModel.fetchData()
+        viewModel.fetchFeaturedPosts()
+        viewModel.fetchPromotionalPosts()
 
     }
 
@@ -153,7 +155,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             val layoutManager = recyclerView.layoutManager as GridLayoutManager
             if (layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1) {
                 // Load more data when the last item is visible
-                viewModel.fetchData()
+                viewModel.fetchFeaturedPosts()
             }
         }
     })
@@ -225,7 +227,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             val layoutManager = recyclerView.layoutManager as GridLayoutManager
             if (layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1) {
                 // Load more data when the last item is visible
-                viewModel.fetchData()
+                viewModel.fetchPromotionalPosts()
             }
         }
     })

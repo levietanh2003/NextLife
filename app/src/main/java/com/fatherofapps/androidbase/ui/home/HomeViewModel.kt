@@ -97,43 +97,101 @@ class HomeViewModel @Inject constructor(
 //        }
 //        registerJobFinish()
 //    }
-    var hasShownEndOfListToast = false
+//    var hasShownEndOfListToast = false
+    var isLoadingPromotionalPost = false
+    var isLoadingFeaturedPost = false
 
-    override fun fetchData() {
-        if (isLoadingPage || hasShownEndOfListToast) return // Prevent multiple calls while loading
-        isLoadingPage = true
+    private var hasShownEndOfListToastPromotional = false
+    private var hasShownEndOfListToastFeatured = false
+
+    fun fetchPromotionalPosts() {
+        if (isLoadingPromotionalPost || hasShownEndOfListToastPromotional) return
+        isLoadingPromotionalPost = true
         showLoading(true)
 
-        parentJob = viewModelScope.launch(handler) {
+        viewModelScope.launch {
             try {
-                val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
-                val postFeaturedResponse = postFeaturedRepository.fetchPostFeatured()
-                // Check if the response is empty and handle accordingly
-                if (postPromotionalResponse.isEmpty()) {
-                    if (!hasShownEndOfListToast) { // Chỉ hiển thị Toast nếu chưa hiển thị
-                        hasShownEndOfListToast = true
-                        Log.d("HomeViewModel", "No promotional posts available. Stopping load.")
-                        // Hiển thị Toast ở đây nếu cần
-                        // Toast.makeText(context, "Đã hết sản phẩm", Toast.LENGTH_SHORT).show()
+                val response = postPromotionalRepository.fetchPromotionalPostsData2()
+                if (response.isEmpty()) {
+                    if (!hasShownEndOfListToastPromotional) {
+                        hasShownEndOfListToastPromotional = true
+                        Log.d("HomeViewModel", "No more promotional posts available.")
                     }
                 } else {
-                    // Append new data to existing data
                     val currentPosts = _promotionalPost.value.orEmpty()
-                    _promotionalPost.postValue(currentPosts + postPromotionalResponse)
-                    // Append new data to existing data
-                    val currentFeaturedPosts = _postFeatured.value.orEmpty()
-                    _postFeatured.postValue(currentFeaturedPosts + postFeaturedResponse)
-                    hasShownEndOfListToast = false
+                    _promotionalPost.postValue(currentPosts + response)
+                    hasShownEndOfListToastPromotional = false
                 }
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "Error fetching promotional posts: ${e.message}")
             } finally {
                 showLoading(false)
-                isLoadingPage = false
+                isLoadingPromotionalPost = false
             }
         }
-        registerJobFinish()
     }
+
+    fun fetchFeaturedPosts() {
+        if (isLoadingFeaturedPost || hasShownEndOfListToastFeatured) return
+        isLoadingFeaturedPost = true
+        showLoading(true)
+
+        viewModelScope.launch {
+            try {
+                val response = postFeaturedRepository.fetchPostFeatured()
+                if (response.isEmpty()) {
+                    if (!hasShownEndOfListToastFeatured) {
+                        hasShownEndOfListToastFeatured = true
+                        Log.d("HomeViewModel", "No more featured posts available.")
+                    }
+                } else {
+                    val currentFeaturedPosts = _postFeatured.value.orEmpty()
+                    _postFeatured.postValue(currentFeaturedPosts + response)
+                    hasShownEndOfListToastFeatured = false
+                }
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error fetching featured posts: ${e.message}")
+            } finally {
+                showLoading(false)
+                isLoadingFeaturedPost = false
+            }
+        }
+    }
+//    override fun fetchData() {
+//        if (isLoadingPage || hasShownEndOfListToast) return // Prevent multiple calls while loading
+//        isLoadingPage = true
+//        showLoading(true)
+//
+//        parentJob = viewModelScope.launch(handler) {
+//            try {
+//                val postPromotionalResponse = postPromotionalRepository.fetchPromotionalPostsData2()
+//                val postFeaturedResponse = postFeaturedRepository.fetchPostFeatured()
+//                // Check if the response is empty and handle accordingly
+//                if (postPromotionalResponse.isEmpty()) {
+//                    if (!hasShownEndOfListToast) { // Chỉ hiển thị Toast nếu chưa hiển thị
+//                        hasShownEndOfListToast = true
+//                        Log.d("HomeViewModel", "No promotional posts available. Stopping load.")
+//                        // Hiển thị Toast ở đây nếu cần
+//                        // Toast.makeText(context, "Đã hết sản phẩm", Toast.LENGTH_SHORT).show()
+//                    }
+//                } else {
+//                    // Append new data to existing data
+//                    val currentPosts = _promotionalPost.value.orEmpty()
+//                    _promotionalPost.postValue(currentPosts + postPromotionalResponse)
+//                    // Append new data to existing data
+//                    val currentFeaturedPosts = _postFeatured.value.orEmpty()
+//                    _postFeatured.postValue(currentFeaturedPosts + postFeaturedResponse)
+//                    hasShownEndOfListToast = false
+//                }
+//            } catch (e: Exception) {
+//                Log.e("HomeViewModel", "Error fetching promotional posts: ${e.message}")
+//            } finally {
+//                showLoading(false)
+//                isLoadingPage = false
+//            }
+//        }
+//        registerJobFinish()
+//    }
     fun resetPagination() {
         postPromotionalRepository.resetPagination() // Reset khi cần
         _promotionalPost.value = emptyList() // Xóa dữ liệu cũ
