@@ -96,6 +96,10 @@ open class BaseViewModel : ViewModel() {
 
     }
 
+    open fun fetchData(page: Int) {
+
+    }
+
     open fun fetchData(minPrice: Double? = null,
                            maxPrice: Double? = null,
                            district: String? = null,

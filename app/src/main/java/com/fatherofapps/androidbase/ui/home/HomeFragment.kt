@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.fatherofapps.androidbase.R
@@ -24,7 +26,20 @@ class HomeFragment : BaseFragment() {
     private val viewModel by viewModels<HomeViewModel>()
     private var promotionalPostsList: List<PromotionalPost> = emptyList()
     private var featuredPostsList: List<PromotionalPost> = emptyList()
+    // Tạo các danh sách rỗng để chứa dữ liệu
+    private val productNames = mutableListOf<String>()
+    private val productPrices = mutableListOf<String>()
+    private val productImages = mutableListOf<String>()
+    private val productAddress = mutableListOf<String>()
+    private val productLastModified = mutableListOf<Double>()
+    private val productQuantityImage = mutableListOf<Int>()
 
+    private val productNamesFeatured = mutableListOf<String>()
+    private val productPricesFeatured = mutableListOf<String>()
+    private val productImagesFeatured = mutableListOf<String>()
+    private val productAddressFeatured = mutableListOf<String>()
+    private val productLastModifiedFeatured = mutableListOf<Double>()
+    private val productQuantityImageFeatured = mutableListOf<Int>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,17 +88,9 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
     viewModel.postFeatured.observe(viewLifecycleOwner) { featuredPosts ->
         featuredPosts?.let {
-            featuredPostsList = it
-//            Log.d("SizeListFeatured", it.size.toString())
+            featuredPostsList = featuredPostsList + it
+            Log.d("SizeList_Future", featuredPostsList.size.toString())
 
-            val productNames = mutableListOf<String>()
-            val productPrices = mutableListOf<String>()
-            val productImages = mutableListOf<String>()
-            val productAddress = mutableListOf<String>()
-            val productLastModified = mutableListOf<Double>()
-            val productQuantityImage = mutableListOf<Int>()
-
-            // Duyệt qua từng phần tử trong promotionalPosts
             for (post in it) {
                 val title = post.title
                 val basePrice = post.pricingDetails.basePrice
@@ -94,16 +101,16 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
                 // Thêm dữ liệu vào các danh sách
-                productNames.add(title)
-                productPrices.add(basePrice.toString())
-                productAddress.add(address)
-                productLastModified.add(lastModified)
-                productQuantityImage.add(quantityImage)
+                productNamesFeatured.add(title)
+                productPricesFeatured.add(basePrice.toString())
+                productAddressFeatured.add(address)
+                productLastModifiedFeatured.add(lastModified)
+                productQuantityImageFeatured.add(quantityImage)
                 // Chuyển basePrice thành chuỗi nếu cần
                 if (images.isNotEmpty()) {
-                    productImages.add(images[0]) // Chọn ảnh đầu tiên, bạn có thể thay đổi logic này
+                    productImagesFeatured.add(images[0]) // Chọn ảnh đầu tiên, bạn có thể thay đổi logic này
                 } else {
-                    productImages.add("") // Nếu không có ảnh thì thêm chuỗi rỗng
+                    productImagesFeatured.add("") // Nếu không có ảnh thì thêm chuỗi rỗng
                 }
             }
 
@@ -118,14 +125,11 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 requireContext(),
                 object : ProductAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
-                        // Khi người dùng nhấn vào item, chuyển đến trang chi tiết sản phẩm
+                        // Điều hướng đến trang chi tiết sản phẩm
                         val productId = promotionalPostsList[position].id
                         val bundle = Bundle().apply {
-                            putString("productId", productId) // Thêm productId vào bundle
+                            putString("productId", productId)
                         }
-//                        Log.d("ProductId", "productId: $productId")
-//                    navigateToPage(R.id.action_homeFragment_to_productDetailsFragment, bundle)
-                        // Trực tiếp điều hướng mà không sử dụng hàm navigateToPage
                         findNavController().navigate(
                             R.id.action_homeFragment_to_productDetailsFragment,
                             bundle
@@ -141,21 +145,22 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         }
     }
 
+    // Thêm listener cho sự kiện scroll
+    dataBinding.rvBestProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
 
+            val layoutManager = recyclerView.layoutManager as GridLayoutManager
+            if (layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1) {
+                // Load more data when the last item is visible
+                viewModel.fetchData()
+            }
+        }
+    })
     viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPosts ->
         promotionalPosts?.let {
-            promotionalPostsList = it
-//            Log.d("Size List", it.size.toString())
-
-
-            // Tạo các danh sách rỗng để chứa dữ liệu
-            val productNames = mutableListOf<String>()
-            val productPrices = mutableListOf<String>()
-            val productImages = mutableListOf<String>()
-            val productAddress = mutableListOf<String>()
-            val productLastModified = mutableListOf<Double>()
-            val productQuantityImage = mutableListOf<Int>()
-
+            promotionalPostsList = promotionalPostsList + it
+            Log.d("Size List", promotionalPostsList.size.toString())
 
             // Duyệt qua từng phần tử trong promotionalPosts
             for (post in it) {
@@ -179,15 +184,6 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 } else {
                     productImages.add("") // Nếu không có ảnh thì thêm chuỗi rỗng
                 }
-
-//                Log.d("Size List Image", quantityImage.toString())
-//                // Ví dụ: Log các giá trị hoặc hiển thị chúng trên UI
-//                Log.d("PromotionalPost", "Title: $title")
-//                Log.d("PromotionalPost", "Base Price: $basePrice")
-//                Log.d("PromotionalPost", "Address: $productAddress")
-//                images.forEach { imageUrl ->
-//                    Log.d("PromotionalPost", "Image URL: $imageUrl")
-//                }
             }
 
             // Khởi tạo adapter với danh sách sản phẩm
@@ -201,20 +197,18 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 requireContext(),
                 object : ProductAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
-                        // Khi người dùng nhấn vào item, chuyển đến trang chi tiết sản phẩm
+                        // Điều hướng đến trang chi tiết sản phẩm
                         val productId = promotionalPostsList[position].id
                         val bundle = Bundle().apply {
-                            putString("productId", productId) // Thêm productId vào bundle
+                            putString("productId", productId)
                         }
-//                        Log.d("ProductId", "productId: $productId")
-//                    navigateToPage(R.id.action_homeFragment_to_productDetailsFragment, bundle)
-                        // Trực tiếp điều hướng mà không sử dụng hàm navigateToPage
                         findNavController().navigate(
                             R.id.action_homeFragment_to_productDetailsFragment,
                             bundle
                         )
                     }
                 })
+
 
             val gridLayoutManager = GridLayoutManager(requireContext(), 2) // 2 là số cột
             dataBinding.rvOfferProducts.apply {
@@ -223,7 +217,18 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             }
         }
     }
+    // Thêm listener cho sự kiện scroll
+    dataBinding.rvOfferProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
 
+            val layoutManager = recyclerView.layoutManager as GridLayoutManager
+            if (layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1) {
+                // Load more data when the last item is visible
+                viewModel.fetchData()
+            }
+        }
+    })
 
     // quan sat loading
     viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->

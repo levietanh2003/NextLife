@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
@@ -23,7 +22,8 @@ class ProductAdapter(
     private val lastModifiedTimestamps: List<Double>,
     private val quantityImage: List<Int>,
     private val context: Context,
-    private val itemClickListener: OnItemClickListener
+    private val itemClickListener: OnItemClickListener,
+//    private val scrollListener: OnScrollListener?
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     // ViewHolder class chứa các view từ layout
@@ -38,6 +38,10 @@ class ProductAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+    }
+
+    interface OnScrollListener { // Define the scroll listener interface
+        fun onScroll()
     }
 
     // Hàm này để tạo ra ViewHolder mới khi RecyclerView cần
@@ -66,15 +70,20 @@ class ProductAdapter(
         holder.productLocation.text = locationProduct
         holder.productLastModified.text = formattedDate
         holder.productQuantity.text = quantityImage.toString()
+
         // Sử dụng Glide để tải hình ảnh sản phẩm
         Glide.with(context)
             .load(imageUrl)
             .into(holder.productImage)
 
-
         holder.itemView.setOnClickListener {
-            itemClickListener.onItemClick(position) // Gọi listener với position và productId
+            itemClickListener.onItemClick(position) // Gọi listener với position
         }
+
+        // Call the scroll listener if the last item is reached
+//        if (position == itemCount - 1) {
+//            scrollListener?.onScroll()
+//        }
     }
 
     // Trả về số lượng item trong danh sách sản phẩm

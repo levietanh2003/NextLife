@@ -8,5 +8,5 @@ class PostFeatureRemoteService @Inject constructor(
     private val postFeatureAPI: PostFeaturedAPI,
 ) : BaseRemoteService(){
 
-    suspend fun getAllPostFeatured() = callApi { postFeatureAPI.getPostFeatured(1,10) }
+    suspend fun getAllPostFeatured(page: Int) = callApi { postFeatureAPI.getPostFeatured(page,4) }
 }

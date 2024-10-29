@@ -3,6 +3,7 @@
     <string name="default_notify_title">Message</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_promotional_posts">Hết sản phẩm</string>
 
     <!-- range slider values -->
     <string-array name="rangeSliderValues">
