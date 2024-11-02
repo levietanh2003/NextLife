@@ -60,7 +60,6 @@
         app:navGraph="@navigation/main_nav" />
 
     <!-- ListView sẽ nằm trên (overlay) các thành phần khác -->
-
     <!-- FrameLayout loading -->
     <FrameLayout
         android:id="@+id/loadingLayout"

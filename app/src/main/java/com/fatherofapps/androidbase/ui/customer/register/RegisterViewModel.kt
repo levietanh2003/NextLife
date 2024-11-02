@@ -31,5 +31,4 @@ class RegisterViewModel @Inject constructor(
         }
         registerJobFinish()
     }
-
 }
