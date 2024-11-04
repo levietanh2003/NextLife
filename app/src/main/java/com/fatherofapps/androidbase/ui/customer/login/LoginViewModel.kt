@@ -1,17 +1,14 @@
 package com.fatherofapps.androidbase.ui.customer.login
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
-import com.fatherofapps.androidbase.common.AppSharePreference
+import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
-import com.fatherofapps.androidbase.data.models.user.RegisterRequest
-import com.fatherofapps.androidbase.data.models.user.RegisterResponse
 import com.fatherofapps.androidbase.data.repositories.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,6 +27,13 @@ class LoginViewModel @Inject constructor(
     private val _loginSuccess = MutableLiveData<Boolean>()
     val loginSuccess: LiveData<Boolean> get() = _loginSuccess
 
+    private val _logOutResult = MutableLiveData<NetworkResult<LogOutResponses>>()
+    val logOutResult: LiveData<NetworkResult<LogOutResponses>> get() = _logOutResult
+
+    // Biến LiveData để theo dõi trạng thái đăng xuất thành công
+    private val _logOutSuccess = MutableLiveData<Boolean>()
+    val logOutSuccess: LiveData<Boolean> get() = _logOutSuccess
+
     fun loginUser(request: LoginRequest) {
         showLoading(true)
         parentJob = viewModelScope.launch(handler){
@@ -47,5 +51,18 @@ class LoginViewModel @Inject constructor(
             showLoading(false)
         }
         registerJobFinish()
+    }
+
+    fun logoutUser(token: String) {
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val result = customerRepository.logOut(token)
+            // kiem tra trang thai logout thanh cong
+            if (result is NetworkResult.Success && result.data.message == "Successfully" && result.data.responseCode == 200) {
+                _logOutSuccess.postValue(true)
+            } else {
+                _logOutSuccess.postValue(false)
+            }
+        }
     }
 }

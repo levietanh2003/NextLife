@@ -2,6 +2,7 @@ package com.fatherofapps.androidbase.data.repositories
 
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PromotionalPost
+import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 class CustomerRepository @Inject constructor(
     private val customerRemoteService: CustomerRemoteService,
-    private val customerLocalService: CustomerLocalService,
+//    private val customerLocalService: CustomerLocalService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
@@ -25,5 +26,9 @@ class CustomerRepository @Inject constructor(
 
     suspend fun postLogin(request: LoginRequest): NetworkResult<LoginResponse> = withContext(dispatcher) {
         customerRemoteService.loginUser(request)
+    }
+
+    suspend fun logOut(token: String) : NetworkResult<LogOutResponses> = withContext(dispatcher) {
+        customerRemoteService.logOutUser(token)
     }
 }

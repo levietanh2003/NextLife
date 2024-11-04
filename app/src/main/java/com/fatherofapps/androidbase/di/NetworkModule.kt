@@ -75,15 +75,6 @@ class NetworkModule {
             .build()
     }
 
-//    @Provides
-//    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): RegisterAPI {
-//        return retrofit.create(RegisterAPI::class.java)
-//    }
-//
-//    @Provides
-//    fun provideLoginAPI(@Named("UserAPI") retrofit: Retrofit):  LoginAPI{
-//        return retrofit.create(LoginAPI::class.java)
-//    }
 
     @Provides
     fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI{

@@ -1,6 +1,5 @@
 package com.fatherofapps.androidbase.data.services
 
-import com.fatherofapps.androidbase.base.network.BaseService
 import com.fatherofapps.androidbase.data.database.daos.ProductDao
 import com.fatherofapps.androidbase.data.database.entities.ProductEntity
 import javax.inject.Inject

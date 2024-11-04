@@ -221,5 +221,10 @@ dependencies {
     androidTestImplementation  "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
+    // Google Play Services Location - Thêm thư viện này để sử dụng các API liên quan đến vị trí
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+// Dexter - Thư viện yêu cầu quyền runtime đơn giản (nếu bạn cần hỗ trợ dễ dàng cho việc yêu cầu quyền)
+    implementation 'com.karumi:dexter:6.2.3'
 
 }

@@ -1,11 +1,15 @@
 package com.fatherofapps.androidbase.ui.search
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,14 +20,16 @@ import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
-import com.fatherofapps.androidbase.data.models.user.RegisterRequest
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
 import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
 import com.fatherofapps.androidbase.ui.customer.register.RegisterViewModel
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterPriceBottomSheetFragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment() {
@@ -31,6 +37,7 @@ class SearchFragment : BaseFragment() {
     private val viewModel by viewModels<SearchViewModel>()
     private val viewModel1 by viewModels<RegisterViewModel>()
     private val viewModel2 by viewModels<LoginViewModel>()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var minPrice: Double? = null
     private var maxPrice: Double? = null
     private var district: String? = null
@@ -38,11 +45,17 @@ class SearchFragment : BaseFragment() {
     private var hasPromotion: Boolean? = null
     private lateinit var titleSearch: String
     private lateinit var noResultsImage: ImageView
+    private var token: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Khởi tạo FusedLocationProviderClient
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        // lấy vị trí của người dùng
+        getUserLocation()
         // Nhận search query từ MainActivity
         val titleSearchMainActivity = arguments?.getString("search_query").toString()
 
@@ -78,6 +91,64 @@ class SearchFragment : BaseFragment() {
             }
         }
     }
+//    private fun getUserLocation() {
+//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(
+//                requireActivity(),
+//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                LOCATION_PERMISSION_REQUEST_CODE
+//            )
+//            return
+//        }
+//
+//        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+//            if (location != null) {
+//                val geocoder = Geocoder(requireContext(), Locale.getDefault())
+//                val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+//                val address = addresses?.get(0)?.getAddressLine(0)
+//                dataBinding.titleAddress.text = address ?: "Vị trí không xác định"
+//            } else {
+//                Log.e("Location_Error", "Không lấy được vị trí hiện tại.")
+//            }
+//        }
+//    }
+    private fun getUserLocation() {
+        try {
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE
+                )
+                Log.d("Location_Permission", "Location permission not granted, requesting permission.")
+                return
+            }
+
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                    val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    val address = addresses?.get(0)?.getAddressLine(0)
+                    dataBinding.titleAddress.text = address ?: "Vị trí không xác định"
+
+                    // Log ra vị trí lấy được
+                    Log.d("Location_Info", "Latitude: ${location.latitude}, Longitude: ${location.longitude}, Address: $address")
+                } else {
+                    Log.e("Location_Error", "Không lấy được vị trí hiện tại.")
+                }
+            }.addOnFailureListener { exception ->
+                Log.e("Location_Error", "Lỗi khi lấy vị trí: ${exception.message}")
+            }
+        } catch (e: Exception) {
+            Log.e("Location_Error", "Đã xảy ra lỗi trong getUserLocation(): ${e.message}")
+        }
+    }
+
+
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+    }
 
 
     override fun onCreateView(
@@ -104,18 +175,19 @@ class SearchFragment : BaseFragment() {
         dataBinding.spinnerCategory.setOnClickListener {
 
             val loginRequest = LoginRequest(
-                email = "avanh090@gmail.com",
+                email = "levietanhzz108@gmail.com",
                 password = "01082003"
             )
 
             viewModel2.loginUser(loginRequest)
 
-
             viewModel2.loginResult.observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is NetworkResult.Success -> {
+                        token = result.data.data.token
+                        Log.d("Token_SearchFragment", token.toString())
                         // Xử lý thành công, ví dụ hiển thị thông báo thành công
-                        showNotify("Đăng ký thành công","Thông báo")
+                        showNotify("Đăng nhập thành công","Thông báo")
                     }
                     is NetworkResult.Error -> {
                         // Xử lý lỗi, ví dụ hiển thị thông báo lỗi
@@ -150,6 +222,21 @@ class SearchFragment : BaseFragment() {
 //            }
         }
 
+        dataBinding.tvOfferProducts.setOnClickListener{
+            viewModel2.logoutUser(token.toString())
+            Log.d("Token_LogOut", token.toString())
+            viewModel2.logOutSuccess.observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    true -> {
+                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
+                        showNotify("Đăng xuất thành công","Thông báo")
+                    }
+                    false -> {
+                        showNotify("Đăng xuất không thành công","Thông báo")
+                    }
+                }
+            }
+        }
         dataBinding.btnFilterArea.setOnClickListener {
             openBottomSheetFilterArea()
         }

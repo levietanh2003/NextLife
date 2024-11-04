@@ -1,7 +1,6 @@
 package com.fatherofapps.androidbase.data.apis
 
 import com.fatherofapps.androidbase.data.models.ProductDetails
-import com.fatherofapps.androidbase.data.models.PromotionalPost
 import retrofit2.Response
 
 import retrofit2.http.GET

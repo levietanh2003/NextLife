@@ -3,6 +3,7 @@ package com.fatherofapps.androidbase.data.services
 import com.fatherofapps.androidbase.base.network.BaseRemoteService
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.apis.UserAPI
+import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
@@ -13,6 +14,7 @@ class CustomerRemoteService @Inject constructor(
     private val userAPI: UserAPI
 ) : BaseRemoteService() {
 
+    // Các phương thức gọi API liên quan đến đăng ký và đăng nhập
     suspend fun registerUser(request: RegisterRequest): NetworkResult<RegisterResponse> {
         // Sử dụng callApi từ BaseRemoteService
         return callApi {
@@ -22,5 +24,10 @@ class CustomerRemoteService @Inject constructor(
 
     suspend fun loginUser(request: LoginRequest): NetworkResult<LoginResponse> {
         return callApi { userAPI.loginUser(request) }
+    }
+
+    // các phương thức logout
+    suspend fun logOutUser(token: String): NetworkResult<LogOutResponses> {
+        return callApi { userAPI.logoutUser(token) }
     }
 }

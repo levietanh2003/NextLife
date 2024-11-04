@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.data.apis
 
+import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
@@ -21,5 +22,9 @@ interface UserAPI {
     // register API
     @POST("users/create")
     suspend fun registerUser(@Body request: RegisterRequest): Response<RegisterResponse>
+
+    // logout API
+    @POST("auth/logout")
+    suspend fun logoutUser(token: String): Response<LogOutResponses>
 
 }
