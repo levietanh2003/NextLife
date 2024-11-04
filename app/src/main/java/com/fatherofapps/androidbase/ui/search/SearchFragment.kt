@@ -50,8 +50,8 @@ class SearchFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Khởi tạo FusedLocationProviderClient
 
+        // Khởi tạo FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         // lấy vị trí của người dùng
@@ -91,27 +91,7 @@ class SearchFragment : BaseFragment() {
             }
         }
     }
-//    private fun getUserLocation() {
-//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(
-//                requireActivity(),
-//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                LOCATION_PERMISSION_REQUEST_CODE
-//            )
-//            return
-//        }
-//
-//        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//            if (location != null) {
-//                val geocoder = Geocoder(requireContext(), Locale.getDefault())
-//                val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-//                val address = addresses?.get(0)?.getAddressLine(0)
-//                dataBinding.titleAddress.text = address ?: "Vị trí không xác định"
-//            } else {
-//                Log.e("Location_Error", "Không lấy được vị trí hiện tại.")
-//            }
-//        }
-//    }
+
     private fun getUserLocation() {
         try {
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -143,8 +123,6 @@ class SearchFragment : BaseFragment() {
             Log.e("Location_Error", "Đã xảy ra lỗi trong getUserLocation(): ${e.message}")
         }
     }
-
-
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000

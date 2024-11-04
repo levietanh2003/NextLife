@@ -488,7 +488,14 @@
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
-
+                    <TextView
+                        android:id="@+id/tvPhoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Liên hệ: 0123456789"
+                        android:textColor="@color/black"
+                        android:textStyle="italic"
+                        android:autoLink="phone" />
                     <View
                         android:id="@+id/divider1"
                         android:layout_width="match_parent"
