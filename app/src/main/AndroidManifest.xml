@@ -23,6 +23,7 @@
         android:theme="@style/Theme.FatherOfApps"
         android:name=".CustomApplication"
         >
+        <activity android:name=".activities.ChatActivity" />
         <activity
             android:exported="true"
             android:screenOrientation="portrait"

@@ -227,4 +227,10 @@ dependencies {
 // Dexter - Thư viện yêu cầu quyền runtime đơn giản (nếu bạn cần hỗ trợ dễ dàng cho việc yêu cầu quyền)
     implementation 'com.karumi:dexter:6.2.3'
 
+    // Dependency cho Ktor WebSocket
+    def ktor_version = "2.0.3" // hoặc phiên bản mới nhất hiện có
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version") // Client HTTP
+    implementation("io.ktor:ktor-client-websockets:$ktor_version") // WebSocket
+
 }

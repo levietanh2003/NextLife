@@ -1,10 +1,12 @@
 package com.fatherofapps.androidbase.activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fatherofapps.androidbase.R
@@ -58,6 +60,14 @@ class MainActivity : BaseActivity() {
 
             override fun onButtonClicked(buttonCode: Int) {}
         })
+
+        // Thiết lập sự kiện OnClickListener cho btn_chat
+        val btnChat = findViewById<ImageView>(R.id.btn_chat)
+        btnChat.setOnClickListener {
+            // Khởi chạy ChatActivity
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 //    private fun isUserLoggedIn(): Boolean {
