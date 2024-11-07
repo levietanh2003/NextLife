@@ -50,6 +50,9 @@ class ChatWebSocketClient(
                     disconnect()
                 }
                 // Có thể xử lý thêm các frame khác nếu cần
+                is Frame.Binary -> TODO()
+                is Frame.Ping -> TODO()
+                is Frame.Pong -> TODO()
             }
         }
     }

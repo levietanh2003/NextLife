@@ -22,9 +22,14 @@
     <color name="color_main">#1E3A8A</color>
     <color name="background_header_color">@color/primaryColor</color>
     <color name="g_gray700">#666666</color>
-    <color name="icon_color_bottom_normal">@color/primaryLightColor</color>
-    <color name="icon_color_bottom_selected">@color/primaryColor</color>
+    <color name="icon_color_bottom_normal">@color/blue_dark</color>
+    <color name="icon_color_bottom_selected">@color/color_main</color>
     <color name="g_blue_gray200">#97AABD</color>
+
+<!--    <selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--        <item android:color="@android:color/darker_gray" android:state_checked="false" />-->
+<!--        <item android:color="@android:color/black" android:state_checked="true" />-->
+<!--    </selector>-->
 
     <color name="icon_color_normal">#B7B7B7</color>
 

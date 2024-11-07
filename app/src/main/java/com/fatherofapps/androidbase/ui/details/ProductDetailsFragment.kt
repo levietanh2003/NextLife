@@ -12,6 +12,7 @@ import com.fatherofapps.androidbase.adapter.AdditionalFeeAdapter
 import com.fatherofapps.androidbase.adapter.ImageAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.common.formatPrice
+import com.fatherofapps.androidbase.common.hideBottomNavigation
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
@@ -59,6 +60,8 @@ class ProductDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
+
+        hideBottomNavigation()
 
         viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
             Log.d("ProductDetailsFragment", "Received promotional post: $promotionalPost")

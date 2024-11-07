@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -27,36 +28,44 @@ class ChatActivity : BaseActivity() {
         setupRecyclerView()
         setupObservers()
         setupSendButton()
+
+        binding.btnMore.setOnClickListener {
+            // Khởi chạy ChatDetailsActivity
+            val intent = Intent(this, ChatDetailActivity::class.java)
+            startActivity(intent)
+            Log.d("ChatActivity", "Navigating to ChatDetailsActivity") // Log khi chuyển sang ChatDetailsActivity
+        }
     }
 
     private fun setupRecyclerView() {
-        binding.recyclerView.apply {
-            adapter = chatAdapter
-            layoutManager = LinearLayoutManager(this@ChatActivity)
-        }
-        Log.d("ChatActivity", "RecyclerView setup complete") // Log khi RecyclerView đã thiết lập xong
+//        binding.recyclerView.apply {
+//            adapter = chatAdapter
+//            layoutManager = LinearLayoutManager(this@ChatActivity)
+//        }
+//        Log.d("ChatActivity", "RecyclerView setup complete")
+    // Log khi RecyclerView đã thiết lập xong
     }
 
     private fun setupObservers() {
-        lifecycleScope.launch {
-            chatViewModel.messages.collect { messages ->
-                Log.d("ChatActivity", "Messages collected: ${messages.size}") // Log khi nhận danh sách tin nhắn
-                chatAdapter.submitList(messages)
-                binding.recyclerView.scrollToPosition(messages.size - 1)
-            }
-        }
+//        lifecycleScope.launch {
+//            chatViewModel.messages.collect { messages ->
+//                Log.d("ChatActivity", "Messages collected: ${messages.size}") // Log khi nhận danh sách tin nhắn
+//                chatAdapter.submitList(messages)
+//                binding.recyclerView.scrollToPosition(messages.size - 1)
+//            }
+//        }
     }
 
     private fun setupSendButton() {
-        binding.sendButton.setOnClickListener {
-            val messageContent = binding.messageInput.text.toString()
-            if (messageContent.isNotBlank()) {
-                Log.d("ChatActivity", "Sending message: $messageContent") // Log khi nhấn gửi tin nhắn
-                chatViewModel.sendMessage(messageContent)
-                binding.messageInput.text.clear()
-            } else {
-                Log.d("ChatActivity", "Message content is blank") // Log nếu nội dung tin nhắn rỗng
-            }
-        }
+//        binding.sendButton.setOnClickListener {
+//            val messageContent = binding.messageInput.text.toString()
+//            if (messageContent.isNotBlank()) {
+//                Log.d("ChatActivity", "Sending message: $messageContent") // Log khi nhấn gửi tin nhắn
+//                chatViewModel.sendMessage(messageContent)
+//                binding.messageInput.text.clear()
+//            } else {
+//                Log.d("ChatActivity", "Message content is blank") // Log nếu nội dung tin nhắn rỗng
+//            }
+//        }
     }
 }

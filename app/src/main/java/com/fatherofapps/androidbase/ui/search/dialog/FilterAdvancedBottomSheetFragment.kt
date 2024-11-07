@@ -42,6 +42,13 @@ class FilterAdvancedBottomSheetFragment : BottomSheetDialogFragment() {
         "Thủ Đức"
     )
 
+    val categoryList = listOf(
+        "Căn hộ mini",
+        "Căn hộ",
+        "Phòng trọ",
+        "Căn hộ dịch vụ",
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,6 +82,12 @@ class FilterAdvancedBottomSheetFragment : BottomSheetDialogFragment() {
         adapterCreatedDay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.sortByCreatedSpinner.adapter = adapterCreatedDay
 
+        // setting up Spinner with type values
+        val categoryOptions = categoryList
+        val adapterCategory = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryOptions)
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.sortByCategoriesSpinner.adapter = adapterCategory
+
         binding.btnPositive.setOnClickListener {
             val minPrice = binding.minPrice.text.toString().toDoubleOrNull()
             val maxPrice = binding.maxPrice.text.toString().toDoubleOrNull()
@@ -94,6 +107,4 @@ class FilterAdvancedBottomSheetFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

@@ -92,6 +92,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <!-- Sort By Categories -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Loại phòng"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <Spinner
+                android:id="@+id/sortByCategoriesSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <!-- Sort By Created -->
             <TextView
                 android:layout_width="wrap_content"

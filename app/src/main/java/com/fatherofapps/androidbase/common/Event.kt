@@ -2,7 +2,7 @@ package com.fatherofapps.androidbase.common
 
 import androidx.lifecycle.Observer
 
-open class Event<out  T>(private val content: T) {
+open class Event<out T>(private val content: T) {
 
     @Suppress("MemberVisibilityCanBePrivate")
     var hasBeenHandled = false
@@ -27,9 +27,15 @@ open class Event<out  T>(private val content: T) {
 }
 
 class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Observer<Event<T>> {
-    override fun onChanged(event: Event<T>?) {
-        event?.getContentIfNotHandled()?.let {
-            onEventUnhandledContent(it)
+//    override fun onChanged(event: Event<T>?) {
+//        event?.getContentIfNotHandled()?.let { content ->
+//            onEventUnhandledContent(content)
+//        }
+//    }
+
+    override fun onChanged(value: Event<T>) {
+        value?.getContentIfNotHandled()?.let { content ->
+            onEventUnhandledContent(content)
         }
     }
 }

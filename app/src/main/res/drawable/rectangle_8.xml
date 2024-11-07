@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="550dp"
+    android:height="120dp"
+    android:viewportWidth="360"
+
+    android:viewportHeight="70">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M360,78V24C360,12.95 351.05,4 340,4H215C215.5,19 203,39 180,39C157,39 144,18.5 145,4H20C8.95,4 0,12.95 0,24V78H360Z"
+        android:strokeColor="#D9D9D9"
+        android:strokeWidth="0.5"/> <!-- Sử dụng giá trị float mà không có đơn vị -->
+</vector>
