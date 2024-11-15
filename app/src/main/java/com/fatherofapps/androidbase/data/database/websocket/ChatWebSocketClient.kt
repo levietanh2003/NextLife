@@ -14,28 +14,36 @@ import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
+import okhttp3.*
+import java.util.concurrent.TimeUnit
+
 class ChatWebSocketClient(
-    private val serverUrl: String = "wss://echo.websocket.events" // WebSocket server miễn phí
+    private val serverUrl: String = "wss://echo.websocket.org/" // WebSocket server miễn phí
 ) {
     private val client = HttpClient {
         install(WebSockets)
     }
     private var socketSession: WebSocketSession? = null
+    private var isConnected = false // Trạng thái kết nối
     private val _incomingMessages = MutableSharedFlow<Message>(replay = 0)
     val incomingMessages = _incomingMessages.asSharedFlow()
 
+    // Kết nối đến WebSocket
     suspend fun connect() {
         Log.d("ChatWebSocketClient", "Attempting to connect to WebSocket server at $serverUrl")
         try {
             socketSession = client.webSocketSession { url.takeFrom(serverUrl) }
+            isConnected = true // Đánh dấu kết nối thành công
             Log.d("ChatWebSocketClient", "Connected to WebSocket server")
             receiveMessages() // Gọi hàm nhận tin nhắn sau khi kết nối thành công
         } catch (e: Exception) {
             Log.e("ChatWebSocketClient", "Connection failed: ${e.message}")
             e.printStackTrace()
+            isConnected = false // Đánh dấu kết nối thất bại
         }
     }
 
+    // Hàm nhận tin nhắn
     internal suspend fun receiveMessages() {
         Log.d("ChatWebSocketClient", "Listening for incoming messages")
         socketSession?.incoming?.consumeEach { frame ->
@@ -57,15 +65,23 @@ class ChatWebSocketClient(
         }
     }
 
+    // Hàm gửi tin nhắn
     suspend fun sendMessage(message: Message) {
         Log.d("ChatWebSocketClient", "Sending message: ${message.content}")
         socketSession?.send(Frame.Text(message.content))
     }
 
+    // Hàm ngắt kết nối
     suspend fun disconnect() {
         Log.d("ChatWebSocketClient", "Disconnecting from WebSocket server")
         socketSession?.close()
         socketSession = null
+        isConnected = false // Đánh dấu ngắt kết nối
         Log.d("ChatWebSocketClient", "Disconnected from WebSocket server")
+    }
+
+    // Hàm kiểm tra kết nối
+    fun isConnected(): Boolean {
+        return isConnected
     }
 }

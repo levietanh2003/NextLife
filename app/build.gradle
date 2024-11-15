@@ -71,16 +71,20 @@ android {
         dev {
             buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL_DEV'])
             buildConfigField("String", "URL_USER", apikeyProperties['URL_USER_DEV'])
+//            buildConfigField("String","URL_CHAT", apikeyProperties['URL_CHAT_DEV'])
         }
 
         staging {
             buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL_STAGING'])
             buildConfigField("String", "URL_USER", apikeyProperties['URL_USER_STAGING'])
+//            buildConfigField("String", "URL_CHAT", apikeyProperties['URL_CHAT_STAGING'])
         }
 
         live {
             buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL_LIVE'])
             buildConfigField("String", "URL_USER", apikeyProperties['URL_USER_LIVE'])
+//            buildConfigField("String", "URL_CHAT", apikeyProperties['URL_CHAT_LIVE'])
+
         }
 
     }

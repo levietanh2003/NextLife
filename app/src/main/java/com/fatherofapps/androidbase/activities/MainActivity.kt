@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
     private var loadingLayout: FrameLayout? = null
     private var bottomNavigationView: BottomNavigationView? = null
     private var fabPostNews: FloatingActionButton? = null
-    private var navController: NavController? = null
+    private lateinit var navController: NavController
     private var isNavigationVisible = true
     private var isAnimating = false
 
@@ -52,19 +52,52 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initViews() {
+        loadingLayout = findViewById(R.id.loadingLayout)
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        fabPostNews = findViewById(R.id.fabPostNews)
+        navController = findNavController(R.id.container)
+    }
+
+    private fun setupNavigation() {
         try {
-            loadingLayout = findViewById(R.id.loadingLayout)
-            bottomNavigationView = findViewById(R.id.bottomNavigationView)
-            fabPostNews = findViewById(R.id.fabPostNews)
-            navController = findNavController(R.id.container)
-            showLoading(false)
+            bottomNavigationView?.let { bottomNav ->
+                bottomNav.setupWithNavController(navController)
+
+                // Set up custom navigation listener
+                bottomNav.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.homeFragment -> {
+                            navController.navigate(R.id.homeFragment)
+                            true
+                        }
+                        R.id.marketFragment -> {
+                            navController.navigate(R.id.marketFragment)
+                            true
+                        }
+                        R.id.newsFragment -> {
+                            navController.navigate(R.id.newsFragment)
+                            true
+                        }
+                        R.id.myAccountFragment -> {
+                            navController.navigate(R.id.myAccountFragment)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+
+            fabPostNews?.setOnClickListener {
+                // Add your post news logic here
+                // For example: navController.navigate(R.id.createPostFragment)
+            }
         } catch (e: Exception) {
-            Log.e("MainActivity", "Error in initViews: ${e.message}", e)
+            Log.e("MainActivity", "Error in setupNavigation: ${e.message}", e)
         }
     }
 
     private fun setupNavigationVisibility() {
-        navController?.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             handleDestinationChange(destination)
         }
     }
@@ -140,38 +173,6 @@ class MainActivity : BaseActivity() {
 
     fun toggleNavigationVisibility(show: Boolean) {
         if (show) showNavigationWithAnimation() else hideNavigationWithAnimation()
-    }
-
-    private fun setupNavigation() {
-        try {
-            bottomNavigationView?.let { bottomNav ->
-                navController?.let { navController ->
-                    bottomNav.setupWithNavController(navController)
-
-                    bottomNav.setOnItemSelectedListener { item ->
-                        when (item.itemId) {
-                            R.id.navigation_home -> {
-                                navController.navigate(R.id.homeFragment)
-                                true
-                            }
-                            R.id.navigation_market -> true
-                            R.id.navigation_news -> true
-                            R.id.myAccountFragment -> {
-                                navController.navigate(R.id.myAccountFragment2)
-                                true
-                            }
-                            else -> false
-                        }
-                    }
-                }
-            }
-
-            fabPostNews?.setOnClickListener {
-                // Add your post news logic here
-            }
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Error in setupNavigation: ${e.message}", e)
-        }
     }
 
     private fun setupSearchBar() {

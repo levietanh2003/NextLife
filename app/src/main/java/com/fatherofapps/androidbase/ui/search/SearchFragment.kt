@@ -22,6 +22,7 @@ import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
 import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
+import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountViewModel
 import com.fatherofapps.androidbase.ui.customer.register.RegisterViewModel
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment
@@ -36,6 +37,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var dataBinding: FragmentSearchBinding
     private val viewModel by viewModels<SearchViewModel>()
     private val viewModel1 by viewModels<RegisterViewModel>()
+    private val viewModelMyInfo: MyAccountViewModel by viewModels()
     private val viewModel2 by viewModels<LoginViewModel>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var minPrice: Double? = null
@@ -152,28 +154,40 @@ class SearchFragment : BaseFragment() {
 
         dataBinding.spinnerCategory.setOnClickListener {
 
-            val loginRequest = LoginRequest(
-                email = "levietanhzz108@gmail.com",
-                password = "01082003"
-            )
+//            val loginRequest = LoginRequest(
+//                email = "levietanhzz108@gmail.com",
+//                password = "01082003"
+//            )
+//
+//            viewModel2.loginUser(loginRequest)
+//
+//            viewModel2.loginResult.observe(viewLifecycleOwner) { result ->
+//                when (result) {
+//                    is NetworkResult.Success -> {
+//                        token = result.data.data.token
+//                        Log.d("Token_SearchFragment", token.toString())
+//
+//
+//                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
+//                        showNotify("Đăng nhập thành công","Thông báo")
+//                    }
+//                    is NetworkResult.Error -> {
+//                        // Xử lý lỗi, ví dụ hiển thị thông báo lỗi
+//                        showErrorMessage("Đăng ký thất bại: ${result.exception?.message ?: "Có lỗi xảy ra."}")
+//                    }
+//                }
+//            }
 
-            viewModel2.loginUser(loginRequest)
+            // test get info user
+            viewModelMyInfo.fetchMyAccount()
 
-            viewModel2.loginResult.observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is NetworkResult.Success -> {
-                        token = result.data.data.token
-                        Log.d("Token_SearchFragment", token.toString())
-                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
-                        showNotify("Đăng nhập thành công","Thông báo")
-                    }
-                    is NetworkResult.Error -> {
-                        // Xử lý lỗi, ví dụ hiển thị thông báo lỗi
-                        showErrorMessage("Đăng ký thất bại: ${result.exception?.message ?: "Có lỗi xảy ra."}")
-                    }
+            viewModelMyInfo.myInfoResult.observe(viewLifecycleOwner) { result ->
+                if (result == null) {
+                    showNotify("Lấy thông tin thất bại","Thông báo")
+                }else{
+                    showNotify("Lấy thông tin thành công","Thông báo")
                 }
             }
-
             // Gọi hàm đăng ký với dữ liệu cứng
 //            val registerRequest = RegisterRequest(
 //                email = "avanh090@gmail.com",

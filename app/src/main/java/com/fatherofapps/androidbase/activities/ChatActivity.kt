@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fatherofapps.androidbase.adapter.ChatAdapter
 import com.fatherofapps.androidbase.base.activities.BaseActivity
 import com.fatherofapps.androidbase.databinding.ActivityChatBinding
@@ -17,6 +15,7 @@ class ChatActivity : BaseActivity() {
     private lateinit var binding: ActivityChatBinding
     private val chatViewModel: ChatViewModel by viewModels()
     private val chatAdapter = ChatAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

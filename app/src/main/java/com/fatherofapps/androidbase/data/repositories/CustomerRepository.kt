@@ -7,6 +7,8 @@ import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
 import com.fatherofapps.androidbase.data.models.user.RegisterResponse
+import com.fatherofapps.androidbase.data.models.user.UserData
+import com.fatherofapps.androidbase.data.models.user.UserResponse
 import com.fatherofapps.androidbase.data.services.CustomerLocalService
 import com.fatherofapps.androidbase.data.services.CustomerRemoteService
 import com.fatherofapps.androidbase.di.IoDispatcher
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class CustomerRepository @Inject constructor(
     private val customerRemoteService: CustomerRemoteService,
 //    private val customerLocalService: CustomerLocalService,
+
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
@@ -31,4 +34,22 @@ class CustomerRepository @Inject constructor(
     suspend fun logOut(token: String) : NetworkResult<LogOutResponses> = withContext(dispatcher) {
         customerRemoteService.logOutUser(token)
     }
+
+    suspend fun getInfoUser(): NetworkResult<UserData> = withContext(dispatcher) {
+        val result = customerRemoteService.getUserInfo()
+
+        when (result) {
+            is NetworkResult.Success -> {
+                if (result.data.responseCode == 200) {
+                    NetworkResult.Success(result.data.data)
+                } else {
+                    NetworkResult.Error(Exception(result.data.message))  // Return string message directly
+                }
+            }
+            is NetworkResult.Error -> {
+                NetworkResult.Error(result.exception)
+            }
+        }
+    }
+
 }

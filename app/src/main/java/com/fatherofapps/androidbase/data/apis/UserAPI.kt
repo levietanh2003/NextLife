@@ -9,6 +9,7 @@ import com.fatherofapps.androidbase.data.models.user.UserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface UserAPI {
@@ -27,4 +28,11 @@ interface UserAPI {
     @POST("auth/logout")
     suspend fun logoutUser(token: String): Response<LogOutResponses>
 
+    // get info user
+//    @GET("users/my-info")
+//    suspend fun getUserInfo(
+//        @Header("Authorization") bearerToken: String
+//    ): Response<UserResponse>
+    @GET("users/my-info")
+    suspend fun getUserInfo(): Response<UserResponse>
 }

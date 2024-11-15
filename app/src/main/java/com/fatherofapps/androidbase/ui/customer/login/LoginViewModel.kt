@@ -10,6 +10,7 @@ import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
 import com.fatherofapps.androidbase.data.repositories.CustomerRepository
+import com.fatherofapps.androidbase.di.AppSharePreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val customerRepository: CustomerRepository,
-//    private val appSharePreference: AppSharePreference
+    private val appSharePreference: AppSharePreference
 ) : BaseViewModel() {
     // Các phương thức và thuộc tính liên quan đến giao diện đăng nhập
     private val _loginResult = MutableLiveData<NetworkResult<LoginResponse>>()
@@ -41,11 +42,10 @@ class LoginViewModel @Inject constructor(
             _loginResult.postValue(result)
             // Phát tín hiệu đăng nhập thành công
             if (result is NetworkResult.Success) {
+                val token = result.data.data.token
+                // luu token vao share preference
+                appSharePreference.saveToken(token)
                 _loginSuccess.postValue(true)
-                // Lưu trạng thái đăng nhập
-//                appSharePreference.getSharedPreferences().edit()
-//                    .putBoolean("isLoggedIn", true)
-//                    .apply()
             }
             Log.d("LoginViewModel", "Login result: $result")// Cập nhật kết quả vào LiveData
             showLoading(false)
@@ -59,6 +59,8 @@ class LoginViewModel @Inject constructor(
             val result = customerRepository.logOut(token)
             // kiem tra trang thai logout thanh cong
             if (result is NetworkResult.Success && result.data.message == "Successfully" && result.data.responseCode == 200) {
+                // xoa token
+                appSharePreference.saveToken("")
                 _logOutSuccess.postValue(true)
             } else {
                 _logOutSuccess.postValue(false)

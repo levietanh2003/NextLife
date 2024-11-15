@@ -8,6 +8,7 @@ import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
 import com.fatherofapps.androidbase.data.models.user.RegisterResponse
+import com.fatherofapps.androidbase.data.models.user.UserResponse
 import javax.inject.Inject
 
 class CustomerRemoteService @Inject constructor(
@@ -29,5 +30,13 @@ class CustomerRemoteService @Inject constructor(
     // các phương thức logout
     suspend fun logOutUser(token: String): NetworkResult<LogOutResponses> {
         return callApi { userAPI.logoutUser(token) }
+    }
+
+    // get info user
+    suspend fun getUserInfo(): NetworkResult<UserResponse> {
+        // Gọi API và truyền vào token
+        return callApi {
+            userAPI.getUserInfo()
+        }
     }
 }

@@ -61,7 +61,7 @@ class ProductDetailsFragment : BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
-        hideBottomNavigation()
+//        hideBottomNavigation()
 
         viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
             Log.d("ProductDetailsFragment", "Received promotional post: $promotionalPost")

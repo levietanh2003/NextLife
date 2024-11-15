@@ -16,32 +16,32 @@ class ChatViewModel @Inject constructor() : BaseViewModel() {
     private val _messages = MutableStateFlow<List<Message>>(emptyList())
     val messages = _messages.asStateFlow()
 
-    init {
-        connectWebSocket()
-    }
+//    init {
+//        connectWebSocket()
+//    }
 
-    private fun connectWebSocket() {
-        viewModelScope.launch {
-            chatWebSocketClient.connect()
-            chatWebSocketClient.receiveMessages()
-            chatWebSocketClient.incomingMessages.collect { message ->
-                _messages.value = _messages.value + message
-            }
-        }
-    }
+//    private fun connectWebSocket() {
+//        viewModelScope.launch {
+//            chatWebSocketClient.connect()
+//            chatWebSocketClient.receiveMessages()
+//            chatWebSocketClient.incomingMessages.collect { message ->
+//                _messages.value = _messages.value + message
+//            }
+//        }
+//    }
 
-    fun sendMessage(content: String) {
-        val message = Message("User", content, System.currentTimeMillis())
-        viewModelScope.launch {
-            chatWebSocketClient.sendMessage(message)
-            _messages.value = _messages.value + message
-        }
-    }
-
-    override fun onCleared() {
-        viewModelScope.launch {
-            chatWebSocketClient.disconnect()
-        }
-        super.onCleared()
-    }
+//    fun sendMessage(content: String) {
+//        val message = Message("User", content, System.currentTimeMillis())
+//        viewModelScope.launch {
+//            chatWebSocketClient.sendMessage(message)
+//            _messages.value = _messages.value + message
+//        }
+//    }
+//
+//    override fun onCleared() {
+//        viewModelScope.launch {
+//            chatWebSocketClient.disconnect()
+//        }
+//        super.onCleared()
+//    }
 }
