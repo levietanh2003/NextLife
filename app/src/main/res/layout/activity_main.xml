@@ -1,118 +1,137 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
-    <!-- Home Header, luôn cố định -->
-    <LinearLayout
-        android:id="@+id/homeHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/color_main"
-        android:paddingTop="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- MaterialSearchBar -->
-        <com.mancj.materialsearchbar.MaterialSearchBar
-            android:id="@+id/searchBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:mt_hint="Tìm kiếm trên Next Life"
-            app:mt_speechMode="false"
-            app:mt_roundedSearchBarEnabled="true"
-            app:mt_maxSuggestionsCount="10"
-            style="@style/MaterialSearchBarLight" />
-
-        <ImageView
-            android:id="@+id/btn_bell"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/icon_bell"
-            android:padding="8dp"
-            android:scaleType="centerInside" />
-
-        <ImageView
-            android:id="@+id/btn_chat"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/icon_chat"
-            android:padding="8dp"
-            android:scaleType="centerInside" />
-    </LinearLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/container"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeHeader"
-        app:navGraph="@navigation/main_nav" />
-
-    <!-- ListView sẽ nằm trên (overlay) các thành phần khác -->
-    <!-- FrameLayout loading -->
-    <FrameLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        android:clickable="true"
-        android:elevation="12dp"
-        android:focusable="true"
-        android:visibility="gone">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/color_main"
-            android:indeterminate="true"
-            android:layout_gravity="center" />
-    </FrameLayout>
-
+    <!-- Main Content Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/nav_bar"
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
+        <!-- Home Header -->
+        <LinearLayout
+            android:id="@+id/homeHeader"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/rectangle_8"
-            android:padding="10dp"
-            app:itemIconSize="24dp"
-            app:itemIconTint="@color/icon_color_bottom_normal"
-            app:itemTextColor="@color/icon_color_bottom_selected"
-            app:labelVisibilityMode="labeled"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_main"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabPostNews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="45dp"
-            android:src="@drawable/ic_post_news"
-            app:layout_constraintBottom_toBottomOf="parent"
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchBar"
+                style="@style/MaterialSearchBarLight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:mt_hint="Tìm kiếm trên Next Life"
+                app:mt_maxSuggestionsCount="10"
+                app:mt_roundedSearchBarEnabled="true"
+                app:mt_speechMode="false" />
+
+            <ImageView
+                android:id="@+id/btn_bell"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_bell" />
+
+            <ImageView
+                android:id="@+id/btn_chat"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_chat" />
+        </LinearLayout>
+
+        <!-- Main Navigation Container -->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@+id/nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeHeader"
+            app:navGraph="@navigation/main_nav" />
+
+        <!-- Loading Overlay -->
+        <FrameLayout
+            android:id="@+id/loadingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:elevation="12dp"
+            android:focusable="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/color_main" />
+        </FrameLayout>
+
+        <!-- Bottom Navigation Bar -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/nav_bar"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/rectangle_8"
+                android:padding="10dp"
+                app:itemIconSize="24dp"
+                app:itemIconTint="@color/icon_color_bottom_normal"
+                app:itemTextColor="@color/icon_color_bottom_selected"
+                app:labelVisibilityMode="labeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabPostNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="45dp"
+                android:src="@drawable/ic_post_news"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Login Overlay Container -->
+    <FrameLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="15dp"
+        android:visibility="gone" />
+
+</FrameLayout>

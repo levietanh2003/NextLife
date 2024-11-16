@@ -9,4 +9,8 @@ data class UserData(
     val verificationToken: String,
     val enabled: Boolean,
     val roles: List<UserRole>
-)
+){
+    fun fullName(): String {
+        return "$firstName $lastName"
+    }
+}

@@ -177,17 +177,17 @@ class SearchFragment : BaseFragment() {
 //                    }
 //                }
 //            }
-
-            // test get info user
-            viewModelMyInfo.fetchMyAccount()
-
-            viewModelMyInfo.myInfoResult.observe(viewLifecycleOwner) { result ->
-                if (result == null) {
-                    showNotify("Lấy thông tin thất bại","Thông báo")
-                }else{
-                    showNotify("Lấy thông tin thành công","Thông báo")
-                }
-            }
+//
+//            // test get info user
+//            viewModelMyInfo.fetchMyAccount()
+//
+//            viewModelMyInfo.myInfoResult.observe(viewLifecycleOwner) { result ->
+//                if (result == null) {
+//                    showNotify("Lấy thông tin thất bại","Thông báo")
+//                }else{
+//                    showNotify("Lấy thông tin thành công","Thông báo")
+//                }
+//            }
             // Gọi hàm đăng ký với dữ liệu cứng
 //            val registerRequest = RegisterRequest(
 //                email = "avanh090@gmail.com",
@@ -214,21 +214,21 @@ class SearchFragment : BaseFragment() {
 //            }
         }
 
-        dataBinding.tvOfferProducts.setOnClickListener{
-            viewModel2.logoutUser(token.toString())
-            Log.d("Token_LogOut", token.toString())
-            viewModel2.logOutSuccess.observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    true -> {
-                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
-                        showNotify("Đăng xuất thành công","Thông báo")
-                    }
-                    false -> {
-                        showNotify("Đăng xuất không thành công","Thông báo")
-                    }
-                }
-            }
-        }
+//        dataBinding.tvOfferProducts.setOnClickListener{
+//            viewModel2.logoutUser(token.toString())
+//            Log.d("Token_LogOut", token.toString())
+//            viewModel2.logOutSuccess.observe(viewLifecycleOwner) { result ->
+//                when (result) {
+//                    true -> {
+//                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
+//                        showNotify("Đăng xuất thành công","Thông báo")
+//                    }
+//                    false -> {
+//                        showNotify("Đăng xuất không thành công","Thông báo")
+//                    }
+//                }
+//            }
+//        }
         dataBinding.btnFilterArea.setOnClickListener {
             openBottomSheetFilterArea()
         }

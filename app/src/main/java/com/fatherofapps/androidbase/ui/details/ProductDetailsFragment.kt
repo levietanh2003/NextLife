@@ -12,10 +12,10 @@ import com.fatherofapps.androidbase.adapter.AdditionalFeeAdapter
 import com.fatherofapps.androidbase.adapter.ImageAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.common.formatPrice
-import com.fatherofapps.androidbase.common.hideBottomNavigation
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
+import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import formatCurrencyFromString
 
@@ -28,6 +28,7 @@ class ProductDetailsFragment : BaseFragment() {
     private lateinit var imageAdapter: ImageAdapter
     private var isExpanded = false
     private val MAX_WORD_COUNT = 50
+    private val authViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

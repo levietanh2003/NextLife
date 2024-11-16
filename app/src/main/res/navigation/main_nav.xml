@@ -16,7 +16,6 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-
     </fragment>
 
 
@@ -43,32 +42,6 @@
             android:id="@+id/action_searchFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.fatherofapps.androidbase.ui.customer.register.RegisterFragment"
-        android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register">
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.fatherofapps.androidbase.ui.customer.login.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/myAccountFragment"
-        android:name="com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountFragment"
-        tools:layout="@layout/fragment_my_account"
-        android:label="MyAccountFragment" />
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.fatherofapps.androidbase.ui.customer.news.NewsFragment"

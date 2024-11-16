@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,8 @@ import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentHomeBinding
+import com.fatherofapps.androidbase.ui.customer.login.LoginActivity
+import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -84,8 +87,9 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     imagesSlider.setImageList(imageListt, ScaleTypes.FIT)
 
 
-    dataBinding.btnTypeOfDishBreads.setOnClickListener{
-        findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+    dataBinding.btnTypeOfDishBreads.setOnClickListener {
+        val intent = Intent(requireContext(), MyAccountActivity::class.java)
+        startActivity(intent)
     }
 
     viewModel.postFeatured.observe(viewLifecycleOwner) { featuredPosts ->

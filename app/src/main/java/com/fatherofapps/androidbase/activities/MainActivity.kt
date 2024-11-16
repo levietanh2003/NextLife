@@ -58,6 +58,7 @@ class MainActivity : BaseActivity() {
         navController = findNavController(R.id.container)
     }
 
+
     private fun setupNavigation() {
         try {
             bottomNavigationView?.let { bottomNav ->
@@ -104,8 +105,6 @@ class MainActivity : BaseActivity() {
 
     private fun handleDestinationChange(destination: NavDestination) {
         when (destination.id) {
-            R.id.loginFragment,
-            R.id.registerFragment,
             R.id.productDetailsFragment,
             R.id.myAccountFragment -> hideNavigationWithAnimation()
             else -> showNavigationWithAnimation()
@@ -208,20 +207,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        try {
-            if (!isNavigationVisible && navController?.currentDestination?.id !in listOf(
-                    R.id.loginFragment,
-                    R.id.registerFragment
-                )) {
-                showNavigationWithAnimation()
-            }
-            super.onBackPressed()
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Error in onBackPressed: ${e.message}", e)
-            super.onBackPressed()
-        }
-    }
 
     override fun showLoading(isShow: Boolean) {
         loadingLayout?.visibility = if (isShow) View.VISIBLE else View.GONE

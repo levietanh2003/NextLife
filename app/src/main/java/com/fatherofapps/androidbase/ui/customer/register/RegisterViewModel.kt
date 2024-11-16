@@ -17,8 +17,6 @@ class RegisterViewModel @Inject constructor(
     private val customerRepository: CustomerRepository
 ) : BaseViewModel() {
 
-//    private val _registerResult = MutableLiveData<NetworkResult<RegisterRequest>>()
-//    val registerResult: LiveData<NetworkResult<RegisterRequest>> get() = _registerResult
     private val _registerResult = MutableLiveData<NetworkResult<RegisterResponse>>()
     val registerResult: LiveData<NetworkResult<RegisterResponse>> get() = _registerResult
 

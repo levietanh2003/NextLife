@@ -1,3 +1,7 @@
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 fun formatCurrencyFromString(input: String?): String {
     // Kiểm tra nếu đầu vào là null hoặc rỗng
@@ -15,4 +19,21 @@ fun formatCurrencyFromString(input: String?): String {
     val formattedValue = String.format("%,.0f", value)
 
     return "$formattedValue đ/tháng"
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun formatBirthDate(birthDateArray: List<Int>): String {
+    // Mảng birthDateArray có dạng [year, month, day]
+    val year = birthDateArray[0]
+    val month = birthDateArray[1]
+    val day = birthDateArray[2]
+
+    // Tạo đối tượng LocalDate từ year, month, day
+    val date = LocalDate.of(year, month, day)
+
+    // Định dạng ngày theo định dạng bạn muốn, ví dụ: "dd/MM/yyyy"
+    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+    // Chuyển đối tượng LocalDate thành chuỗi theo định dạng
+    return date.format(formatter)
 }

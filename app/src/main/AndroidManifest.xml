@@ -4,8 +4,7 @@
     <!-- Quyền truy cập Internet và trạng thái mạng -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Quyền truy cập vị trí -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Nếu ứng dụng cần quyền truy cập vị trí nền trên Android 10 trở lên -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Nếu ứng dụng cần quyền truy cập vị trí nền trên Android 10 trở lên -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
@@ -18,6 +17,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FatherOfApps">
+        <activity
+            android:name=".ui.customer.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.myaccount.ProfileDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.login.LoginActivity"
+            android:label="Login Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+            <!-- Thêm thông tin cấu hình khác nếu cần -->
+        </activity>
+        <activity android:name=".ui.customer.myaccount.MyAccountActivity" />
         <activity
             android:name=".activities.ChatDetailActivity"
             android:exported="false" />
