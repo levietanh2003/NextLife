@@ -21,6 +21,11 @@
             android:name=".ui.customer.register.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.RoomStatisticsActivity"
+            android:exported="false">
+            <!-- Nếu bạn muốn activity có thể được gọi từ bên ngoài app, đặt exported="true" -->
+        </activity>
+        <activity
             android:name=".ui.customer.myaccount.ProfileDetailsActivity"
             android:exported="false" />
         <activity

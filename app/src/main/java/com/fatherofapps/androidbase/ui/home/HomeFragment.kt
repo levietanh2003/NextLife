@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.activities.RoomStatisticsActivity
 import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PromotionalPost
@@ -88,7 +89,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
     dataBinding.btnTypeOfDishBreads.setOnClickListener {
-        val intent = Intent(requireContext(), MyAccountActivity::class.java)
+        val intent = Intent(requireContext(), RoomStatisticsActivity::class.java)
         startActivity(intent)
     }
 

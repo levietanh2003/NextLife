@@ -610,7 +610,6 @@
                         android:overScrollMode="never"
                         tools:listitem="@layout/item_additional_fee" />
                 </GridLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
