@@ -48,9 +48,8 @@ class RegisterActivity : BaseActivity() {
                 val registerRequest = RegisterRequest(email, password, firstName, lastName, dayOfBirth)
                 viewModel.registerUser(registerRequest)
             }else{
-
+                showNotifyDialog("Vui lòng điền đầy đủ thông tin","Thông báo","OK")
             }
-
         }
     }
 
@@ -59,14 +58,12 @@ class RegisterActivity : BaseActivity() {
             when (result) {
                 is NetworkResult.Success -> {
                     // Show success message
-                    Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show()
-
-                    // Close the LoginActivity and return to the previous screen
+                    showNotifyDialog("Đăng ký thành công","Thông báo","OK")
                     finish()
                 }
                 is NetworkResult.Error -> {
                     // Show error message
-                    Toast.makeText(this, "Đăng ký thất bại: ${result.exception}", Toast.LENGTH_SHORT).show()
+                    showErrorDialog("Đăng ký thật bại")
                 }
             }
         }

@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
-import com.fatherofapps.androidbase.data.apis.PromotionalPostDetailAPI
 import com.fatherofapps.androidbase.data.models.ProductDetails
-import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.repositories.PromotionalPostDetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -47,7 +47,7 @@ data class ProductEntity(
                 capacity = 0,
                 numberOfBedrooms = 0,
                 numberOfBathrooms = 0,
-                availableFromDate = listOf(),  // Cung cấp giá trị mặc định
+                availableFromDate = 0.0,  // Cung cấp giá trị mặc định
                 postImages = emptyList()
             ), // Cần xác định RoomUtilityEntity
             roomUtility = this.roomUtility?.toRoomUtility() ?: RoomUtility(

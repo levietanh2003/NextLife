@@ -11,16 +11,13 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.WebSocket
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
-import okhttp3.Request
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -86,19 +83,6 @@ class NetworkModule {
     fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI{
         return retrofit.create(UserAPI::class.java)
     }
-
-//    @Provides
-//    @Singleton
-//    fun provideOKHttpClient(
-//        httpLoggingInterceptor: HttpLoggingInterceptor
-//    ): OkHttpClient {
-//        val builder = OkHttpClient.Builder()
-//
-//        builder.interceptors().add(httpLoggingInterceptor)
-//        return builder.build()
-//    }
-
-
 
     @Provides
     @Singleton

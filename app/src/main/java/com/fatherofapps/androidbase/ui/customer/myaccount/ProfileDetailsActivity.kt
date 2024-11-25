@@ -45,7 +45,6 @@ class ProfileDetailsActivity : BaseActivity() {
         if (!viewModelLogin.checkLoginStatus()) {
             showNotify("Chưa đăng nhập", "Thông báo")
         } else {
-            showNotify("Đã đăng nhập", "Thông báo")
             // Fetch user account info
             viewModelMyInfo.fetchMyAccount()
         }

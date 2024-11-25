@@ -4,13 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
-
 import com.fatherofapps.androidbase.data.models.PromotionalPost
-
 import com.fatherofapps.androidbase.data.repositories.PostFeaturedRepository
-
 import com.fatherofapps.androidbase.data.repositories.PostPromotionalRepository
 import com.fatherofapps.androidbase.data.repositories.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

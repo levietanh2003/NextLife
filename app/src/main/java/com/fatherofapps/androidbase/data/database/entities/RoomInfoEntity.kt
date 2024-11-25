@@ -21,7 +21,7 @@ data class RoomInfoEntity(
     @ColumnInfo(name = "capacity") val capacity: Int = 0,
     @ColumnInfo(name = "number_of_bedrooms") val numberOfBedrooms: Int = 0,
     @ColumnInfo(name = "number_of_bathrooms") val numberOfBathrooms: Int = 0,
-    @ColumnInfo(name = "available_From_Date") val availableFromDate: List<Int>? = null,
+    @ColumnInfo(name = "available_From_Date") val availableFromDate: Double ?= null,
 
     @TypeConverters(PostImageConverters::class)
     @ColumnInfo(name = "post_images") val postImages: List<PostImageEntity>? = null
@@ -42,7 +42,7 @@ data class RoomInfoEntity(
             capacity = this.capacity,
             numberOfBedrooms = this.numberOfBedrooms,
             numberOfBathrooms = this.numberOfBathrooms,
-            availableFromDate = this.availableFromDate ?: listOf(),
+            availableFromDate = this.availableFromDate ?: 0.0,
             postImages = this.postImages?.map { it.toPostImage() } ?: emptyList()
         )
     }

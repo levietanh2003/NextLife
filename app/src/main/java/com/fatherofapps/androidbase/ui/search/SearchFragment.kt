@@ -17,9 +17,7 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.adapter.ProductHorizontalAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
-import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PromotionalPost
-import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
 import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
 import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountViewModel
@@ -154,81 +152,8 @@ class SearchFragment : BaseFragment() {
 
         dataBinding.spinnerCategory.setOnClickListener {
 
-//            val loginRequest = LoginRequest(
-//                email = "levietanhzz108@gmail.com",
-//                password = "01082003"
-//            )
-//
-//            viewModel2.loginUser(loginRequest)
-//
-//            viewModel2.loginResult.observe(viewLifecycleOwner) { result ->
-//                when (result) {
-//                    is NetworkResult.Success -> {
-//                        token = result.data.data.token
-//                        Log.d("Token_SearchFragment", token.toString())
-//
-//
-//                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
-//                        showNotify("Đăng nhập thành công","Thông báo")
-//                    }
-//                    is NetworkResult.Error -> {
-//                        // Xử lý lỗi, ví dụ hiển thị thông báo lỗi
-//                        showErrorMessage("Đăng ký thất bại: ${result.exception?.message ?: "Có lỗi xảy ra."}")
-//                    }
-//                }
-//            }
-//
-//            // test get info user
-//            viewModelMyInfo.fetchMyAccount()
-//
-//            viewModelMyInfo.myInfoResult.observe(viewLifecycleOwner) { result ->
-//                if (result == null) {
-//                    showNotify("Lấy thông tin thất bại","Thông báo")
-//                }else{
-//                    showNotify("Lấy thông tin thành công","Thông báo")
-//                }
-//            }
-            // Gọi hàm đăng ký với dữ liệu cứng
-//            val registerRequest = RegisterRequest(
-//                email = "avanh090@gmail.com",
-//                password = "01082003",
-//                firstName = "Le",
-//                lastName = "Anh",
-//                dayOfBirth = "2003-08-01"
-//            )
-//
-//            viewModel1.registerUser(registerRequest)
-//
-//            // Đăng ký observer cho registerResult
-//            viewModel1.registerResult.observe(viewLifecycleOwner) { result ->
-//                when (result) {
-//                    is NetworkResult.Success -> {
-//                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
-//                        showNotify("Đăng ký thành công","Thông báo")
-//                    }
-//                    is NetworkResult.Error -> {
-//                        // Xử lý lỗi, ví dụ hiển thị thông báo lỗi
-//                        showErrorMessage("Đăng ký thất bại: ${result.exception?.message ?: "Có lỗi xảy ra."}")
-//                    }
-//                }
-//            }
         }
 
-//        dataBinding.tvOfferProducts.setOnClickListener{
-//            viewModel2.logoutUser(token.toString())
-//            Log.d("Token_LogOut", token.toString())
-//            viewModel2.logOutSuccess.observe(viewLifecycleOwner) { result ->
-//                when (result) {
-//                    true -> {
-//                        // Xử lý thành công, ví dụ hiển thị thông báo thành công
-//                        showNotify("Đăng xuất thành công","Thông báo")
-//                    }
-//                    false -> {
-//                        showNotify("Đăng xuất không thành công","Thông báo")
-//                    }
-//                }
-//            }
-//        }
         dataBinding.btnFilterArea.setOnClickListener {
             openBottomSheetFilterArea()
         }

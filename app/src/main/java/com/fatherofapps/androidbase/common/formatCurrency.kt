@@ -1,6 +1,9 @@
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 fun formatCurrencyFromString(input: String?): String {
@@ -19,6 +22,17 @@ fun formatCurrencyFromString(input: String?): String {
     val formattedValue = String.format("%,.0f", value)
 
     return "$formattedValue đ/tháng"
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun convertToDate(unixTimestamp: Double): String {
+    // Chuyển đổi từ Unix Timestamp (giây) sang LocalDateTime
+    val timestampInSeconds = unixTimestamp.toLong() // Lấy phần nguyên (bỏ số thập phân)
+    val dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestampInSeconds), ZoneId.systemDefault())
+
+    // Định dạng ngày tháng năm
+    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    return dateTime.format(formatter) // Trả về chuỗi ngày định dạng dd-MM-yyyy
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

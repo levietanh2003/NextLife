@@ -97,6 +97,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
     private fun setupNavigationVisibility() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             handleDestinationChange(destination)
