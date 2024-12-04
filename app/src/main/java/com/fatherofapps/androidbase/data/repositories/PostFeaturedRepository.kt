@@ -42,6 +42,20 @@ class PostFeaturedRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun fetchAllProduct(): List<PromotionalPost> = withContext(dispatcher) {
+        when (val result = postFeaturedRemoteService.getAllProduct()) {
+            is NetworkResult.Success -> {
+                // Truy xuất danh sách sản phẩm từ kết quả thành công
+                result.data.data.data
+            }
+            is NetworkResult.Error -> {
+                // Ném ngoại lệ khi gặp lỗi
+                throw result.exception
+            }
+        }
+    }
+
     fun resetPagination() {
         currentPage = 1 // Reset page khi cần
     }

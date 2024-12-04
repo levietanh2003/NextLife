@@ -20,7 +20,7 @@ class PromotionalPostDetailRepository @Inject constructor(
         }
 
         when (val result = promotionalPostDetailRemoteService.getPostPromotionalById(id)) {
-            is NetworkResult.Success -> result.data
+            is NetworkResult.Success -> result.data.data
             is NetworkResult.Error -> {
                 Log.d("PromotionalRepository", "Error fetching promotional post by ID: ${result.exception.message}")
                 throw result.exception

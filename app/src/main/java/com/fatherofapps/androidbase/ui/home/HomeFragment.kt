@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,10 +18,16 @@ import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentHomeBinding
-import com.fatherofapps.androidbase.ui.customer.login.LoginActivity
 import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountActivity
+import com.fatherofapps.androidbase.ui.search.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+
+
+/**
+ * The `HomeFragment` displays promotional and featured posts in a grid layout.
+ * It includes image sliders and buttons to navigate between different activities or fragments.
+ */
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
     private lateinit var dataBinding: FragmentHomeBinding
@@ -89,6 +94,16 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
     dataBinding.btnTypeOfDishBreads.setOnClickListener {
+        val intent = Intent(requireContext(), MyAccountActivity::class.java)
+        startActivity(intent)
+    }
+
+    dataBinding.btnTypeOfDishCakes.setOnClickListener {
+//        val intent = Intent(requireContext(), SearchFragment::class.java)
+//        startActivity(intent)
+    }
+
+    dataBinding.btnChart.setOnClickListener {
         val intent = Intent(requireContext(), RoomStatisticsActivity::class.java)
         startActivity(intent)
     }

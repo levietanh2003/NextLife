@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.activities.BaseActivity
+import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mancj.materialsearchbar.MaterialSearchBar
@@ -58,7 +59,6 @@ class MainActivity : BaseActivity() {
         navController = findNavController(R.id.container)
     }
 
-
     private fun setupNavigation() {
         try {
             bottomNavigationView?.let { bottomNav ->
@@ -80,7 +80,9 @@ class MainActivity : BaseActivity() {
                             true
                         }
                         R.id.myAccountFragment -> {
-                            navController.navigate(R.id.myAccountFragment)
+                            // Chuyển sang MyAccountActivity
+                            startActivity(Intent(this, MyAccountActivity::class.java))
+                            Log.d("MainActivity_Item", "MyAccountFragment clicked")
                             true
                         }
                         else -> false
@@ -96,7 +98,6 @@ class MainActivity : BaseActivity() {
             Log.e("MainActivity", "Error in setupNavigation: ${e.message}", e)
         }
     }
-
 
     private fun setupNavigationVisibility() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -186,7 +187,7 @@ class MainActivity : BaseActivity() {
                         val bundle = Bundle().apply {
                             putString("search_query", searchQuery.toString())
                         }
-                        navController?.navigate(R.id.searchFragment, bundle)
+                        navController.navigate(R.id.searchFragment, bundle)
                     }
                 }
 
@@ -207,7 +208,6 @@ class MainActivity : BaseActivity() {
             Log.e("MainActivity", "Error in setupChatButton: ${e.message}", e)
         }
     }
-
 
     override fun showLoading(isShow: Boolean) {
         loadingLayout?.visibility = if (isShow) View.VISIBLE else View.GONE

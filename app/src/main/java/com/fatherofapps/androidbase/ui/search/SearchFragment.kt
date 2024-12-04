@@ -17,6 +17,7 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.adapter.ProductHorizontalAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.common.Logger
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
 import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
@@ -30,13 +31,20 @@ import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+/**
+ * Fragment for handling the search functionality in the application.
+ *
+ * This fragment allows users to:
+ * - Search for products or posts based on various filters such as price, area, and other advanced filters.
+ * - Retrieve and display results dynamically from a ViewModel.
+ * - Display a message or image if no results are found.
+ *
+ * @constructor This fragment requires `FragmentSearchBinding` for UI interactions and uses `SearchViewModel` to fetch and manage data.
+ */
 @AndroidEntryPoint
 class SearchFragment : BaseFragment() {
     private lateinit var dataBinding: FragmentSearchBinding
     private val viewModel by viewModels<SearchViewModel>()
-    private val viewModel1 by viewModels<RegisterViewModel>()
-    private val viewModelMyInfo: MyAccountViewModel by viewModels()
-    private val viewModel2 by viewModels<LoginViewModel>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var minPrice: Double? = null
     private var maxPrice: Double? = null
@@ -45,7 +53,6 @@ class SearchFragment : BaseFragment() {
     private var hasPromotion: Boolean? = null
     private lateinit var titleSearch: String
     private lateinit var noResultsImage: ImageView
-    private var token: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +99,13 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Retrieves the user's current location using `FusedLocationProviderClient`.
+     *
+     * - If location permission is not granted, it requests the necessary permissions.
+     * - Updates the displayed address based on the location.
+     * @throws Exception if an error occurs during location retrieval.
+     */
     private fun getUserLocation() {
         try {
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -100,7 +114,8 @@ class SearchFragment : BaseFragment() {
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     LOCATION_PERMISSION_REQUEST_CODE
                 )
-                Log.d("Location_Permission", "Location permission not granted, requesting permission.")
+
+                Logger.log("Location_Permission", "Location permission not granted, requesting permission.")
                 return
             }
 
@@ -112,15 +127,15 @@ class SearchFragment : BaseFragment() {
                     dataBinding.titleAddress.text = address ?: "Vị trí không xác định"
 
                     // Log ra vị trí lấy được
-                    Log.d("Location_Info", "Latitude: ${location.latitude}, Longitude: ${location.longitude}, Address: $address")
+                    Logger.log("Location_Info", "Latitude: ${location.latitude}, Longitude: ${location.longitude}, Address: $address")
                 } else {
-                    Log.e("Location_Error", "Không lấy được vị trí hiện tại.")
+                    Logger.log("Location_Error", "Không lấy được vị trí hiện tại.")
                 }
             }.addOnFailureListener { exception ->
-                Log.e("Location_Error", "Lỗi khi lấy vị trí: ${exception.message}")
+                Logger.log("Location_Error", "Lỗi khi lấy vị trí: ${exception.message}")
             }
         } catch (e: Exception) {
-            Log.e("Location_Error", "Đã xảy ra lỗi trong getUserLocation(): ${e.message}")
+            Logger.log("Location_Error", "Đã xảy ra lỗi trong getUserLocation(): ${e.message}")
         }
     }
 
@@ -202,6 +217,15 @@ class SearchFragment : BaseFragment() {
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 
+
+    /**
+     * Handles the filtered posts by updating the UI.
+     *
+     * - Displays the results in a RecyclerView.
+     * - Shows a message if no results are found.
+     *
+     * @param posts The list of filtered posts to display.
+     */
     private fun handleFilteredPosts(posts: List<PromotionalPost>) {
         Log.d("Address_SearchFragment", "Handling filtered posts. Count: ${posts.size}")
 

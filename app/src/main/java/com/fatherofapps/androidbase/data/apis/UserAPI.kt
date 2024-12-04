@@ -35,4 +35,9 @@ interface UserAPI {
 //    ): Response<UserResponse>
     @GET("users/my-info")
     suspend fun getUserInfo(): Response<UserResponse>
+
+    // edit profile
+
+
+
 }

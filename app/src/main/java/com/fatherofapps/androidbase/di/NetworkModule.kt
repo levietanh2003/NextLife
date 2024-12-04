@@ -1,10 +1,8 @@
 package com.fatherofapps.androidbase.di
 
-import android.content.Context
 import android.util.Log
 import com.fatherofapps.androidbase.BuildConfig
 import com.fatherofapps.androidbase.data.apis.*
-import com.fatherofapps.androidbase.data.database.websocket.ChatWebSocketListener
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -19,36 +17,82 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
+/**
+ * This module provides network-related dependencies such as Retrofit, OkHttpClient,
+ * Moshi, and API services to be used throughout the application.
+ *
+ * It contains all the necessary configurations to handle network requests, including
+ * the setup of base URLs, converters, logging, and interceptors.
+ *
+ * This module is installed in the SingletonComponent, meaning that the provided instances
+ * will be shared across the entire app lifecycle.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    // provides PostPromotionalAPI
+    /**
+     * Provides the [PostPromotionalAPI] service to interact with the promotional post API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [PostPromotionalAPI] instance.
+     */
     @Provides
     fun providePostPromotionalAPI(@Named("MainSite") retrofit: Retrofit): PostPromotionalAPI {
         return retrofit.create(PostPromotionalAPI::class.java)
     }
 
+    /**
+     * Provides the [PromotionalPostDetailAPI] service to interact with the promotional post details API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [PromotionalPostDetailAPI] instance.
+     */
     @Provides
     fun providePromotionalPostDetailAPI(@Named("MainSite") retrofit: Retrofit): PromotionalPostDetailAPI {
         return retrofit.create(PromotionalPostDetailAPI::class.java)
     }
 
+    /**
+     * Provides the [PostFeaturedAPI] service to interact with the featured posts API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [PostFeaturedAPI] instance.
+     */
     @Provides
     fun providePostFeaturedAPI(@Named("MainSite") retrofit: Retrofit): PostFeaturedAPI {
         return retrofit.create(PostFeaturedAPI::class.java)
     }
 
+    /**
+     * Provides the [PostFilterAPI] service to interact with the post filter API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [PostFilterAPI] instance.
+     */
     @Provides
     fun providePostFilterAPI(@Named("MainSite") retrofit: Retrofit): PostFilterAPI {
         return retrofit.create(PostFilterAPI::class.java)
     }
 
+    /**
+     * Provides the [PostSearchAPI] service to interact with the post search API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [PostSearchAPI] instance.
+     */
     @Provides
     fun providePostSearchAPI(@Named("MainSite") retrofit: Retrofit): PostSearchAPI {
         return retrofit.create(PostSearchAPI::class.java)
     }
 
+    /**
+     * Provides a [Retrofit] instance configured with the base URL for the main site.
+     *
+     * @param okHttpClient The OkHttpClient instance used for making network requests.
+     * @param moshiConverterFactory The Moshi converter used to convert JSON responses.
+     * @return The [Retrofit] instance configured with the base URL and client.
+     */
     @Provides
     @Singleton
     @Named("MainSite")
@@ -56,14 +100,19 @@ class NetworkModule {
         okHttpClient: OkHttpClient,
         moshiConverterFactory: MoshiConverterFactory
     ): Retrofit {
-
         return Retrofit.Builder().addConverterFactory(moshiConverterFactory)
             .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .build()
     }
 
-
+    /**
+     * Provides a [Retrofit] instance configured with the base URL for user-related API requests.
+     *
+     * @param okHttpClient The OkHttpClient instance used for making network requests.
+     * @param moshiConverterFactory The Moshi converter used to convert JSON responses.
+     * @return The [Retrofit] instance configured with the user-related API base URL.
+     */
     @Provides
     @Singleton
     @Named("UserAPI")
@@ -78,12 +127,22 @@ class NetworkModule {
             .build()
     }
 
-
+    /**
+     * Provides the [UserAPI] service to interact with the user-related API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [UserAPI] instance.
+     */
     @Provides
-    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI{
+    fun provideUserAPI(@Named("UserAPI") retrofit: Retrofit): UserAPI {
         return retrofit.create(UserAPI::class.java)
     }
 
+    /**
+     * Provides the [HttpLoggingInterceptor] to log network requests and responses for debugging.
+     *
+     * @return The [HttpLoggingInterceptor] instance.
+     */
     @Provides
     @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -92,6 +151,11 @@ class NetworkModule {
         return httpLoggingInterceptor
     }
 
+    /**
+     * Provides the [MoshiConverterFactory] to convert JSON data into Kotlin objects using Moshi.
+     *
+     * @return The [MoshiConverterFactory] instance configured with Moshi.
+     */
     @Provides
     @Singleton
     fun provideMoshiConverterFactory(): MoshiConverterFactory {
@@ -99,6 +163,13 @@ class NetworkModule {
         return MoshiConverterFactory.create(moshi)
     }
 
+    /**
+     * Provides the [OkHttpClient] with interceptors for logging and adding the Authorization token to requests.
+     *
+     * @param httpLoggingInterceptor The logging interceptor used to log network requests.
+     * @param appSharePreference The shared preferences instance used to retrieve the stored token.
+     * @return The [OkHttpClient] instance with added interceptors.
+     */
     @Provides
     @Singleton
     fun provideOkHttpClient(

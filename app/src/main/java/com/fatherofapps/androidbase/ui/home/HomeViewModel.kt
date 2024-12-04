@@ -13,42 +13,53 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * HomeViewModel is a ViewModel class responsible for managing the UI-related data for the home screen.
+ * It interacts with repositories to fetch promotional and featured posts, and exposes them as LiveData to the UI.
+ *
+ * @param postPromotionalRepository: Repository responsible for fetching promotional posts data.
+ * @param productRepository: Repository for handling product-related data (currently unused in this ViewModel).
+ * @param postFeaturedRepository: Repository responsible for fetching featured posts data.
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val postPromotionalRepository: PostPromotionalRepository,
     private val productRepository: ProductRepository,
-    private val postFeaturedRepository: PostFeaturedRepository,
+    private val postFeaturedRepository: PostFeaturedRepository
+) : BaseViewModel() {
 
-
-    ) : BaseViewModel() {
-
-    // product featured
-    private var _postFeatured = MutableLiveData<List<PromotionalPost>>() // Sử dụng PostData
+    // LiveData for holding a list of featured posts
+    private var _postFeatured = MutableLiveData<List<PromotionalPost>>()
     val postFeatured: LiveData<List<PromotionalPost>>
         get() = _postFeatured
 
+    // LiveData for holding a list of promotional posts
     private var _promotionalPost = MutableLiveData<List<PromotionalPost>>()
-    // Sử dụng PostData
-
     val promotionalPost: LiveData<List<PromotionalPost>>
         get() = _promotionalPost
 
+    private var _allPost = MutableLiveData<List<PromotionalPost>>()
+    val allPost: LiveData<List<PromotionalPost>>
+        get() = _allPost
 
-
-    // Để theo dõi trạng thái loading
-    var isLoadingPage = false
+    // Flag to track loading states for different post categories
     var isLoadingPromotionalPost = false
     var isLoadingFeaturedPost = false
 
+    // Flags to track if "end of list" toast has been shown
     private var hasShownEndOfListToastPromotional = false
     private var hasShownEndOfListToastFeatured = false
 
-    fun fetchPromotionalPosts() {
+    /**
+     * Fetches promotional posts data and appends it to the existing list.
+     * If no more posts are available, logs a message and prevents further loading.
+     */
+     fun fetchPromotionalPosts() {
         if (isLoadingPromotionalPost || hasShownEndOfListToastPromotional) return
         isLoadingPromotionalPost = true
         showLoading(true)
 
-        viewModelScope.launch {
+        parentJob = viewModelScope.launch {
             try {
                 val response = postPromotionalRepository.fetchPromotionalPostsData2()
                 if (response.isEmpty()) {
@@ -70,12 +81,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Fetches featured posts data and appends it to the existing list.
+     * If no more posts are available, logs a message and prevents further loading.
+     */
     fun fetchFeaturedPosts() {
         if (isLoadingFeaturedPost || hasShownEndOfListToastFeatured) return
         isLoadingFeaturedPost = true
         showLoading(true)
 
-        viewModelScope.launch {
+        parentJob = viewModelScope.launch {
             try {
                 val response = postFeaturedRepository.fetchPostFeatured()
                 if (response.isEmpty()) {
@@ -97,8 +112,35 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Fetches all posts data and appends it to the existing list.
+     * Set up data in chart bar
+     * If no more posts are available, logs a message and prevents further loading.
+     */
+
+    fun fetchAllProduct() {
+        showLoading(true) // Cập nhật trạng thái isLoading
+        parentJob = viewModelScope.launch {
+            try {
+                val response = postFeaturedRepository.fetchAllProduct()
+                _allPost.postValue(response)
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error fetching products: ${e.message}")
+            } finally {
+                showLoading(false) // Ẩn trạng thái tải sau khi hoàn tất
+            }
+        }
+        registerJobFinish()
+    }
+
+
+    /**
+     * Resets the pagination of promotional posts and clears the existing data.
+     * Call this method when refreshing or reloading the promotional posts.
+     */
     fun resetPagination() {
-        postPromotionalRepository.resetPagination() // Reset khi cần
-        _promotionalPost.value = emptyList() // Xóa dữ liệu cũ
+        postPromotionalRepository.resetPagination() // Reset when needed
+        _promotionalPost.value = emptyList() // Clear old data
     }
 }
+

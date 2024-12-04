@@ -3,6 +3,7 @@ package com.fatherofapps.androidbase.activities
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.fatherofapps.androidbase.R
@@ -10,6 +11,8 @@ import com.fatherofapps.androidbase.base.activities.BaseActivity
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.ui.home.HomeViewModel
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -28,6 +31,8 @@ class RoomStatisticsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate: Activity starting")
         try {
+
+            showLoading(true)
             setContentView(R.layout.activity_room_statistics)
             Log.d(TAG, "onCreate: Layout set successfully")
 
@@ -42,7 +47,7 @@ class RoomStatisticsActivity : BaseActivity() {
 
             // Fetch data when activity starts
             Log.d(TAG, "onCreate: Initiating data fetch")
-            viewModel.fetchFeaturedPosts()
+            viewModel.fetchAllProduct()
 
         } catch (e: Exception) {
             Log.e(TAG, "onCreate: Error initializing activity", e)
@@ -52,14 +57,15 @@ class RoomStatisticsActivity : BaseActivity() {
     private fun setupObservers() {
         Log.d(TAG, "setupObservers: Setting up data observers")
 
-        viewModel.postFeatured.observe(this, Observer { posts ->
+        viewModel.allPost.observe(this) { posts ->
             Log.d(TAG, "promotionalPost observer: Received ${posts.size} posts")
             processDataAndUpdateChart(posts)
-        })
+            showLoading(false)
+        }
 
-        viewModel.isLoading.observe(this, Observer { isLoading ->
-            Log.d(TAG, "isLoading observer: Loading state = $isLoading")
-        })
+        viewModel.isLoading.observe(this) { isLoading ->
+            showLoading(true)
+        }
     }
 
     private fun setupBarChart() {
@@ -97,7 +103,12 @@ class RoomStatisticsActivity : BaseActivity() {
             Log.e(TAG, "setupBarChart: Error setting up chart", e)
         }
     }
+    override fun showLoading(isLoading: Boolean) {
+        val loadingLayout = findViewById<View>(R.id.loadingLayout)
+        loadingLayout?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 
+    // avg price in address
     private fun processDataAndUpdateChart(posts: List<PromotionalPost>) {
         Log.d(TAG, "processDataAndUpdateChart: Starting data processing for ${posts.size} posts")
         try {
@@ -155,4 +166,5 @@ class RoomStatisticsActivity : BaseActivity() {
             Log.e(TAG, "processDataAndUpdateChart: Error updating chart", e)
         }
     }
+
 }

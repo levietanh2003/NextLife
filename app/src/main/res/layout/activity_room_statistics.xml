@@ -19,6 +19,27 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" /> <!-- Set fixed height for better UI -->
+        android:layout_height="match_parent" />
+
+    <!-- Set fixed height for better UI -->
+    <!-- Loading Overlay -->
+    <FrameLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
+        android:clickable="true"
+        android:elevation="12dp"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/color_main" />
+    </FrameLayout>
 
 </LinearLayout>

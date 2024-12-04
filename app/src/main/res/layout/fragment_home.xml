@@ -98,7 +98,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/btnTypeOfDishPastry"
+                        android:id="@+id/btnChart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -106,14 +106,13 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-
                         <ImageView
                             android:id="@+id/image_Pastry"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            app:srcCompat="@drawable/icon_work" />
+                            app:srcCompat="@drawable/ic_chart" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -121,7 +120,7 @@
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:text="Tìm việc"
+                            android:text="Thị Trường"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
 

@@ -11,6 +11,13 @@ import com.fatherofapps.androidbase.data.repositories.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+/**
+ * MyAccountViewModel is a ViewModel class responsible for managing the user's account information.
+ * It fetches the user's account details from the repository and provides the result to the UI.
+ *
+ * @param myAccountRepository The repository that handles the network operations related to fetching user account information.
+ */
 @HiltViewModel
 class MyAccountViewModel @Inject constructor(
     private val myAccountRepository: CustomerRepository,
@@ -19,6 +26,10 @@ class MyAccountViewModel @Inject constructor(
     private val _myAccount = MutableLiveData<NetworkResult<UserData>>()
     val myInfoResult: LiveData<NetworkResult<UserData>> get() = _myAccount
 
+    /**
+     * Fetches the user's account information from the repository.
+     * It triggers a network request to retrieve the user's data and updates the LiveData with the result.
+     */
     fun fetchMyAccount() {
         showLoading(true)
             try {

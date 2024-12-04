@@ -11,6 +11,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * SearchViewModel is a ViewModel class responsible for managing the UI-related data for the search functionality.
+ * It interacts with repositories to fetch filtered posts based on given parameters or search posts by title,
+ * and exposes them as LiveData to the UI.
+ *
+ * @param postFilterRepository: Repository responsible for fetching posts based on filtering criteria such as price, district, and promotion.
+ * @param postSearchRepository: Repository responsible for searching posts by title.
+ */
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val postFilterRepository: PostFilterRepository,
@@ -18,13 +26,25 @@ class SearchViewModel @Inject constructor(
 
 ) : BaseViewModel() {
 
+    // Flag to track if "end of list" toast has been shown
     private var hasShownEndOfListToast= false
 
-    // post fillter
+    // LiveData for holding the list of posts after applying filters
     private var _listPost = MutableLiveData<List<PromotionalPost>>()
     val getPost: LiveData<List<PromotionalPost>>
         get() = _listPost
 
+
+    /**
+     * Fetches posts based on filter criteria such as price, district, type, and promotion status.
+     * Updates the list of posts with the filtered results.
+     *
+     * @param minPrice: The minimum price for filtering posts.
+     * @param maxPrice: The maximum price for filtering posts.
+     * @param district: The district for filtering posts.
+     * @param type: The type of post for filtering.
+     * @param hasPromotion: Boolean indicating whether to filter posts with promotions.
+     */
     override fun fetchData(minPrice: Double?,
                            maxPrice: Double?,
                            district: String?,
@@ -38,6 +58,14 @@ class SearchViewModel @Inject constructor(
         }
         registerJobFinish()
     }
+
+    /**
+     * Fetches posts based on the search query (title search).
+     * Updates the list of posts with the search results.
+     * Prevents fetching data if the "end of list" toast has already been shown.
+     *
+     * @param titleSearch: The title or keyword to search for in posts.
+     */
 
     override fun fetchData(titleSearch: String){
         if (hasShownEndOfListToast) return

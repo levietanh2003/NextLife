@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.ui.details
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -15,9 +16,15 @@ import com.fatherofapps.androidbase.common.formatPrice
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
-import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import dagger.hilt.android.AndroidEntryPoint
 import formatCurrencyFromString
+
+private const val TAG = "ProductDetailsFragment"
 
 @AndroidEntryPoint
 class ProductDetailsFragment : BaseFragment() {
@@ -27,9 +34,8 @@ class ProductDetailsFragment : BaseFragment() {
     private val viewModel by viewModels<ProductDetailsViewModel>()
     private lateinit var imageAdapter: ImageAdapter
     private var isExpanded = false
+    private lateinit var pieChart: PieChart
     private val MAX_WORD_COUNT = 50
-    private val authViewModel by viewModels<LoginViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,27 +68,28 @@ class ProductDetailsFragment : BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
 
-//        hideBottomNavigation()
+        // Initialize pieChart before using it
+        pieChart = dataBinding.pieChart
 
         viewModel.promotionalPost.observe(viewLifecycleOwner) { promotionalPost ->
             Log.d("ProductDetailsFragment", "Received promotional post: $promotionalPost")
             promotionalPost?.let {
-                dataBinding.tvTitle.text = it.data.title
-                dataBinding.tvDescription.text = it.data.description
-                dataBinding.tvAddress.text = it.data.roomInfo.address
+                dataBinding.tvTitle.text = it.title
+                dataBinding.tvDescription.text = it.description
+                dataBinding.tvAddress.text = it.roomInfo.address
                 dataBinding.tvAddress.paintFlags = dataBinding.tvAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-                dataBinding.tvPricePerMeter.text = it.data.roomInfo.type
-                dataBinding.txtWaterMoney.text = "Nước: ${formatPrice().formatPriceWaterFromString(it.data.pricingDetails.waterCost.toString())}"
-                dataBinding.txtElectricMoney.text = "Điện: ${formatPrice().formatPriceElectricFromString(it.data.pricingDetails.electricityCost.toString())}"
-                dataBinding.tvPhoneNumber.text = "Liên hệ: ${it.data.contactInfo}"
+                dataBinding.tvPricePerMeter.text = it.roomInfo.type
+                dataBinding.txtWaterMoney.text = "Nước: ${formatPrice().formatPriceWaterFromString(it.pricingDetails.waterCost.toString())}"
+                dataBinding.txtElectricMoney.text = "Điện: ${formatPrice().formatPriceElectricFromString(it.pricingDetails.electricityCost.toString())}"
+                dataBinding.tvPhoneNumber.text = "Liên hệ: ${it.contactInfo}"
                 // hien gia dich vu
-                val additionalFees = it.data.pricingDetails.additionalFees
+                val additionalFees = it.pricingDetails.additionalFees
                 val additionalFeeAdapter = AdditionalFeeAdapter(additionalFees)
                 Log.d("TestAdditionalFees", "Received additional fees: $additionalFees")
                 dataBinding.rvAvailability.layoutManager = LinearLayoutManager(context)
                 dataBinding.rvAvailability.adapter = additionalFeeAdapter
 
-                if (it.data.status == "active") {
+                if (it.status == "active") {
                     dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
                 }else{
                     dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
@@ -93,21 +100,24 @@ class ProductDetailsFragment : BaseFragment() {
                         "- Khu vực gần vị trí cầu Thủ Thiêm 4 (Cầu Bến Nghé, sẽ khởi công trong năm 2025) rất đáng tiền để đầu tư sinh lợi.\n" +
                         "- Nhà rộng 5,4m dài 9m diện tích trên sổ công nhận 49m2 thực tế trên 50m2.\n" +
                         "- Đường trước nhà mới làm xong không lo lộ giới, quy hoạch đất ở đô thị, sổ hồng, hoàn công đầy đủ, dễ dàng công chứng, vay trả góp ngân hàng.")
-                dataBinding.txtCapacity.text = "Dung tích: ${it.data.roomInfo.capacity}"
-                dataBinding.txtWidthRoom.text = "Chiều rộng: ${it.data.roomInfo.width}"
-                dataBinding.txtHeightRoom.text = "Chiều dài: ${it.data.roomInfo.height}"
-                dataBinding.productPrice.text = "Giá: ${formatCurrencyFromString(it.data.pricingDetails.basePrice.toString())}"
-                dataBinding.txtFloor.text = "Tầng: ${promotionalPost.data.roomInfo.floor}"
-                dataBinding.txtTotalArea.text = "Diện tích: ${it.data.roomInfo.totalArea} m²"
-                dataBinding.txtNumberOfBedrooms.text = "Số phòng ngủ: ${it.data.roomInfo.numberOfBedrooms}"
-                dataBinding.txtNumberOfBathrooms.text = "Số phòng tắm: ${it.data.roomInfo.numberOfBathrooms}"
+                dataBinding.txtCapacity.text = "Dung tích: ${it.roomInfo.capacity}"
+                dataBinding.txtWidthRoom.text = "Chiều rộng: ${it.roomInfo.width}"
+                dataBinding.txtHeightRoom.text = "Chiều dài: ${it.roomInfo.height}"
+                dataBinding.productPrice.text = "Giá: ${formatCurrencyFromString(it.pricingDetails.basePrice.toString())}"
+                dataBinding.txtFloor.text = "Tầng: ${promotionalPost.roomInfo.floor}"
+                dataBinding.txtTotalArea.text = "Diện tích: ${it.roomInfo.totalArea} m²"
+                dataBinding.txtNumberOfBedrooms.text = "Số phòng ngủ: ${it.roomInfo.numberOfBedrooms}"
+                dataBinding.txtNumberOfBathrooms.text = "Số phòng tắm: ${it.roomInfo.numberOfBathrooms}"
 
                 // Hiển thị thông tin Nội thất và Tiện nghi
-                displayFurnitureInfo(it.data.roomUtility)
-                displayAmenitiesInfo(it.data.roomUtility)
+                displayFurnitureInfo(it.roomUtility)
+                displayAmenitiesInfo(it.roomUtility)
 
-                // Hiển thị hình ảnh
-                setupImageCarousel(it.data.roomInfo.postImages)
+                // show image
+                setupImageCarousel(it.roomInfo.postImages)
+
+                // setup pie char with product details
+                processDataAndUpdatePieChart(it.pricingDetails.basePrice,it.pricingDetails.electricityCost, it.pricingDetails.waterCost)
             }
         }
 
@@ -120,6 +130,68 @@ class ProductDetailsFragment : BaseFragment() {
                 // Ẩn loading indicator
                 showLoading(false)
             }
+        }
+    }
+
+    // chart pie info price
+    private fun processDataAndUpdatePieChart(basePrice: Int, electricityCost: Int, waterCost: Int) {
+        try {
+            // Calculate total prices
+            val totalPrices = basePrice + electricityCost + waterCost
+
+            Log.d(TAG, "ProcessData: $totalPrices, $basePrice, $electricityCost, $waterCost")
+
+            // Prepare pie chart entries
+            val entries = ArrayList<PieEntry>()
+            entries.add(PieEntry(basePrice.toFloat(), "Giá gốc"))
+            entries.add(PieEntry(electricityCost.toFloat(), "Điện"))
+            entries.add(PieEntry(waterCost.toFloat(), "Nước"))
+
+            // Create pie chart dataset
+            val dataSet = PieDataSet(entries, "Chi phí phòng")
+            dataSet.apply {
+                colors = listOf(
+                    Color.rgb(64, 89, 128),   // Blue for base price
+                    Color.rgb(149, 165, 124), // Green for electricity
+                    Color.rgb(217, 184, 162)  // Soft orange for water
+                )
+                valueTextSize = 12f
+                valueTextColor = Color.WHITE
+            }
+
+            // Configure pie chart
+            pieChart.apply {
+                description.isEnabled = false
+                setUsePercentValues(true)
+                setEntryLabelColor(Color.WHITE)
+                setEntryLabelTextSize(12f)
+                setDrawEntryLabels(true)
+
+                legend.apply {
+                    isEnabled = true
+                    verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+                    horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+                    orientation = Legend.LegendOrientation.HORIZONTAL
+                }
+
+                // Create pie data
+                val pieData = PieData(dataSet)
+                data = pieData
+
+                // Animate the chart
+                animateY(1000)
+
+                // Highlight the first entry
+                highlightValue(null)
+
+                // Refresh the chart
+                invalidate()
+            }
+
+            Log.d(TAG, "Pie chart updated successfully. Total prices: $totalPrices")
+
+        } catch (e: Exception) {
+            Log.e(TAG, "processDataAndUpdatePieChart: Error updating pie chart", e)
         }
     }
 

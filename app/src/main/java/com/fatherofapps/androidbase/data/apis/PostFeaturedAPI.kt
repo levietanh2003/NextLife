@@ -11,4 +11,11 @@ interface PostFeaturedAPI {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<PromotionalPostResponse>
+
+    // get all product
+    @GET("post/all")
+    suspend fun getPostAll(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ):Response<PromotionalPostResponse>
 }
