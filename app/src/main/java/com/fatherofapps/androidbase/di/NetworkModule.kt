@@ -139,6 +139,38 @@ class NetworkModule {
     }
 
     /**
+     * Provides a [Retrofit] instance configured with the base URL for payment-related API requests.
+     *
+     * @param okHttpClient The OkHttpClient instance used for making network requests.
+     * @param moshiConverterFactory The Moshi converter used to convert JSON responses.
+     * @return The [Retrofit] instance configured with the user-related API base URL.
+     */
+    @Provides
+    @Singleton
+    @Named("PaymentAPI")
+    fun providePaymentAPIRetrofit(
+        okHttpClient: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+            .addConverterFactory(moshiConverterFactory)
+            .baseUrl(BuildConfig.PAYMENT)
+            .client(okHttpClient)
+            .build()
+    }
+
+    /**
+     * Provides the [PaymentAPI] service to interact with the payment-related API.
+     *
+     * @param retrofit The Retrofit instance used for making network requests.
+     * @return The [PaymentAPI] instance.
+     */
+    @Provides
+    fun providePaymentAPI(@Named("PaymentAPI") retrofit: Retrofit): PaymentAPI {
+        return retrofit.create(PaymentAPI::class.java)
+    }
+
+    /**
      * Provides the [HttpLoggingInterceptor] to log network requests and responses for debugging.
      *
      * @return The [HttpLoggingInterceptor] instance.

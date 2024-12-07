@@ -20,6 +20,10 @@
         <activity
             android:name=".ui.customer.register.RegisterActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.customer.news.NewsFragment"
+            android:exported="false" />
         <activity
             android:name=".activities.RoomStatisticsActivity"
             android:exported="false">

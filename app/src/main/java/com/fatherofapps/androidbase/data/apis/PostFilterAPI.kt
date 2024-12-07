@@ -12,6 +12,8 @@ interface PostFilterAPI {
         @Query("maxPrice") maxPrice: Double? = null,
         @Query("district") district: String? = null,
         @Query("type") type: String? = null,
-        @Query("hasPromotion") hasPromotion: Boolean? = null
+        @Query("hasPromotion") hasPromotion: Boolean? = null,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): Response<PromotionalPostResponse>
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.adapter.DistrictFilterAdapter
+import com.fatherofapps.androidbase.base.dialogs.NotifyDialog
 import com.fatherofapps.androidbase.databinding.DialogFilterBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -19,8 +20,6 @@ class FilterAreaBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: DialogFilterBinding? = null
     private val binding get() = _binding!!
     private var address: String? = null
-    private var minPrice: Double? = null
-    private var maxPrice: Double? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var districtsFilterAdapter: DistrictFilterAdapter
 
@@ -78,13 +77,23 @@ class FilterAreaBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.btnPositive.setOnClickListener {
 
-            val result = Bundle().apply {
-                putString("selected_address", address) // Thêm productId vào bundle
+            // kiem tra nguoi dung da chon chua
+            if(address == null) {
+                NotifyDialog(
+                    requireContext(),
+                    title = "Thông báo",
+                    message = "Vui lòng chọn quận",
+                    textButton = "Đồng ý"
+                ).show()
+                return@setOnClickListener
+            }else{
+                val result = Bundle().apply {
+                    putString("selected_address", address) // Thêm productId vào bundle
+                }
+                setFragmentResult("filter_request_key", result)
+                dismiss()
+                Log.d("Address_BottomSheet", "Selected address: $address")
             }
-            setFragmentResult("filter_request_key", result)
-            dismiss()
-            Log.d("Address_BottomSheet", "Selected address: $address")
-
         }
     }
 

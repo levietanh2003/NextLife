@@ -13,6 +13,7 @@ import com.fatherofapps.androidbase.adapter.AdditionalFeeAdapter
 import com.fatherofapps.androidbase.adapter.ImageAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.common.formatPrice
+import com.fatherofapps.androidbase.data.models.AdditionalFee
 import com.fatherofapps.androidbase.data.models.PostImage
 import com.fatherofapps.androidbase.data.models.RoomUtility
 import com.fatherofapps.androidbase.databinding.FragmentProductDetailsBinding
@@ -21,8 +22,10 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import formatCurrencyFromString
+import formatCurrencyFromString2
 
 private const val TAG = "ProductDetailsFragment"
 
@@ -62,7 +65,6 @@ class ProductDetailsFragment : BaseFragment() {
         return dataBinding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
@@ -85,15 +87,16 @@ class ProductDetailsFragment : BaseFragment() {
                 // hien gia dich vu
                 val additionalFees = it.pricingDetails.additionalFees
                 val additionalFeeAdapter = AdditionalFeeAdapter(additionalFees)
-                Log.d("TestAdditionalFees", "Received additional fees: $additionalFees")
                 dataBinding.rvAvailability.layoutManager = LinearLayoutManager(context)
                 dataBinding.rvAvailability.adapter = additionalFeeAdapter
 
-                if (it.status == "active") {
-                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
-                }else{
-                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
-                }
+                dataBinding.txtStatus.text = it.statusShow
+
+//                if (it.status == "active") {
+//                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
+//                }else{
+//                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
+//                }
 
                 handleDescriptionText("- Nhà cách phố đi bộ Nguyễn Huệ Quận 1 chỉ 1,9 km di chuyển từ nhà đến trung tâm Quận 1 không quá 7 phút. Nhà mới xây dựng xong mua là có nhà ở trước tết.\n" +
                         "- Hẻm cực rộng thoáng mát, khu sang trọng, dân trí cao đường Huỳnh Tấn Phát, đoạn chân cầu Tân Thuận.\n" +
@@ -109,15 +112,14 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.txtNumberOfBedrooms.text = "Số phòng ngủ: ${it.roomInfo.numberOfBedrooms}"
                 dataBinding.txtNumberOfBathrooms.text = "Số phòng tắm: ${it.roomInfo.numberOfBathrooms}"
 
-                // Hiển thị thông tin Nội thất và Tiện nghi
+                // show FurnitureInfo and AmenitiesInfo
                 displayFurnitureInfo(it.roomUtility)
                 displayAmenitiesInfo(it.roomUtility)
 
                 // show image
                 setupImageCarousel(it.roomInfo.postImages)
-
                 // setup pie char with product details
-                processDataAndUpdatePieChart(it.pricingDetails.basePrice,it.pricingDetails.electricityCost, it.pricingDetails.waterCost)
+                processDataAndUpdatePieChart(it.pricingDetails.basePrice,it.pricingDetails.electricityCost, it.pricingDetails.waterCost, it.pricingDetails.additionalFees)
             }
         }
 
@@ -132,40 +134,48 @@ class ProductDetailsFragment : BaseFragment() {
             }
         }
     }
-
-    // chart pie info price
-    private fun processDataAndUpdatePieChart(basePrice: Int, electricityCost: Int, waterCost: Int) {
+    private fun processDataAndUpdatePieChart(basePrice: Int, electricityCost: Int, waterCost: Int, additionalFees: List<AdditionalFee>) {
         try {
-            // Calculate total prices
-            val totalPrices = basePrice + electricityCost + waterCost
+            // Chuẩn bị danh sách entries để bao gồm các khoản phí chi tiết
+            val entries = ArrayList<PieEntry>().apply {
+                add(PieEntry(basePrice.toFloat(), "Giá thuê"))
+                add(PieEntry(electricityCost.toFloat(), "Điện/Kwh"))
+                add(PieEntry(waterCost.toFloat(), "Nước/m³"))
 
-            Log.d(TAG, "ProcessData: $totalPrices, $basePrice, $electricityCost, $waterCost")
+                // Thêm từng khoản phí bổ sung vào biểu đồ
+                additionalFees.forEach { fee ->
+                    add(PieEntry(fee.amount.toFloat(), fee.type))
+                }
+            }
 
-            // Prepare pie chart entries
-            val entries = ArrayList<PieEntry>()
-            entries.add(PieEntry(basePrice.toFloat(), "Giá gốc"))
-            entries.add(PieEntry(electricityCost.toFloat(), "Điện"))
-            entries.add(PieEntry(waterCost.toFloat(), "Nước"))
-
-            // Create pie chart dataset
-            val dataSet = PieDataSet(entries, "Chi phí phòng")
+            val dataSet = PieDataSet(entries, "/tháng")
             dataSet.apply {
+                // Tạo danh sách màu động để phù hợp với số lượng khoản phí
                 colors = listOf(
                     Color.rgb(64, 89, 128),   // Blue for base price
                     Color.rgb(149, 165, 124), // Green for electricity
-                    Color.rgb(217, 184, 162)  // Soft orange for water
+                    Color.rgb(217, 184, 162), // Soft orange for water
+                    Color.rgb(255, 105, 180), // Pink
+                    Color.rgb(70, 130, 180),  // Steel Blue
+                    Color.rgb(144, 238, 144), // Light Green
+                    Color.rgb(255, 160, 122)  // Light Salmon
                 )
-                valueTextSize = 12f
+                valueTextSize = 8f
                 valueTextColor = Color.WHITE
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return formatCurrencyFromString2(value.toInt().toString())
+                    }
+                }
             }
 
-            // Configure pie chart
             pieChart.apply {
                 description.isEnabled = false
-                setUsePercentValues(true)
+                setUsePercentValues(false)
                 setEntryLabelColor(Color.WHITE)
-                setEntryLabelTextSize(12f)
-                setDrawEntryLabels(true)
+                setDrawEntryLabels(false)
+                setEntryLabelTextSize(7f)
+
 
                 legend.apply {
                     isEnabled = true
@@ -174,22 +184,16 @@ class ProductDetailsFragment : BaseFragment() {
                     orientation = Legend.LegendOrientation.HORIZONTAL
                 }
 
-                // Create pie data
                 val pieData = PieData(dataSet)
                 data = pieData
 
-                // Animate the chart
                 animateY(1000)
-
-                // Highlight the first entry
                 highlightValue(null)
-
-                // Refresh the chart
                 invalidate()
             }
 
-            Log.d(TAG, "Pie chart updated successfully. Total prices: $totalPrices")
-
+            // Log để kiểm tra các khoản phí
+            Log.d(TAG, "Additional Fees: ${additionalFees.map { "${it.type}: ${it.amount}" }}")
         } catch (e: Exception) {
             Log.e(TAG, "processDataAndUpdatePieChart: Error updating pie chart", e)
         }

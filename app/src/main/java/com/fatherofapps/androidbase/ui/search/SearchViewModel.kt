@@ -76,4 +76,14 @@ class SearchViewModel @Inject constructor(
         }
         registerJobFinish()
     }
+
+    fun sortProductsByPrice(isAscending: Boolean) {
+        _listPost.value = _listPost.value?.sortedBy {
+            if (isAscending) {
+                it.pricingDetails.basePrice
+            } else {
+                -it.pricingDetails.basePrice
+            }
+        }
+    }
 }

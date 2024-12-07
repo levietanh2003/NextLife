@@ -119,7 +119,8 @@ class HomeViewModel @Inject constructor(
      */
 
     fun fetchAllProduct() {
-        showLoading(true) // Cập nhật trạng thái isLoading
+        showLoading(true)
+        isLoadingFeaturedPost = true// Cập nhật trạng thái isLoading
         parentJob = viewModelScope.launch {
             try {
                 val response = postFeaturedRepository.fetchAllProduct()
@@ -127,7 +128,8 @@ class HomeViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "Error fetching products: ${e.message}")
             } finally {
-                showLoading(false) // Ẩn trạng thái tải sau khi hoàn tất
+                showLoading(false)
+                isLoadingFeaturedPost = false// Ẩn trạng thái tải sau khi hoàn tất
             }
         }
         registerJobFinish()

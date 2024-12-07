@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
@@ -20,9 +22,6 @@ import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.common.Logger
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
-import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
-import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountViewModel
-import com.fatherofapps.androidbase.ui.customer.register.RegisterViewModel
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAreaBottomSheetFragment
 import com.fatherofapps.androidbase.ui.search.dialog.FilterPriceBottomSheetFragment
@@ -96,6 +95,22 @@ class SearchFragment : BaseFragment() {
                 Log.d("Min_Max_SearchFragment", "minPrice: $minPrice, maxPrice: $maxPrice")
                 viewModel.fetchData(minPrice = minPrice, maxPrice = maxPrice)
             }
+
+            // xử lý lọc nâng cao
+            val minPriceValueAdvanced = bundle.getString("min_price_Advanced")?.toDoubleOrNull()
+            val maxPriceValueAdvanced = bundle.getString("max_price_Advanced")?.toDoubleOrNull()
+            val selectedDistrictAdvanced = bundle.getString("selected_district_Advanced")
+            val categoryAdvanced = bundle.getString("category_Advanced").toString()
+            val hasPromotionAdvanced = bundle.getBoolean("has_promotion_Advanced")
+            if (minPriceValueAdvanced != null && maxPriceValueAdvanced != null && selectedDistrictAdvanced != null && categoryAdvanced != null) {
+                minPrice = minPriceValueAdvanced
+                maxPrice = maxPriceValueAdvanced
+                district = selectedDistrictAdvanced
+                type = categoryAdvanced
+                hasPromotion = hasPromotionAdvanced
+                Log.d("FillAdvanced", "minPrice: $minPrice, maxPrice: $maxPrice, district: $district, type: $type, hasPromotion: $hasPromotion")
+                viewModel.fetchData(minPrice = minPrice, maxPrice = maxPrice,type = type, district = district, hasPromotion = hasPromotion)
+            }
         }
     }
 
@@ -165,9 +180,6 @@ class SearchFragment : BaseFragment() {
             openBottomSheetFilterAdvanced()
         }
 
-        dataBinding.spinnerCategory.setOnClickListener {
-
-        }
 
         dataBinding.btnFilterArea.setOnClickListener {
             openBottomSheetFilterArea()
@@ -180,6 +192,88 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
+
+        // Tạo adapter cho Spinner sắp xếp
+        val sortOptions = arrayOf(
+            "Mặc định",
+            "Thấp đến Cao",
+            "Cao đến Thấp"
+        )
+
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            sortOptions
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dataBinding.spinnerSort.adapter = spinnerAdapter
+
+        val spinnerCategory = arrayOf(
+            "Căn hộ",
+            "Căn hộ mini",
+            "Căn hộ dịch vụ",
+            "Phòng trọ"
+        )
+
+        val spinnerCategoryAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            spinnerCategory
+        )
+        spinnerCategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dataBinding.spinnerCategory.adapter = spinnerCategoryAdapter
+
+        dataBinding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> {
+                        // Mặc định - load lại dữ liệu gốc
+                        viewModel.fetchData(type = "Căn hộ")
+                    }
+                    1 -> {
+                        // Sắp xếp giá tăng dần
+                        viewModel.fetchData(type = "Căn hộ mini")
+                    }
+                    2 -> {
+                        // Sắp xếp giá giảm dần
+                        viewModel.fetchData(type = "Căn hộ dịch vụ")
+                    }
+                    3 -> {
+                        viewModel.fetchData(type = "Phòng trọ")
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        // Lắng nghe sự kiện chọn spinner sắp xếp theo giá
+        dataBinding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> {
+                        // Mặc định - load lại dữ liệu gốc
+                        viewModel.fetchData(
+                            minPrice = minPrice,
+                            maxPrice = maxPrice,
+                            district = district,
+                            type = type,
+                            hasPromotion = hasPromotion
+                        )
+                    }
+                    1 -> {
+                        // Sắp xếp giá tăng dần
+                        viewModel.sortProductsByPrice(true)
+                    }
+                    2 -> {
+                        // Sắp xếp giá giảm dần
+                        viewModel.sortProductsByPrice(false)
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
         dataBinding.btnFilterAdvanced.setOnClickListener {
             openBottomSheetFilterAdvanced()

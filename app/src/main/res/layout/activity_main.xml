@@ -32,6 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:imeOptions="actionSearch"
                 app:mt_hint="Tìm kiếm trên Next Life"
                 app:mt_maxSuggestionsCount="10"
                 app:mt_roundedSearchBarEnabled="true"
@@ -57,15 +58,15 @@
         <!-- Main Navigation Container -->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container"
-            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@+id/nav_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:navGraph="@navigation/main_nav"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             app:layout_constraintTop_toBottomOf="@+id/homeHeader"
-            app:navGraph="@navigation/main_nav" />
+            app:layout_constraintBottom_toTopOf="@+id/nav_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <!-- Loading Overlay -->
         <FrameLayout

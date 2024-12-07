@@ -19,6 +19,7 @@ import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentHomeBinding
 import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountActivity
+import com.fatherofapps.androidbase.ui.customer.news.NewsFragment
 import com.fatherofapps.androidbase.ui.search.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -94,13 +95,14 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
     dataBinding.btnTypeOfDishBreads.setOnClickListener {
-        val intent = Intent(requireContext(), MyAccountActivity::class.java)
+//        val intent = Intent(requireContext(), MyAccountActivity::class.java)
+//        startActivity(intent)
+        val intent = Intent(requireContext(), NewsFragment::class.java)
         startActivity(intent)
     }
 
     dataBinding.btnTypeOfDishCakes.setOnClickListener {
-//        val intent = Intent(requireContext(), SearchFragment::class.java)
-//        startActivity(intent)
+        findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
     }
 
     dataBinding.btnChart.setOnClickListener {

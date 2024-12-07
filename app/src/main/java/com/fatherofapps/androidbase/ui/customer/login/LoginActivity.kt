@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.fatherofapps.androidbase.base.activities.BaseActivity
+import com.fatherofapps.androidbase.base.dialogs.NotifyDialog
 import com.fatherofapps.androidbase.base.network.NetworkResult
 
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
@@ -43,12 +45,13 @@ class LoginActivity : BaseActivity() {
             val email = dataBinding.edEmailLogin.text.toString().trim()
             val password = dataBinding.edPasswordLogin.text.toString().trim()
 
+            // Kiểm tra dữ liệu người dùng nhập vào
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 val loginRequest = LoginRequest(email, password)
                 viewModel.loginUser(loginRequest)
 
             } else {
-                // Hiển thị thông báo lỗi nếu email hoặc mật khẩu trống
+                showNotifyDialog("Thông báo", "Vui lòng nhập đầy đủ thông tin đăng nhập", "Đồng ý")
             }
         }
     }

@@ -29,15 +29,9 @@ interface UserAPI {
     suspend fun logoutUser(token: String): Response<LogOutResponses>
 
     // get info user
-//    @GET("users/my-info")
-//    suspend fun getUserInfo(
-//        @Header("Authorization") bearerToken: String
-//    ): Response<UserResponse>
     @GET("users/my-info")
     suspend fun getUserInfo(): Response<UserResponse>
 
     // edit profile
-
-
 
 }

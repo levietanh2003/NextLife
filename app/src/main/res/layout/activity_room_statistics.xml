@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Title or any other components can go here -->
-    <TextView
-        android:id="@+id/titleText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Biểu đồ giá trung bình theo khu vực"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Stacked Bar Chart -->
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- Set fixed height for better UI -->
-    <!-- Loading Overlay -->
-    <FrameLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        android:clickable="true"
-        android:elevation="12dp"
-        android:focusable="true"
-        android:visibility="gone">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
+        <!-- Tiêu đề biểu đồ giá trung bình -->
+        <TextView
+            android:id="@+id/titleBarChartText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/color_main" />
-    </FrameLayout>
+            android:text="Biểu đồ giá trung bình theo khu vực"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
 
-</LinearLayout>
+        <!-- Stacked Bar Chart -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"/>
+
+        <!-- Tiêu đề biểu đồ loại phòng -->
+        <TextView
+            android:id="@+id/titlePieChartText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thống kê loại phòng"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
+
+        <!-- Pie Chart -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartRoomTypes"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"/>
+    </LinearLayout>
+</ScrollView>

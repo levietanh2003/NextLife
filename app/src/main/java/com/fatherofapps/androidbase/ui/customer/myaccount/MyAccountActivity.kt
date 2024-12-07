@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.fatherofapps.androidbase.base.activities.BaseActivity
+import com.fatherofapps.androidbase.base.dialogs.ConfirmDialog
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.user.UserData
 import com.fatherofapps.androidbase.databinding.FragmentMyAccountBinding
@@ -43,16 +44,32 @@ class MyAccountActivity : BaseActivity() {
             startActivity(intent)
         }
     }
+
     private fun performLogout() {
-        // Clear user session or authentication data
-        viewModelLogin.logoutUser()
+        // Hiển thị hộp thoại xác nhận
+        val confirmDialog = ConfirmDialog(
+            context = this,
+            callback = object : ConfirmDialog.ConfirmCallback {
+                override fun negativeAction() {
+                    // Người dùng nhấn "Hủy", không thực hiện hành động gì
+                    Toast.makeText(this@MyAccountActivity, "Hủy đăng xuất", Toast.LENGTH_SHORT).show()
+                }
 
-        // Navigate to the LoginActivity
-        navigateToLoginActivity()
-
-        // Optionally, show a message to confirm logout
-        showNotify("Đăng xuất thành công", "Thông báo")
+                override fun positiveAction() {
+                    // Người dùng nhấn "Đồng ý", tiến hành đăng xuất
+                    viewModelLogin.logoutUser()
+                    navigateToLoginActivity()
+                    showNotify("Đăng xuất thành công", "Thông báo")
+                }
+            },
+            title = "Xác nhận",
+            message = "Bạn có chắc chắn muốn đăng xuất không?",
+            positiveButtonTitle = "Đồng ý",
+            negativeButtonTitle = "Hủy"
+        )
+        confirmDialog.show()
     }
+
     private fun fetchUserInfo() {
         // Call your ViewModel to fetch the user info here
         viewModelMyInfo.fetchMyAccount()

@@ -18,7 +18,7 @@ data class RoomInfo(
     val capacity: Int,
     val numberOfBedrooms: Int,
     val numberOfBathrooms: Int,
-    val availableFromDate: Double
+    val availableFromDate: Double ?=null
 )
 {
     fun toRoomInfoEntity() : RoomInfoEntity {

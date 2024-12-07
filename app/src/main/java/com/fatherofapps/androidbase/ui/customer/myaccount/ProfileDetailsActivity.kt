@@ -57,16 +57,26 @@ class ProfileDetailsActivity : BaseActivity() {
     private fun updateUI(userData: UserData) {
         // Populate the UI with user data
         dataBinding.edtFullName.setText(userData.fullName())
-//        dataBinding.edtAddress.setText(userData.)
-//        dataBinding.edtPhone.setText(userData.)
-//        dataBinding.edtIntro.setText(userData.intro)
         dataBinding.edtEmail.setText(userData.email)
-//        dataBinding.spinnerGender.setText(userData.gender)
         dataBinding.edtBirthDate.setText(formatBirthDate(userData.dayOfBirth))
     }
 
     private fun showNotify(message: String, title: String) {
         // Show a notification message
         Toast.makeText(this, "$title: $message", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateInfo(){
+        val fullName = dataBinding.edtFullName.text.toString()
+        val address = dataBinding.edtAddress.text.toString()
+        val phone = dataBinding.edtPhone.text.toString()
+        val intro = dataBinding.edtIntro.text.toString()
+
+        if(fullName.isEmpty() || address.isEmpty() || phone.isEmpty() || intro.isEmpty()){
+            showNotifyDialog("Vui lòng nhập đầy đủ thông tin", "Thông báo", "OK")
+        }else{
+            // xu ly update info
+        }
+
     }
 }

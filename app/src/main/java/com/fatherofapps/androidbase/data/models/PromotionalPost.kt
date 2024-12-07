@@ -14,12 +14,13 @@ data class PromotionalPost(
     val pricingDetails: PricingDetails,
     val contactInfo: String,
     val additionalDetails: String,
-    val status: String,
+    val status: String ?= null,
     val createdDate: Double,
     val lastModifiedDate: Double,
     val createdBy: String,
     val modifiedBy: String,
     val fixPrice: Int?,
+    val statusShow: String ?=null
 //    val created: String?
 )
 {
