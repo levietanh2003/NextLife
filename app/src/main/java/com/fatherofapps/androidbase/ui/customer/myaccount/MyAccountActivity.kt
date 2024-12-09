@@ -39,6 +39,15 @@ class MyAccountActivity : BaseActivity() {
             performLogout()
         }
 
+        dataBinding.btnHistoryPayment.setOnClickListener {
+            val intent = Intent(this, WalletActivity::class.java)
+            startActivity(intent)
+        }
+
+        dataBinding.btnBack.setOnClickListener {
+            onBackPressed() // Hoặc gọi finish() nếu muốn đóng Activity hiện tại
+        }
+
         dataBinding.linearLayoutEditProfile.setOnClickListener {
             val intent = Intent(this, ProfileDetailsActivity::class.java)
             startActivity(intent)
@@ -63,7 +72,7 @@ class MyAccountActivity : BaseActivity() {
                 }
             },
             title = "Xác nhận",
-            message = "Bạn có chắc chắn muốn đăng xuất không?",
+            message = "Bạn muốn đăng xuất không?",
             positiveButtonTitle = "Đồng ý",
             negativeButtonTitle = "Hủy"
         )

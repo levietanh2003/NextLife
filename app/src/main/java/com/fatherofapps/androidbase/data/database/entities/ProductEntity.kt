@@ -67,7 +67,8 @@ data class ProductEntity(
             lastModifiedDate = this.lastModifiedDate ?: 0.0,  // Gán giá trị mặc định nếu null
             createdBy = this.createdBy ?: "",
             modifiedBy = this.modifiedBy ?: "",
-            fixPrice = this.fixPrice
+            fixPrice = this.fixPrice,
+            created = ""
         )
     }
 

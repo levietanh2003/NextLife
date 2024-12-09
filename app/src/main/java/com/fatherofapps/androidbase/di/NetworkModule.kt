@@ -86,6 +86,11 @@ class NetworkModule {
         return retrofit.create(PostSearchAPI::class.java)
     }
 
+    @Provides
+    fun providePostCategoryAPI(@Named("MainSite") retrofit: Retrofit): NewsAPI {
+        return retrofit.create(NewsAPI::class.java)
+    }
+
     /**
      * Provides a [Retrofit] instance configured with the base URL for the main site.
      *

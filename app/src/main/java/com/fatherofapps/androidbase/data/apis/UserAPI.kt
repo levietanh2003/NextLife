@@ -3,6 +3,7 @@ package com.fatherofapps.androidbase.data.apis
 import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
+import com.fatherofapps.androidbase.data.models.user.NewsResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
 import com.fatherofapps.androidbase.data.models.user.RegisterResponse
 import com.fatherofapps.androidbase.data.models.user.UserResponse
@@ -33,5 +34,4 @@ interface UserAPI {
     suspend fun getUserInfo(): Response<UserResponse>
 
     // edit profile
-
 }

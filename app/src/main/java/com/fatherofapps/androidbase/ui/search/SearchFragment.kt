@@ -62,55 +62,20 @@ class SearchFragment : BaseFragment() {
 
         // lấy vị trí của người dùng
         getUserLocation()
-        // Nhận search query từ MainActivity
-        val titleSearchMainActivity = arguments?.getString("search_query").toString()
 
-        if (!titleSearchMainActivity.isNullOrEmpty()) {
-            titleSearch = titleSearchMainActivity
+        // Handle search query
+        arguments?.getString("search_query")?.takeIf { it.isNotEmpty() }?.let { searchQuery ->
+            titleSearch = searchQuery
             Log.d("Title_SearchFragment", "Search query received: $titleSearch")
-
-            // Fetch dữ liệu theo từ khóa tìm kiếm
             viewModel.fetchData(titleSearch = titleSearch)
-        }else{
+        } ?: run {
+            // If no search query, fetch data with existing filters
             viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
         }
 
-        // Listener cho filter dialog:
+        // Fragment result listener for filters
         parentFragmentManager.setFragmentResultListener("filter_request_key", this) { _, bundle ->
-            // Xử lý district
-            val selectedDistrict = bundle.getString("selected_address")
-            if (selectedDistrict != null) {
-                district = selectedDistrict
-                dataBinding.titleAddress.text = district
-                Log.d("District_SearchFragment", district.toString())
-                viewModel.fetchData(district = district)
-            }
-
-            // Xử lý minPrice và maxPrice
-            val minPriceValue = bundle.getString("min_price")?.toDoubleOrNull()
-            val maxPriceValue = bundle.getString("max_price")?.toDoubleOrNull()
-            if (minPriceValue != null && maxPriceValue != null) {
-                minPrice = minPriceValue
-                maxPrice = maxPriceValue
-                Log.d("Min_Max_SearchFragment", "minPrice: $minPrice, maxPrice: $maxPrice")
-                viewModel.fetchData(minPrice = minPrice, maxPrice = maxPrice)
-            }
-
-            // xử lý lọc nâng cao
-            val minPriceValueAdvanced = bundle.getString("min_price_Advanced")?.toDoubleOrNull()
-            val maxPriceValueAdvanced = bundle.getString("max_price_Advanced")?.toDoubleOrNull()
-            val selectedDistrictAdvanced = bundle.getString("selected_district_Advanced")
-            val categoryAdvanced = bundle.getString("category_Advanced").toString()
-            val hasPromotionAdvanced = bundle.getBoolean("has_promotion_Advanced")
-            if (minPriceValueAdvanced != null && maxPriceValueAdvanced != null && selectedDistrictAdvanced != null && categoryAdvanced != null) {
-                minPrice = minPriceValueAdvanced
-                maxPrice = maxPriceValueAdvanced
-                district = selectedDistrictAdvanced
-                type = categoryAdvanced
-                hasPromotion = hasPromotionAdvanced
-                Log.d("FillAdvanced", "minPrice: $minPrice, maxPrice: $maxPrice, district: $district, type: $type, hasPromotion: $hasPromotion")
-                viewModel.fetchData(minPrice = minPrice, maxPrice = maxPrice,type = type, district = district, hasPromotion = hasPromotion)
-            }
+            handleFilterResults(bundle)
         }
     }
 
@@ -309,6 +274,53 @@ class SearchFragment : BaseFragment() {
     private fun openBottomSheetFilterAdvanced() {
         val bottomSheetFragment = FilterAdvancedBottomSheetFragment()
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun handleFilterResults(bundle: Bundle) {
+        // Handle district filter
+        bundle.getString("selected_address")?.let { selectedDistrict ->
+            district = selectedDistrict
+            dataBinding.titleAddress.text = district
+            Log.d("District_SearchFragment", district.toString())
+            viewModel.fetchData(district = district)
+        }
+
+        // Handle price filters
+        val minPriceValue = bundle.getString("min_price")?.toDoubleOrNull()
+        val maxPriceValue = bundle.getString("max_price")?.toDoubleOrNull()
+        if (minPriceValue != null && maxPriceValue != null) {
+            minPrice = minPriceValue
+            maxPrice = maxPriceValue
+            Log.d("Min_Max_SearchFragment", "minPrice: $minPrice, maxPrice: $maxPrice")
+            viewModel.fetchData(minPrice = minPrice, maxPrice = maxPrice)
+        }
+
+        // Handle advanced filters
+        val minPriceAdvanced = bundle.getString("min_price_Advanced")?.toDoubleOrNull()
+        val maxPriceAdvanced = bundle.getString("max_price_Advanced")?.toDoubleOrNull()
+        val districtAdvanced = bundle.getString("selected_district_Advanced")
+        val categoryAdvanced = bundle.getString("category_Advanced")
+        val hasPromotionAdvanced = bundle.getBoolean("has_promotion_Advanced")
+
+        if (minPriceAdvanced != null && maxPriceAdvanced != null &&
+            !districtAdvanced.isNullOrEmpty() && !categoryAdvanced.isNullOrEmpty()) {
+            minPrice = minPriceAdvanced
+            maxPrice = maxPriceAdvanced
+            district = districtAdvanced
+            type = categoryAdvanced
+            hasPromotion = hasPromotionAdvanced
+
+            Log.d("FillAdvanced", "minPrice: $minPrice, maxPrice: $maxPrice, " +
+                    "district: $district, type: $type, hasPromotion: $hasPromotion")
+
+            viewModel.fetchData(
+                minPrice = minPrice,
+                maxPrice = maxPrice,
+                type = type,
+                district = district,
+                hasPromotion = hasPromotion
+            )
+        }
     }
 
 

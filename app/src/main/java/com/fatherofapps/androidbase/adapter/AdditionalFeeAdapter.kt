@@ -34,3 +34,4 @@ class AdditionalFeeAdapter(private val fees: List<AdditionalFee>) : RecyclerView
         }
     }
 }
+

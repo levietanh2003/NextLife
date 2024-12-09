@@ -13,4 +13,9 @@ class PaymentRemoteService@Inject constructor(private val paymentAPI: PaymentAPI
     suspend fun postPayment(amount: String, method: String): NetworkResult<PaymentResponse> {
         return callApi { paymentAPI.paymentPost(amount,method) }
     }
+
+    // get lich su nap tien cua user
+    suspend fun getPaymentHistory(userId: Int): NetworkResult<PaymentResponse> {
+        return callApi { paymentAPI.getPaymentHistory(1, 10, userId) }
+    }
 }

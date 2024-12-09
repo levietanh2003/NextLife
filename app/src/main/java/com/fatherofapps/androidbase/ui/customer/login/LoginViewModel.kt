@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
+import com.fatherofapps.androidbase.data.models.NewsData
 import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
@@ -49,6 +50,14 @@ class LoginViewModel @Inject constructor(
     // StateFlow to track user authentication state (login, logout)
     private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
+
+    // get all news
+//    private val _listNews = MutableLiveData<NetworkResult<List<NewsData>>>()
+//    val listNews: LiveData<NetworkResult<List<NewsData>>> get() = _listNews
+
+    // LiveData để theo dõi kết quả lấy tất cả các tin tức
+    private val _listNews = MutableLiveData<List<NewsData>>()
+    val listNews: LiveData<List<NewsData>> get() = _listNews
 
     /**
      * Checks the user's login status by verifying the information stored in SharedPreferences.
@@ -103,4 +112,36 @@ class LoginViewModel @Inject constructor(
         }
         registerJobFinish()
     }
+
+//    fun fetchAllNews(){
+//        showLoading(true)
+//        parentJob = viewModelScope.launch(handler) {
+//            val result = customerRepository.getAllNews()
+//            _listNews.postValue(result)
+//            Log.d("LoginViewModel", "Login result: $result")
+//            showLoading(false)
+//        }
+//        registerJobFinish()
+//    }
+
+    fun fetchAllNews() {
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val result = customerRepository.getAllNews()
+
+            when (result) {
+                is NetworkResult.Success -> {
+                    _listNews.postValue(result.data) // Trả về List<NewsData> khi thành công
+                }
+                is NetworkResult.Error -> {
+                    Log.e("LoginViewModel", "Error fetching news: ${result.exception?.message}")
+                    _listNews.postValue(emptyList()) // Trả về danh sách rỗng khi có lỗi
+                }
+            }
+            showLoading(false)
+        }
+        registerJobFinish()
+    }
+
+
 }

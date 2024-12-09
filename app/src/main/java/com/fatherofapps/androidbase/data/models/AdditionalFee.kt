@@ -6,7 +6,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class AdditionalFee(
     val type: String,
-    val amount: Int
+    val amount: Int,
+    var isSelected: Boolean = false
 )
 {
     fun toAdditionalFeeEntity() : AdditionalFeeEntity {

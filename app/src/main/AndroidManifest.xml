@@ -18,15 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FatherOfApps">
         <activity
+            android:name=".ui.customer.myaccount.WalletActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.payment.TransactionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.customer.register.RegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.customer.news.NewsFragment"
             android:exported="false" />
         <activity
             android:name=".activities.RoomStatisticsActivity"
             android:exported="false">
+
             <!-- Nếu bạn muốn activity có thể được gọi từ bên ngoài app, đặt exported="true" -->
         </activity>
         <activity

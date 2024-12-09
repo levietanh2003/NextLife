@@ -42,6 +42,29 @@ class AppSharePreference @Inject constructor(private val context: Context) {
     }
 
     /**
+     * Save idUser when login successfully
+     *
+     * @param idUser The idUser to save.
+     */
+    fun saveIdUser(idUser: Int) {
+        sharedPreferences.edit().putInt("idUser", idUser).apply()
+    }
+
+    /**
+     * Retrieves the saved idUser from shared preferences.
+     *
+     * @return The idUser if it exists, otherwise null.
+     */
+    fun getIdUser(): Int? {
+        val idUser = sharedPreferences.getInt("idUser", -1)
+        return if (idUser != -1) idUser else null
+    }
+
+//    fun getIdUser(): Int {
+//        return sharedPreferences.getInt("idUser", 0)
+//    }
+
+    /**
      * Saves the login state to shared preferences, indicating whether the user is logged in or not.
      *
      * @param isLoggedIn A boolean value representing the login state (true for logged in, false for logged out).
@@ -64,6 +87,7 @@ class AppSharePreference @Inject constructor(private val context: Context) {
      */
     fun clearUserSession() {
         sharedPreferences.edit().apply {
+            remove("idUser")
             remove("token")
             remove("is_logged_in")
             apply()

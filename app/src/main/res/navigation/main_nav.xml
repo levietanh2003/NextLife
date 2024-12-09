@@ -47,11 +47,6 @@
         android:name="com.fatherofapps.androidbase.ui.customer.market.MarketFragment"
         android:label="MarketFragment"
         tools:layout="@layout/fragment_market"/>
-    <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.fatherofapps.androidbase.ui.customer.news.NewsFragment"
-        android:label="NewsFragment"
-        tools:layout="@layout/fragment_news"/>
     <dialog
         android:id="@+id/filterAdvancedBottomSheetFragment"
         android:name="com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment"

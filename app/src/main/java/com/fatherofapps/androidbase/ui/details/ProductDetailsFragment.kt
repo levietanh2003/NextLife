@@ -84,19 +84,20 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.txtWaterMoney.text = "Nước: ${formatPrice().formatPriceWaterFromString(it.pricingDetails.waterCost.toString())}"
                 dataBinding.txtElectricMoney.text = "Điện: ${formatPrice().formatPriceElectricFromString(it.pricingDetails.electricityCost.toString())}"
                 dataBinding.tvPhoneNumber.text = "Liên hệ: ${it.contactInfo}"
+
                 // hien gia dich vu
                 val additionalFees = it.pricingDetails.additionalFees
-                val additionalFeeAdapter = AdditionalFeeAdapter(additionalFees)
+                val additionalFeeAdapter = AdditionalFeeAdapter(additionalFees,)
                 dataBinding.rvAvailability.layoutManager = LinearLayoutManager(context)
                 dataBinding.rvAvailability.adapter = additionalFeeAdapter
 
-                dataBinding.txtStatus.text = it.statusShow
+//                dataBinding.txtStatus.text = it.statusShow
 
-//                if (it.status == "active") {
-//                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
-//                }else{
-//                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
-//                }
+                if (it.status == "active") {
+                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
+                }else{
+                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
+                }
 
                 handleDescriptionText("- Nhà cách phố đi bộ Nguyễn Huệ Quận 1 chỉ 1,9 km di chuyển từ nhà đến trung tâm Quận 1 không quá 7 phút. Nhà mới xây dựng xong mua là có nhà ở trước tết.\n" +
                         "- Hẻm cực rộng thoáng mát, khu sang trọng, dân trí cao đường Huỳnh Tấn Phát, đoạn chân cầu Tân Thuận.\n" +
@@ -160,7 +161,7 @@ class ProductDetailsFragment : BaseFragment() {
                     Color.rgb(144, 238, 144), // Light Green
                     Color.rgb(255, 160, 122)  // Light Salmon
                 )
-                valueTextSize = 8f
+                valueTextSize = 10f
                 valueTextColor = Color.WHITE
                 valueFormatter = object : ValueFormatter() {
                     override fun getFormattedValue(value: Float): String {
@@ -174,7 +175,7 @@ class ProductDetailsFragment : BaseFragment() {
                 setUsePercentValues(false)
                 setEntryLabelColor(Color.WHITE)
                 setDrawEntryLabels(false)
-                setEntryLabelTextSize(7f)
+                setEntryLabelTextSize(9f)
 
 
                 legend.apply {

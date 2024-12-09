@@ -16,11 +16,11 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.activities.RoomStatisticsActivity
 import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentHomeBinding
-import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountActivity
 import com.fatherofapps.androidbase.ui.customer.news.NewsFragment
-import com.fatherofapps.androidbase.ui.search.SearchFragment
+import com.fatherofapps.androidbase.ui.customer.payment.PaymentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,6 +36,7 @@ class HomeFragment : BaseFragment() {
     private val viewModel by viewModels<HomeViewModel>()
     private var promotionalPostsList: List<PromotionalPost> = emptyList()
     private var featuredPostsList: List<PromotionalPost> = emptyList()
+
     // Tạo các danh sách rỗng để chứa dữ liệu
     private val productNames = mutableListOf<String>()
     private val productPrices = mutableListOf<String>()
@@ -58,7 +59,6 @@ class HomeFragment : BaseFragment() {
 //        viewModel.fetchData()
         viewModel.fetchFeaturedPosts()
         viewModel.fetchPromotionalPosts()
-
     }
 
     override fun onCreateView(
@@ -122,7 +122,6 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 val address = post.roomInfo.address
                 val lastModified = post.lastModifiedDate
                 val quantityImage = images.size
-
 
                 // Thêm dữ liệu vào các danh sách
                 productNamesFeatured.add(title)

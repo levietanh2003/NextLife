@@ -2,6 +2,8 @@ package com.fatherofapps.androidbase.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
@@ -12,12 +14,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.activities.BaseActivity
 import com.fatherofapps.androidbase.ui.customer.myaccount.MyAccountActivity
-import com.fatherofapps.androidbase.ui.customer.myaccount.ProfileDetailsActivity
+import com.fatherofapps.androidbase.ui.customer.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mancj.materialsearchbar.MaterialSearchBar
 import dagger.hilt.android.AndroidEntryPoint
 
+@Suppress("UNREACHABLE_CODE")
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
@@ -34,7 +37,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loadingLayout = findViewById(R.id.loadingLayout)
-
         loadingLayout = findViewById(R.id.loadingLayout)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         fabPostNews = findViewById(R.id.fabPostNews)
@@ -50,9 +52,57 @@ class MainActivity : BaseActivity() {
         // Setup BottomNavigationView with NavController
         bottomNavigationView?.setupWithNavController(navController)
 
+//        searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {
+//            override fun onSearchStateChanged(enabled: Boolean) {}
+//
+//            override fun onButtonClicked(buttonCode: Int) {
+//                if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
+//                    // Handle navigation button click if needed
+//                }
+//            }
+//
+//            override fun onSearchConfirmed(text: CharSequence?) {
+//                if (!text.isNullOrBlank()) {
+//                    val bundle = Bundle().apply {
+//                        putString("search_query", text.toString())
+//                    }
+//                    navController.navigate(R.id.searchFragment, bundle)
+//                }
+//            }
+//        })
+        searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {
+            override fun onSearchStateChanged(enabled: Boolean) {}
+
+            override fun onButtonClicked(buttonCode: Int) {}
+
+            override fun onSearchConfirmed(text: CharSequence?) {
+                if (!text.isNullOrBlank()) {
+                    val bundle = Bundle().apply {
+                        putString("search_query", text.toString())
+                    }
+                    navController.navigate(R.id.searchFragment, bundle)
+                }
+            }
+        })
+
+        // Hide BottomNavigationView in specific fragments
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.marketFragment -> {
+                    bottomNavigationView?.visibility = View.GONE
+                    fabPostNews?.visibility = View.GONE
+                }
+                else -> {
+                    bottomNavigationView?.visibility = View.VISIBLE
+                    fabPostNews?.visibility = View.VISIBLE
+                }
+            }
+        }
+
         // Handle FAB Click
         fabPostNews?.setOnClickListener {
-            navController.navigate(R.id.newsFragment)
+            val intentNewActivity = Intent(this, NewsFragment::class.java)
+            startActivity(intentNewActivity)
         }
 
         // Optional: Custom navigation handling
@@ -90,8 +140,8 @@ class MainActivity : BaseActivity() {
         }
 
         btnChat?.setOnClickListener {
-            // Navigate to chat or open chat interface
-            // navController.navigate(R.id.chatFragment)
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
         }
 
     }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <!-- Transaction ID -->
+        <TextView
+            android:id="@+id/tvTransactionId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã giao dịch: "
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/black"/>
+
+        <!-- Amount -->
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số tiền: "
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/black"/>
+
+        <!-- Method with color tag -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvMethod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phương thức: "
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trạng thái: "
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/black"/>
+
+        <!-- Created By -->
+        <TextView
+            android:id="@+id/tvCreatedBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Người tạo: "
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

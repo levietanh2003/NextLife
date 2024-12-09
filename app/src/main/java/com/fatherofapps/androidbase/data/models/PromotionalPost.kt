@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PromotionalPost(
-    val id: String,
-    val roomId: String,
+    val id: String ?= null,
+    val roomId: String ?= null,
     val title: String,
     val description: String,
     val roomInfo: RoomInfo,
@@ -17,31 +17,11 @@ data class PromotionalPost(
     val status: String ?= null,
     val createdDate: Double,
     val lastModifiedDate: Double,
-    val createdBy: String,
-    val modifiedBy: String,
+    val createdBy: String?,
+    val modifiedBy: String?,
     val fixPrice: Int?,
-    val statusShow: String ?=null
-//    val created: String?
+    val statusShow: String ?=null,
+    val created: String?
 )
-{
-    fun toProductEntity(): ProductEntity {
-        return ProductEntity(
-            id = id,
-            title = title,
-            description = description,
-            roomId = roomId,
-            contactInfo = contactInfo,
-            additionalDetails = additionalDetails,
-            status = status,
-            createdDate = createdDate,
-            lastModifiedDate = lastModifiedDate,
-            createdBy = createdBy,
-            modifiedBy = modifiedBy,
-            fixPrice = fixPrice,
-            roomInfo = roomInfo.toRoomInfoEntity(),
-            roomUtility = roomUtility.toRoomUtilityEntity(),
-            pricingDetails = pricingDetails.toPricingDetailsEntity()
-        )
-    }
-}
+
 

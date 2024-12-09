@@ -8,6 +8,7 @@ import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.data.models.user.UserData
 import com.fatherofapps.androidbase.data.repositories.CustomerRepository
+import com.fatherofapps.androidbase.di.AppSharePreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyAccountViewModel @Inject constructor(
     private val myAccountRepository: CustomerRepository,
+    private val appSharePreference: AppSharePreference
 ) : BaseViewModel() {
 
     private val _myAccount = MutableLiveData<NetworkResult<UserData>>()
@@ -37,6 +39,12 @@ class MyAccountViewModel @Inject constructor(
                 parentJob = viewModelScope.launch {
                     val myInfoResponse = myAccountRepository.getInfoUser()
                     _myAccount.postValue(myInfoResponse)
+                    // Nếu lấy thông tin thành công, lưu ID người dùng
+                    if (myInfoResponse is NetworkResult.Success) {
+                        myInfoResponse.data?.let { userData ->
+                            appSharePreference.saveIdUser(userData.id)
+                        }
+                    }
                     Log.e("MyAccountViewModel", myInfoResponse.toString())
                 }
 
