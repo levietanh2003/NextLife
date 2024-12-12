@@ -1,8 +1,6 @@
 # Github Trending Repositories [mvvmclean]
 
-An Android app consuming [GitHub Trending API](https://githubtrendingapi.docs.apiary.io/#reference/0/repositories/list-trending-repositories) to display the current trending
-Github repositories. It has been built using kotlin with clean architecture principles, Repository Pattern and MVVM
-pattern as well as Architecture Components.
+Next Life is an application designed to help users find rental rooms based on criteria such as location, price, and amenities. The application adopts the MVVM (Model-View-ViewModel) architecture to ensure clean code organization, ease of maintenance, and efficient data handling from the backend to the user interface.
 
 Min API Level Supported : 19
 
@@ -39,6 +37,11 @@ The Application is split into a three layer architecture inorder to provide clea
 - Data - Layer that holds APIs, Database, Cache
 - Domain - Layer that holds Use Cases, and Model Objects. Business logic happens here.
 - Application - Layer that holds presentation, Android components, Viewmodels, Dagger components/modules handles Dependency Injection, etc. MVVM exists at this layer.
+- Fragment (View): Displays the user interface and handles user interactions.
+- ViewModel: Manages the stateful data, handles business logic, and communicates with the Repository.
+- Repository: Acts as a mediator, aggregating data from both the RemoteService (API) and LocalService (Room Database).
+- RemoteService: Uses Retrofit to call APIs and retrieve data from the backend.
+- LocalService: Manages local data storage with Room Database.
 
 ![Architecture](https://github.com/user-attachments/assets/7c5d7315-b742-4acf-88f6-080f95381e3b)
 ![Backend](https://github.com/user-attachments/assets/ad2e7f2d-f4c9-45c9-8f22-e15808b86a4b)
@@ -49,13 +52,12 @@ a clear separation of concerns with its Abstraction Principle.
 
 ## Features
  
- - Trending Repository Listing
- - Repository sorting by stars and name
- - Take user to corresponding repository on long press
- - Pull to refresh repository
+ - Users can filter and search for rental rooms by district, price range, and available amenities.
+ - Displays detailed information about each room, such as rental price, size, and contact information.
+ - Connects to the backend to provide the latest updates on available rooms.
+ - Support running ads for user posts.
  - Offline Storage ( Scheduled repo remote controller syncing, App will sync with backend server in every 2hrs )
  
-
 ## Libraries
 
 Following are the Libraries used:
