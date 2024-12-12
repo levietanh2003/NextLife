@@ -1,5 +1,6 @@
-# Github Trending Repositories [mvvmclean]
+# NEXT LIFE 
 
+## 🚧 Overview 🚧
 Next Life is an application designed to help users find rental rooms based on criteria such as location, price, and amenities. The application adopts the MVVM (Model-View-ViewModel) architecture to ensure clean code organization, ease of maintenance, and efficient data handling from the backend to the user interface.
 
 Min API Level Supported : 19
