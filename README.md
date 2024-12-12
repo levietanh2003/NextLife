@@ -163,6 +163,13 @@ Following are the Libraries used:
       </p>
     </td>
   </tr>
+    <tr>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/5299214e-9a93-4f29-ab90-33e5fa95228a" alt="Chart basic" width="500"/>
+      </p>
+    </td> 
+    </tr>
 </table>
 
 
