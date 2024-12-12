@@ -37,6 +37,8 @@ The Application is split into a three layer architecture inorder to provide clea
 - Data - Layer that holds APIs, Database, Cache
 - Domain - Layer that holds Use Cases, and Model Objects. Business logic happens here.
 - Application - Layer that holds presentation, Android components, Viewmodels, Dagger components/modules handles Dependency Injection, etc. MVVM exists at this layer.
+  
+MVVM Implementation:
 - Fragment (View): Displays the user interface and handles user interactions.
 - ViewModel: Manages the stateful data, handles business logic, and communicates with the Repository.
 - Repository: Acts as a mediator, aggregating data from both the RemoteService (API) and LocalService (Room Database).
