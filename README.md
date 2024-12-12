@@ -28,9 +28,11 @@ package-name: com.mvvmclean.trendingrepos
 
 To ensure a smooth deployment process and a clear separation of concerns, the project is configured to support three distinct environments: Development, Staging, and Live. Below are the details for setting up each environment.
 
+```
   ├── dev/
   ├── staging/
   ├── live/
+```
 
 ## Table of Contents
 
