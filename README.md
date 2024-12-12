@@ -23,6 +23,15 @@ package-name: com.mvvmclean.trendingrepos
     JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
     macOS Mojave 10.14
 
+
+## Environment Setup 
+
+To ensure a smooth deployment process and a clear separation of concerns, the project is configured to support three distinct environments: Development, Staging, and Live. Below are the details for setting up each environment.
+
+  ├── dev/
+  ├── staging/
+  ├── live/
+
 ## Table of Contents
 
 - [Architecture Blueprint](#architecture)
