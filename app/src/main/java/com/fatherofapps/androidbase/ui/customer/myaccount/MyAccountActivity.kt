@@ -12,6 +12,7 @@ import com.fatherofapps.androidbase.data.models.user.UserData
 import com.fatherofapps.androidbase.databinding.FragmentMyAccountBinding
 import com.fatherofapps.androidbase.ui.customer.login.LoginActivity
 import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
+import com.fatherofapps.androidbase.ui.customer.payment.PaymentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +21,7 @@ class MyAccountActivity : BaseActivity() {
     private lateinit var dataBinding: FragmentMyAccountBinding
     private val viewModelMyInfo: MyAccountViewModel by viewModels()
     private val viewModelLogin: LoginViewModel by viewModels()
+    private val viewModelPayment: PaymentViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,8 @@ class MyAccountActivity : BaseActivity() {
             // Fetch user account info if logged in
             fetchUserInfo()
         }
+
+        viewModelPayment.getUserPayment()
 
         // Set the OnClickListener for logout button
         dataBinding.linearLayoutLogout.setOnClickListener {

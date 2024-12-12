@@ -1,6 +1,8 @@
 package com.fatherofapps.androidbase.data.apis
 
 import com.fatherofapps.androidbase.data.models.PaymentResponse
+import com.fatherofapps.androidbase.data.models.user.LogOutResponses
+import com.fatherofapps.androidbase.data.models.user.PaymentUserResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -12,7 +14,7 @@ interface PaymentAPI {
     suspend fun paymentPost(
         @Query("amount") amount: String,
         @Query("method") method: String
-    ): Response<PaymentResponse>
+    ): Response<LogOutResponses>
 
     // get lich su nap tien
     @GET("order/all")
@@ -22,4 +24,7 @@ interface PaymentAPI {
         @Query("userId") userId: Int
     ): Response<PaymentResponse>
 
+    // get so tien cua user
+    @GET("userPayment/getUserPayment")
+    suspend fun getUserPayment() : Response<PaymentUserResponse>
 }

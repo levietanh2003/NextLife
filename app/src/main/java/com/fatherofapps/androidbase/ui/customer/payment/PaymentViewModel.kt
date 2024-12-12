@@ -6,11 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
-import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.data.models.Transaction
-import com.fatherofapps.androidbase.data.models.TransactionData
 import com.fatherofapps.androidbase.data.repositories.PaymentRepository
-import com.fatherofapps.androidbase.data.repositories.PromotionalPostDetailRepository
 import com.fatherofapps.androidbase.di.AppSharePreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,6 +22,13 @@ class PaymentViewModel @Inject constructor(
 
     val listHistoryPayment: LiveData<NetworkResult<List<Transaction>>>
         get() = _listHistoryPayment
+
+    val _balance = MutableLiveData<NetworkResult<Double>>()
+    val balance: LiveData<NetworkResult<Double>> get() = _balance
+
+    val _isSuccess = MutableLiveData<Boolean>()
+    val isSussces: LiveData<Boolean> get() = _isSuccess
+
 
     override fun fetchData() {
         showLoading(true)
@@ -41,8 +45,36 @@ class PaymentViewModel @Inject constructor(
         registerJobFinish()
     }
 
-//    fun getTransactionList(): List<Transaction> {
-//        return (_listHistoryPayment.value as? NetworkResult.Success)?.data?.transactions ?: emptyList()
-//    }
+    fun getUserPayment(){
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val result = paymentRepository.getUserPayment()
+            _balance.postValue(result)
+            Log.d("PaymentViewModelResult", "Transaction: ${result}")
 
+        }
+    }
+
+    // postPayment
+    fun postPayment(amount: String, method: String) {
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val result = paymentRepository.postPaymentUser(amount, method)
+            when (result) {
+                is NetworkResult.Success -> {
+                    Log.d("PaymentViewModelResult", "Transaction: ${result}")
+                    if(result.data.responseCode == 200 && result.data.message == "SUCCESS"){
+                        _isSuccess.postValue(true)
+                    }else{
+                        _isSuccess.postValue(false)
+                    }
+                }
+                is NetworkResult.Error ->{
+                    _isSuccess.postValue(false)
+                }
+            }
+
+            Log.d("PaymentViewModelResult", "Transaction: ${result}")
+        }
+    }
 }

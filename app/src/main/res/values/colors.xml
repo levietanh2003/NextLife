@@ -4,8 +4,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primaryColor">#ff6c2f</color>
-    <color name="primaryLightColor">#ff9e5d</color>
+    <color name="primaryColor">#1E3A8A</color>
+    <color name="primaryLightColor">#003366</color>
     <color name="primaryDarkColor">#c53a00</color>
 
     <color name="primaryTextColor">#000000</color>
@@ -15,7 +15,7 @@
     <color name="hint_text_color">#B7B7B7</color>
     <color name="regular_price_color">#cbcbcb</color>
     <color name="inactive_text_color">#8D8D8D</color>
-    <color name="background_splash_color">#FF6C2F</color>
+    <color name="background_splash_color">#1E3A8A</color>
     <color name="blue_main">#1E3A8A</color>
     <color name="blue_dark">#003366</color>
     <color name="blue_light">#90A4AE</color>

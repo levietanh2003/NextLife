@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fatherofapps.androidbase.adapter.AdditionalFeeNewsAdapter
@@ -48,14 +47,6 @@ class NewsFragment : BaseActivity(), AdditionalFeeNewsAdapter.OnFeeUpdateListene
     // Adapter để hiển thị ảnh trong RecyclerView
     private lateinit var imagesAdapter: ImagesAdapter
 
-//    private val pickImages = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
-//        uris?.let { imageUris ->
-//            // Thêm ảnh vào danh sách
-//            selectedImages.addAll(imageUris)
-//            // Cập nhật lại adapter để hiển thị các ảnh mới
-//            imagesAdapter.notifyDataSetChanged()
-//        }
-//    }
     private val pickImages = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
         uris?.let { imageUris ->
             imageUris.forEach { uri ->
@@ -91,6 +82,8 @@ class NewsFragment : BaseActivity(), AdditionalFeeNewsAdapter.OnFeeUpdateListene
         val roomTypes = listOf("Hiện đại", "Tối giản")
         val roomStyles = listOf("Căn hộ", "Phòng trọ", "Căn hộ mini", "Studio")
         val roomStatusShow = listOf("Còn phòng", "Ngừng hoạt động", "Đang thi công")
+        val numberOfBathRooms = listOf("1", "2", "3", "4", "5")
+        val numberOfBedRooms = listOf("1", "2", "3", "4", "5")
 
         // Tạo ArrayAdapter cho AutoCompleteTextView roomTypes
         val adapterRoomTypes = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roomTypes)
@@ -102,6 +95,12 @@ class NewsFragment : BaseActivity(), AdditionalFeeNewsAdapter.OnFeeUpdateListene
 
         val adapterRoomStatusShow = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roomStatusShow)
         binding.spinnerActive.setAdapter(adapterRoomStatusShow)
+
+        val adapterNumberOfBathRooms = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, numberOfBathRooms)
+        binding.spinnerNumberOfBathRoom.setAdapter(adapterNumberOfBathRooms)
+
+        val adapterNumberOfBedRooms = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, numberOfBedRooms)
+        binding.spinnerNumberOfBedRoom.setAdapter(adapterNumberOfBedRooms)
 
         // Cấu hình RecyclerView với LinearLayoutManager theo chiều ngang
         binding.recyclerViewImages.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)

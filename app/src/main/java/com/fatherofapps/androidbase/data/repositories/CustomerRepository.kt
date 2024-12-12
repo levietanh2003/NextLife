@@ -5,12 +5,10 @@ import com.fatherofapps.androidbase.data.models.NewsData
 import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
-import com.fatherofapps.androidbase.data.models.user.NewsResponse
 import com.fatherofapps.androidbase.data.models.user.RegisterRequest
 import com.fatherofapps.androidbase.data.models.user.RegisterResponse
 import com.fatherofapps.androidbase.data.models.user.UserData
 import com.fatherofapps.androidbase.data.services.CustomerRemoteService
-import com.fatherofapps.androidbase.di.AppSharePreference
 import com.fatherofapps.androidbase.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

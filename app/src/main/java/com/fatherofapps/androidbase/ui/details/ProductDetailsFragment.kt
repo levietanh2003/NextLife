@@ -81,6 +81,7 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.tvAddress.text = it.roomInfo.address
                 dataBinding.tvAddress.paintFlags = dataBinding.tvAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                 dataBinding.tvPricePerMeter.text = it.roomInfo.type
+                dataBinding.tvStyle.text = "Phong cách: ${it.roomInfo.style}"
                 dataBinding.txtWaterMoney.text = "Nước: ${formatPrice().formatPriceWaterFromString(it.pricingDetails.waterCost.toString())}"
                 dataBinding.txtElectricMoney.text = "Điện: ${formatPrice().formatPriceElectricFromString(it.pricingDetails.electricityCost.toString())}"
                 dataBinding.tvPhoneNumber.text = "Liên hệ: ${it.contactInfo}"
@@ -91,13 +92,13 @@ class ProductDetailsFragment : BaseFragment() {
                 dataBinding.rvAvailability.layoutManager = LinearLayoutManager(context)
                 dataBinding.rvAvailability.adapter = additionalFeeAdapter
 
-//                dataBinding.txtStatus.text = it.statusShow
+                dataBinding.txtStatus.text = it.statusShow
 
-                if (it.status == "active") {
-                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
-                }else{
-                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
-                }
+//                if (it.status == "active") {
+//                    dataBinding.txtStatus.text = "Trạng thái: Hoạt động"
+//                }else{
+//                    dataBinding.txtStatus.text = "Trạng thái: Không hoạt động"
+//                }
 
                 handleDescriptionText("- Nhà cách phố đi bộ Nguyễn Huệ Quận 1 chỉ 1,9 km di chuyển từ nhà đến trung tâm Quận 1 không quá 7 phút. Nhà mới xây dựng xong mua là có nhà ở trước tết.\n" +
                         "- Hẻm cực rộng thoáng mát, khu sang trọng, dân trí cao đường Huỳnh Tấn Phát, đoạn chân cầu Tân Thuận.\n" +

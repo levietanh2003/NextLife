@@ -52,24 +52,7 @@ class MainActivity : BaseActivity() {
         // Setup BottomNavigationView with NavController
         bottomNavigationView?.setupWithNavController(navController)
 
-//        searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {
-//            override fun onSearchStateChanged(enabled: Boolean) {}
-//
-//            override fun onButtonClicked(buttonCode: Int) {
-//                if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
-//                    // Handle navigation button click if needed
-//                }
-//            }
-//
-//            override fun onSearchConfirmed(text: CharSequence?) {
-//                if (!text.isNullOrBlank()) {
-//                    val bundle = Bundle().apply {
-//                        putString("search_query", text.toString())
-//                    }
-//                    navController.navigate(R.id.searchFragment, bundle)
-//                }
-//            }
-//        })
+        // search bar
         searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {
             override fun onSearchStateChanged(enabled: Boolean) {}
 
@@ -88,7 +71,7 @@ class MainActivity : BaseActivity() {
         // Hide BottomNavigationView in specific fragments
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.marketFragment -> {
+                R.id.marketFragment,  R.id.productDetailsFragment -> {
                     bottomNavigationView?.visibility = View.GONE
                     fabPostNews?.visibility = View.GONE
                 }

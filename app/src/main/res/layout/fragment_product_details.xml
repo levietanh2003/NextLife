@@ -11,6 +11,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:fillViewport="true">
 
         <LinearLayout
@@ -59,6 +60,20 @@
                     app:layout_constraintStart_toStartOf="@+id/llPropertyDetails"
                     app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
+
+                <!-- Price per square meter -->
+                <TextView
+                    android:id="@+id/tvStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="108,57 triệu/m²"
+                    android:textColor="@color/color_main"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/llPropertyDetails"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPricePerMeter" />
+
                 <!-- Property Details -->
                 <LinearLayout
                     android:id="@+id/llPropertyDetails"
@@ -69,7 +84,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPricePerMeter">
+                    app:layout_constraintTop_toBottomOf="@+id/tvStyle">
 
                     <!-- Address -->
                     <TextView

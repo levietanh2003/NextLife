@@ -16,7 +16,7 @@ import javax.inject.Inject
 class CustomerRemoteService @Inject constructor(
     private val userAPI: UserAPI,
     private val newsAPI: NewsAPI
-) : BaseRemoteService() {
+    ) : BaseRemoteService() {
 
     // Các phương thức gọi API liên quan đến đăng ký và đăng nhập
     suspend fun registerUser(request: RegisterRequest): NetworkResult<RegisterResponse> {

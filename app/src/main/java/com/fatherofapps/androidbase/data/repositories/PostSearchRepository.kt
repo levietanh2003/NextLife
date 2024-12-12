@@ -26,6 +26,5 @@ class PostSearchRepository @Inject constructor(
                 throw result.exception
             }
         }
-
     }
 }

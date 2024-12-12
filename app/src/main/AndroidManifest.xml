@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.fatherofapps.androidbase">
     <!-- Quyền truy cập Internet và trạng thái mạng -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,10 +17,23 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        tools:replace="android:theme"
         android:theme="@style/Theme.FatherOfApps">
         <activity
             android:name=".ui.customer.myaccount.WalletActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data
+                android:host="app"
+                android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.customer.payment.TransactionActivity"
             android:exported="false" />

@@ -12,8 +12,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.fatherofapps.androidbase.adapter.Article
 import com.fatherofapps.androidbase.adapter.ArticleAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
-import com.fatherofapps.androidbase.base.network.NetworkResult
-import com.fatherofapps.androidbase.common.hideBottomNavigation
 import com.fatherofapps.androidbase.databinding.FragmentMarketBinding
 import com.fatherofapps.androidbase.ui.customer.login.LoginViewModel
 import com.google.android.material.tabs.TabLayout
@@ -39,24 +37,6 @@ class MarketFragment : BaseFragment() {
 
         val viewPager: ViewPager2 = dataBinding.viewPager
         val tabLayout: TabLayout = dataBinding.tabLayout
-        // Danh sách bài viết mẫu
-//        val articles = listOf(
-//            Article(
-//                "https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/carousel%2F9a94da50-8d25-4476-8c4d-3af6a82bad43_noitang-210915-1442804718143.jpg?alt=media",
-//                "Bài viết 1",
-//                "Đây là nội dung tóm tắt bài viết 1."
-//            ),
-//            Article(
-//                "https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/carousel%2Fb2fb4b40-1f13-419c-aa71-3558cc827de1_photd-tu1-1673254645362582917776.jpg?alt=media",
-//                "Bài viết 2",
-//                "Đây là nội dung tóm tắt bài viết 2."
-//            ),
-//            Article(
-//                "https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/carousel%2Fd3e01b4a-13ac-4036-a057-b6f08d99ffdd_images.jpg?alt=media",
-//                "Bài viết 3",
-//                "Đây là nội dung tóm tắt bài viết 3."
-//            )
-//        )
 
         viewModel.listNews.observe(viewLifecycleOwner) { newsList ->
 

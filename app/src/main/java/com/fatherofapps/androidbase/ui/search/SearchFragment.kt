@@ -58,10 +58,10 @@ class SearchFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         // Khởi tạo FusedLocationProviderClient
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         // lấy vị trí của người dùng
-        getUserLocation()
+//        getUserLocation()
 
         // Handle search query
         arguments?.getString("search_query")?.takeIf { it.isNotEmpty() }?.let { searchQuery ->

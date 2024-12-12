@@ -1,10 +1,10 @@
 package com.fatherofapps.androidbase.data.repositories
 
+import android.util.Log
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.PaymentResponse
-import com.fatherofapps.androidbase.data.models.PostData
 import com.fatherofapps.androidbase.data.models.Transaction
-import com.fatherofapps.androidbase.data.models.TransactionData
+import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.services.PaymentRemoteService
 import com.fatherofapps.androidbase.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +17,7 @@ class PaymentRepository@Inject constructor(
 ) {
 
     // fun post payment user
-    suspend fun postPaymentUser(amount: String, method: String): NetworkResult<PaymentResponse> = withContext(dispatcher) {
+    suspend fun postPaymentUser(amount: String, method: String): NetworkResult<LogOutResponses> = withContext(dispatcher) {
         paymentRemoteService.postPayment(amount, method)
     }
 
@@ -33,4 +33,41 @@ class PaymentRepository@Inject constructor(
             }
         }
     }
+
+    // get tien cua user
+//    suspend fun getUserPayment(): NetworkResult<Double> = withContext(dispatcher) {
+//        when (val result = paymentRemoteService.getUserPayment()) {
+//            is NetworkResult.Success -> {
+//                NetworkResult.Success(result.data.data.balance)
+//            }
+//
+//            is NetworkResult.Error -> {
+//                NetworkResult.Error(result.exception)
+//            }
+//        }
+//    }
+    suspend fun getUserPayment(): NetworkResult<Double> = withContext(dispatcher) {
+        when (val result = paymentRemoteService.getUserPayment()) {
+            is NetworkResult.Success -> {
+                // In log từng bước
+                Log.d("DEBUG_GetUser", "API response: ${result.data}")
+                val data = result.data.data
+                Log.d("DEBUG_GetUser", "Extracted data: $data")
+                val balance = data?.balance
+                Log.d("DEBUG_GetUser", "Extracted balance: $balance")
+
+                if (balance != null) {
+                    NetworkResult.Success(balance)
+                } else {
+                    NetworkResult.Error(Exception("Balance is null"))
+                }
+            }
+
+            is NetworkResult.Error -> {
+                Log.e("ERROR", "API call failed", result.exception)
+                NetworkResult.Error(result.exception)
+            }
+        }
+    }
+
 }
