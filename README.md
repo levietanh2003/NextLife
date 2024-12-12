@@ -162,6 +162,32 @@ Following are the Libraries used:
         <img src="https://github.com/user-attachments/assets/ec82cd07-212d-4dbe-84e7-474df2dbf4dc" alt="Post news4" width="500"/>
       </p>
     </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/023e4da9-6f5d-4623-aa6a-5c95e9a9a864" alt="Search" width="500"/>
+      </p>
+    </td>
+        <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/783c92d3-da1e-409d-be6e-fd8525883191" alt="Fill by price" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/64d15b7c-551b-4059-b4e5-774f6e8556e5" alt="Fill avanted" width="500"/>
+      </p>
+    </td>
+          <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/0054dece-4768-4aec-8b85-1fd41dccbff8" alt="Fill area" width="500"/>
+      </p>
+    </td>
+          </td>
+          <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/5299214e-9a93-4f29-ab90-33e5fa95228a" alt="Chart basic" width="500"/>
+      </p>
+    </td>
   </tr>
 </table>
 
