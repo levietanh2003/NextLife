@@ -31,7 +31,7 @@ package-name: com.mvvmclean.trendingrepos
 - [Features](#features)
 - [Libraries](#libraries)
 - [Extras](#extras)
-- [Screenshots](#screenshots)
+- [Screenshots](#androidscreenshots)
 
 ## Architecture
 
