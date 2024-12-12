@@ -97,68 +97,74 @@ Following are the Libraries used:
 ## Android Screenshots
 
 <table>
-  <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/02bf4f13-117c-4cfa-bcea-128b81c69a7e" alt="Home" width="500"/>
-    </p>
-  </td>
+  <tr>
     <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/a1333d5c-5673-4c16-aa47-c1203624a0ba" alt="Detail1" width="500"/>
-    </p>
-  </td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/02bf4f13-117c-4cfa-bcea-128b81c69a7e" alt="Home" width="500"/>
+      </p>
+    </td>
     <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/6e92c825-dd2d-43e2-93f3-2d55785d68a6" alt="Detail2" width="500"/>
-    </p>
-  </td>
-  <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/a9aa40d9-1943-45fd-ba5b-c704ceb68a17" alt="Detail3" width="500"/>
-    </p>
-  </td>
-</tr>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/a1333d5c-5673-4c16-aa47-c1203624a0ba" alt="Detail1" width="500"/>
+      </p>
+    </td>
     <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/503df634-9c6d-49d8-83c2-5cb0aef455d4" alt="Profile" width="500"/>
-    </p>
-  </td>
-  <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/2b6557ca-047f-482b-ac54-b9841c71646a" alt="Wallet" width="500"/>
-    </p>
-  </td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/6e92c825-dd2d-43e2-93f3-2d55785d68a6" alt="Detail2" width="500"/>
+      </p>
+    </td>
     <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/cd0bf760-733f-466a-babd-f890bf3902f4" alt="Deposit History" width="500"/>
-    </p>
-  </td>
-      <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/a6028200-00dc-444e-8a42-99c8b51fa45c" alt="Eidt prifle" width="500"/>
-    </p>
-  </td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/a9aa40d9-1943-45fd-ba5b-c704ceb68a17" alt="Detail3" width="500"/>
+      </p>
+    </td>
+  </tr>
+  <tr>
     <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/919515e4-a990-408f-ad22-38dfb04035d9" alt="Post news1" width="500"/>
-    </p>
-  </td>
-        <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/8a027ee1-eb59-4ec8-b702-c3e31eef5715" alt="Post news2" width="500"/>
-    </p>
-  </td>
-        <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/8dcf695a-ce28-4ac6-833f-9797a7cfecdd" alt="Post news3" width="500"/>
-    </p>
-  </td>
-            <td>
-    <p align="center">
-      <img src="https://github.com/user-attachments/assets/ec82cd07-212d-4dbe-84e7-474df2dbf4dc" alt="Post news4" width="500"/>
-    </p>
-  </td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/503df634-9c6d-49d8-83c2-5cb0aef455d4" alt="Profile" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/2b6557ca-047f-482b-ac54-b9841c71646a" alt="Wallet" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/cd0bf760-733f-466a-babd-f890bf3902f4" alt="Deposit History" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/a6028200-00dc-444e-8a42-99c8b51fa45c" alt="Edit Profile" width="500"/>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/919515e4-a990-408f-ad22-38dfb04035d9" alt="Post news1" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/8a027ee1-eb59-4ec8-b702-c3e31eef5715" alt="Post news2" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/8dcf695a-ce28-4ac6-833f-9797a7cfecdd" alt="Post news3" width="500"/>
+      </p>
+    </td>
+    <td>
+      <p align="center">
+        <img src="https://github.com/user-attachments/assets/ec82cd07-212d-4dbe-84e7-474df2dbf4dc" alt="Post news4" width="500"/>
+      </p>
+    </td>
+  </tr>
 </table>
+
 ## Demo
 
 [Demo Video](https://www.dropbox.com/s/1irwrefq9pqaeq2/app-demo.mp4?dl=0)
