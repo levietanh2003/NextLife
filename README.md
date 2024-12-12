@@ -1,5 +1,5 @@
 # NEXT LIFE 
-
+![Check](https://github.com/c0de-wizard/tv-maniac/actions/workflows/build.yml/badge.svg)  ![android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat) ![ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat) [![TvManiac Debug](https://img.shields.io/badge/Debug--Apk-download-green?style=for-the-badge&logo=android)](https://github.com/c0de-wizard/tv-maniac/releases/latest/download/app-debug.apk)
 ## 🚧 Overview 🚧
 Next Life is an application designed to help users find rental rooms based on criteria such as location, price, and amenities. The application adopts the MVVM (Model-View-ViewModel) architecture to ensure clean code organization, ease of maintenance, and efficient data handling from the backend to the user interface.
 
