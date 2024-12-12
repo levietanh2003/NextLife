@@ -37,6 +37,9 @@ The Application is split into a three layer architecture inorder to provide clea
 - Data - Layer that holds APIs, Database, Cache
 - Domain - Layer that holds Use Cases, and Model Objects. Business logic happens here.
 - Application - Layer that holds presentation, Android components, Viewmodels, Dagger components/modules handles Dependency Injection, etc. MVVM exists at this layer.
+
+The three layered architectural approach is majorly guided by clean architecture which provides
+a clear separation of concerns with its Abstraction Principle.
   
 MVVM Implementation:
 - Fragment (View): Displays the user interface and handles user interactions.
@@ -45,12 +48,11 @@ MVVM Implementation:
 - RemoteService: Uses Retrofit to call APIs and retrieve data from the backend.
 - LocalService: Manages local data storage with Room Database.
 
+
 ![Architecture](https://github.com/user-attachments/assets/7c5d7315-b742-4acf-88f6-080f95381e3b)
+
 ![Backend](https://github.com/user-attachments/assets/ad2e7f2d-f4c9-45c9-8f22-e15808b86a4b)
 
-
-The three layered architectural approach is majorly guided by clean architecture which provides
-a clear separation of concerns with its Abstraction Principle.
 
 ## Features
  
