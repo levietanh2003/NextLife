@@ -40,7 +40,9 @@ The Application is split into a three layer architecture inorder to provide clea
 - Domain - Layer that holds Use Cases, and Model Objects. Business logic happens here.
 - Application - Layer that holds presentation, Android components, Viewmodels, Dagger components/modules handles Dependency Injection, etc. MVVM exists at this layer.
 
-![Data Flow Diagram](media/arch-flow.png)
+![Architecture](https://github.com/user-attachments/assets/7c5d7315-b742-4acf-88f6-080f95381e3b)
+![Backend](https://github.com/user-attachments/assets/ad2e7f2d-f4c9-45c9-8f22-e15808b86a4b)
+
 
 The three layered architectural approach is majorly guided by clean architecture which provides
 a clear separation of concerns with its Abstraction Principle.
@@ -53,10 +55,6 @@ a clear separation of concerns with its Abstraction Principle.
  - Pull to refresh repository
  - Offline Storage ( Scheduled repo remote controller syncing, App will sync with backend server in every 2hrs )
  
- ## Testing
-
- - `app/test/ - Unit tests` - test -> Right click on package name(com.mvvmclean.trendingrepos) -> Run Test In 'com.mvvmclean.trendingrepos'
- - `app/androidTest/ - Instrumentation tests` - androidTest -> Right click on package name(com.mvvmclean.trendingrepos) -> Run Test In 'com.mvvmclean.trendingrepos'
 
 ## Libraries
 
