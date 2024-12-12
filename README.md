@@ -3,28 +3,18 @@
 ## 🚧 Overview 🚧
 Next Life is an application designed to help users find rental rooms based on criteria such as location, price, and amenities. The application adopts the MVVM (Model-View-ViewModel) architecture to ensure clean code organization, ease of maintenance, and efficient data handling from the backend to the user interface.
 
-Min API Level Supported : 19
+Min API Level Supported : 21
 
 ## Prerequisite
 
 Before running the project check your gradle version matches the required.
 ```
-package-name: com.mvvmclean.trendingrepos
+package-name: com.fatherofapps.androidbase
 ```
-    compileSdkVersion = 29
-    targetSdkVersion = 29
-    minSdkVersion = 19
-    buildToolsVersion = "29.0.2"
+    compileSdkVersion = 21
+    targetSdkVersion = 33
+    minSdkVersion = 21
     
-## Development Environment
-
-    Android Studio 3.5
-    Build #AI-191.8026.42.35.5791312, built on August 9, 2019
-    JRE: 1.8.0_202-release-1483-b49-5587405 x86_64
-    JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
-    macOS Mojave 10.14
-
-
 ## Environment Setup 
 
 To ensure a smooth deployment process and a clear separation of concerns, the project is configured to support three distinct environments: Development, Staging, and Live. Below are the details for setting up each environment.
