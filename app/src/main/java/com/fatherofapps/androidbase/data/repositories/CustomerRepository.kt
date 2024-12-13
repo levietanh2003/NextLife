@@ -52,29 +52,43 @@ class CustomerRepository @Inject constructor(
         }
     }
 
-    // get all news
-//    suspend fun getAllNews(): NetworkResult<List<NewsData>> = withContext(dispatcher) {
-//        val result = customerRemoteService.getAllNews()
-//
-//        when(result){
-//            is NetworkResult.Success ->{
-//                if (result.data.responseCode == 200){
-//                    NetworkResult.Success(result.data.data.data)
-//                } else {
-//                    NetworkResult.Error(Exception(result.data.message))
-//                }
-//            }
-//            is NetworkResult.Error -> {
-//                NetworkResult.Error(result.exception)
-//            }
-//        }
-//    }
+    // get all new
     suspend fun getAllNews(): NetworkResult<List<NewsData>> = withContext(dispatcher) {
         val result = customerRemoteService.getAllNews()
 
         when (result) {
             is NetworkResult.Success -> {
                 NetworkResult.Success(result.data.data.data)
+            }
+            is NetworkResult.Error -> {
+                // Trả về lỗi nếu có ngoại lệ
+                NetworkResult.Error(result.exception)
+            }
+        }
+    }
+
+    // get all experience user
+    suspend fun getAllExperience(): NetworkResult<List<NewsData>> = withContext(dispatcher) {
+        val result = customerRemoteService.getRealEstateExperience()
+
+        when (result) {
+            is NetworkResult.Success -> {
+                NetworkResult.Success(result.data.data.data)
+            }
+            is NetworkResult.Error -> {
+                // Trả về lỗi nếu có ngoại lệ
+                NetworkResult.Error(result.exception)
+            }
+        }
+    }
+
+    // get all experience user by id
+    suspend fun getAllExperienceById(id : String): NetworkResult<NewsData> = withContext(dispatcher) {
+        val result = customerRemoteService.getRealEstateExperienceById(id)
+
+        when (result) {
+            is NetworkResult.Success -> {
+                NetworkResult.Success(result.data.data)
             }
             is NetworkResult.Error -> {
                 // Trả về lỗi nếu có ngoại lệ

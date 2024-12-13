@@ -17,21 +17,24 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:theme"
-        android:theme="@style/Theme.FatherOfApps">
+        android:theme="@style/Theme.FatherOfApps"
+        tools:replace="android:theme">
+        <activity
+            android:name=".ui.customer.news.NewsDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.customer.myaccount.WalletActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-            <data
-                android:host="app"
-                android:scheme="demozpdk" />
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
             </intent-filter>
         </activity>
         <activity

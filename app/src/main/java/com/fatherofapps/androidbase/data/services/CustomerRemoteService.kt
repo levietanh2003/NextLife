@@ -4,6 +4,7 @@ import com.fatherofapps.androidbase.base.network.BaseRemoteService
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.apis.NewsAPI
 import com.fatherofapps.androidbase.data.apis.UserAPI
+import com.fatherofapps.androidbase.data.models.ResponseNewsDetail
 import com.fatherofapps.androidbase.data.models.user.LogOutResponses
 import com.fatherofapps.androidbase.data.models.user.LoginRequest
 import com.fatherofapps.androidbase.data.models.user.LoginResponse
@@ -46,5 +47,15 @@ class CustomerRemoteService @Inject constructor(
     // get all news
     suspend fun getAllNews(): NetworkResult<NewsResponse> {
         return callApi { newsAPI.getNews() }
+    }
+
+    // get experience user
+    suspend fun getRealEstateExperience(): NetworkResult<NewsResponse> {
+        return callApi { newsAPI.getRealEstateExperience() }
+    }
+
+    // get experience user by id
+    suspend fun getRealEstateExperienceById(id: String): NetworkResult<ResponseNewsDetail>  {
+        return callApi { newsAPI.getRealEstateExperienceById(id) }
     }
 }

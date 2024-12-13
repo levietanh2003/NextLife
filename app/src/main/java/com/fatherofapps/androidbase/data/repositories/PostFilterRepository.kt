@@ -16,7 +16,7 @@ class PostFilterRepository @Inject constructor(
     suspend fun fetchPostFilter(minPrice: Double? = null,
                                 maxPrice: Double? = null,
                                 district: String? = null,
-                                type: String? = null,
+                                type: Int? = null,
                                 hasPromotion: Boolean? = null): PostData = withContext(dispatcher) {
         when (val result = postFilterRemoteService.getPostFilter(minPrice, maxPrice, district, type, hasPromotion)) {
             is NetworkResult.Success -> {

@@ -20,6 +20,7 @@ import com.fatherofapps.androidbase.adapter.ProductAdapter
 import com.fatherofapps.androidbase.adapter.ProductHorizontalAdapter
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.common.Logger
+import com.fatherofapps.androidbase.common.showBottomNavigation
 import com.fatherofapps.androidbase.data.models.PromotionalPost
 import com.fatherofapps.androidbase.databinding.FragmentSearchBinding
 import com.fatherofapps.androidbase.ui.search.dialog.FilterAdvancedBottomSheetFragment
@@ -48,7 +49,7 @@ class SearchFragment : BaseFragment() {
     private var minPrice: Double? = null
     private var maxPrice: Double? = null
     private var district: String? = null
-    private var type: String? = null
+    private var type: Int? = null
     private var hasPromotion: Boolean? = null
     private lateinit var titleSearch: String
     private lateinit var noResultsImage: ImageView
@@ -70,7 +71,7 @@ class SearchFragment : BaseFragment() {
             viewModel.fetchData(titleSearch = titleSearch)
         } ?: run {
             // If no search query, fetch data with existing filters
-            viewModel.fetchData(minPrice, maxPrice, district, type, hasPromotion)
+            viewModel.fetchData(minPrice, maxPrice, district, 0, hasPromotion)
         }
 
         // Fragment result listener for filters
@@ -192,19 +193,20 @@ class SearchFragment : BaseFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     0 -> {
-                        // Mặc định - load lại dữ liệu gốc
-                        viewModel.fetchData(type = "Căn hộ")
+                        // filter by "Căn hộ"
+                        viewModel.fetchData(type = 1)
                     }
                     1 -> {
-                        // Sắp xếp giá tăng dần
-                        viewModel.fetchData(type = "Căn hộ mini")
+                        // filter by "Căn hộ mini
+                        viewModel.fetchData(type = 2)
                     }
                     2 -> {
-                        // Sắp xếp giá giảm dần
-                        viewModel.fetchData(type = "Căn hộ dịch vụ")
+                        // filter by "Căn hộ dịch vụ"
+                        viewModel.fetchData(type = 3)
                     }
                     3 -> {
-                        viewModel.fetchData(type = "Phòng trọ")
+                        // filter by "Phòng trọ"
+                        viewModel.fetchData(type = 4)
                     }
                 }
             }
@@ -304,10 +306,15 @@ class SearchFragment : BaseFragment() {
 
         if (minPriceAdvanced != null && maxPriceAdvanced != null &&
             !districtAdvanced.isNullOrEmpty() && !categoryAdvanced.isNullOrEmpty()) {
+            if(categoryAdvanced == "Căn hộ"){
+                type = 1
+            }else if(categoryAdvanced == "Căn hộ mini"){
+                type = 2
+            }
             minPrice = minPriceAdvanced
             maxPrice = maxPriceAdvanced
             district = districtAdvanced
-            type = categoryAdvanced
+            type = type
             hasPromotion = hasPromotionAdvanced
 
             Log.d("FillAdvanced", "minPrice: $minPrice, maxPrice: $maxPrice, " +
@@ -339,6 +346,7 @@ class SearchFragment : BaseFragment() {
             // Hiển thị hình ảnh thông báo khi không có kết quả
             noResultsImage.visibility = View.VISIBLE
             dataBinding.rvProductFilter.visibility = View.GONE
+            showNotify("Không có sản phẩm","Thông báo")
         } else {
             // Ẩn hình ảnh thông báo khi có kết quả
             noResultsImage.visibility = View.GONE

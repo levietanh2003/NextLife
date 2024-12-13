@@ -51,13 +51,17 @@ class LoginViewModel @Inject constructor(
     private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
-    // get all news
-//    private val _listNews = MutableLiveData<NetworkResult<List<NewsData>>>()
-//    val listNews: LiveData<NetworkResult<List<NewsData>>> get() = _listNews
+    // get all Experience User
+    private val _listExperienceUser = MutableLiveData<List<NewsData>>()
+    val listExperienceUser: LiveData<List<NewsData>> get() = _listExperienceUser
 
     // LiveData để theo dõi kết quả lấy tất cả các tin tức
     private val _listNews = MutableLiveData<List<NewsData>>()
     val listNews: LiveData<List<NewsData>> get() = _listNews
+
+    // get all Experience User by id
+    private val _experienceUser = MutableLiveData<NetworkResult<NewsData>>()
+    val experienceUser: LiveData<NetworkResult<NewsData>> get() = _experienceUser
 
     /**
      * Checks the user's login status by verifying the information stored in SharedPreferences.
@@ -113,28 +117,16 @@ class LoginViewModel @Inject constructor(
         registerJobFinish()
     }
 
-//    fun fetchAllNews(){
-//        showLoading(true)
-//        parentJob = viewModelScope.launch(handler) {
-//            val result = customerRepository.getAllNews()
-//            _listNews.postValue(result)
-//            Log.d("LoginViewModel", "Login result: $result")
-//            showLoading(false)
-//        }
-//        registerJobFinish()
-//    }
-
     fun fetchAllNews() {
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
-            val result = customerRepository.getAllNews()
-
-            when (result) {
+            val resultNews = customerRepository.getAllNews()
+            when (resultNews) {
                 is NetworkResult.Success -> {
-                    _listNews.postValue(result.data) // Trả về List<NewsData> khi thành công
+                    _listNews.postValue(resultNews.data) // Trả về List<NewsData> khi thành công
                 }
                 is NetworkResult.Error -> {
-                    Log.e("LoginViewModel", "Error fetching news: ${result.exception?.message}")
+                    Log.e("LoginViewModel", "Error fetching news: ${resultNews.exception?.message}")
                     _listNews.postValue(emptyList()) // Trả về danh sách rỗng khi có lỗi
                 }
             }
@@ -143,5 +135,35 @@ class LoginViewModel @Inject constructor(
         registerJobFinish()
     }
 
+    fun fetchAllExperienceUser() {
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val resultExperience = customerRepository.getAllExperience()
+            when (resultExperience) {
+                is NetworkResult.Success -> {
+                    _listExperienceUser.postValue(resultExperience.data) // Trả về List<NewsData> khi thành công
+                }
+                is NetworkResult.Error -> {
+                    Log.e("LoginViewModel", "Error fetching news: ${resultExperience.exception?.message}")
+                    _listExperienceUser.postValue(emptyList()) // Trả về danh sách rỗng khi có lỗi
+                }
+            }
+        }
+    }
 
+    fun fetchExperienceUserById(id : String){
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val resultExperienceById = customerRepository.getAllExperienceById(id)
+            when (resultExperienceById) {
+                is NetworkResult.Success -> {
+                    _experienceUser.postValue(resultExperienceById)
+                }
+                is NetworkResult.Error -> {
+                    Log.e("LoginViewModel", "Error fetching news: ${resultExperienceById.exception?.message}")
+
+                }
+            }
+        }
+    }
 }

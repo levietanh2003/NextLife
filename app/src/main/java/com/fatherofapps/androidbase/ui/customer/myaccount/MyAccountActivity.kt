@@ -72,7 +72,7 @@ class MyAccountActivity : BaseActivity() {
                     // Người dùng nhấn "Đồng ý", tiến hành đăng xuất
                     viewModelLogin.logoutUser()
                     navigateToLoginActivity()
-                    showNotify("Đăng xuất thành công", "Thông báo")
+                    showNotifyDialog("Đăng xuất thành công","Thông báo","OK")
                 }
             },
             title = "Xác nhận",
@@ -95,9 +95,7 @@ class MyAccountActivity : BaseActivity() {
                     updateUI(userData)
                 }
                 is NetworkResult.Error -> {
-                    // Handle error
-                    showNotify("Failed to fetch data: ${result.exception}", "Error")
-                    Log.d("MyAccountActivity", "Failed to fetch data: ${result.exception}")
+                    showNotifyDialog("Đang gặp sự cố khi tải hồ sơ","Thông báo","OK")
                 }
             }
         }
@@ -117,8 +115,4 @@ class MyAccountActivity : BaseActivity() {
         finish() // Optionally close this activity if needed
     }
 
-    private fun showNotify(message: String, title: String) {
-        // Show a notification message
-        Toast.makeText(this, "$title: $message", Toast.LENGTH_SHORT).show()
-    }
 }

@@ -56,7 +56,6 @@ class WalletActivity : BaseActivity() {
 
         }
 
-
         dataBinding.btnHistoryPayment.setOnClickListener {
             val intent = Intent(this, TransactionActivity::class.java)
             startActivity(intent)
@@ -121,8 +120,6 @@ class WalletActivity : BaseActivity() {
                         viewModelPayment.postPayment(totalPrice,"MOMO")
                         Log.d("TotalPrice", totalPrice)
                         showNotifyDialog("Thanh toán thành công","Thông báo","OK")
-
-
                     }
                     1 -> {
                         // Thanh toán thất bại

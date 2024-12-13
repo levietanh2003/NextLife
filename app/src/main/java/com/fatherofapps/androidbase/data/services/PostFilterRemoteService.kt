@@ -10,8 +10,8 @@ class PostFilterRemoteService @Inject constructor( private val postFilterAPI: Po
     suspend fun getPostFilter(       minPrice: Double? = null,
                                      maxPrice: Double? = null,
                                      district: String? = null,
-                                     type: String? = null,
+                                     type: Int? = null,
                                      hasPromotion: Boolean? = null) : NetworkResult<PromotionalPostResponse> {
-        return callApi { postFilterAPI.filterPost(minPrice, maxPrice, district, type, hasPromotion,1,30) }
+        return callApi { postFilterAPI.filterPost(minPrice, maxPrice, district, type, hasPromotion,1,20) }
     }
 }

@@ -205,7 +205,7 @@ open class BaseViewModel : ViewModel() {
         minPrice: Double? = null,
         maxPrice: Double? = null,
         district: String? = null,
-        type: String? = null,
+        type: Int? = null,
         hasPromotion: Boolean? = null
     ) {
         // Subclass should override to implement data fetching logic with filters

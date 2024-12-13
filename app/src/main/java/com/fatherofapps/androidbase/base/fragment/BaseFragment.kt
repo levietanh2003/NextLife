@@ -94,7 +94,7 @@ open class BaseFragment : Fragment() {
     protected fun showNotify(title: String?, message: String) {
         val activity = requireActivity()
         if (activity is BaseActivity) {
-            activity.showNotifyDialog(title ?: getDefaultNotifyTitle(), message)
+            activity.showNotifyDialog(title ?: getDefaultNotifyTitle(), message,"OK")
         }
     }
 

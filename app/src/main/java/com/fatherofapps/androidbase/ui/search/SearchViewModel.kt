@@ -34,7 +34,6 @@ class SearchViewModel @Inject constructor(
     val getPost: LiveData<List<PromotionalPost>>
         get() = _listPost
 
-
     /**
      * Fetches posts based on filter criteria such as price, district, type, and promotion status.
      * Updates the list of posts with the filtered results.
@@ -48,7 +47,7 @@ class SearchViewModel @Inject constructor(
     override fun fetchData(minPrice: Double?,
                            maxPrice: Double?,
                            district: String?,
-                           type: String?,
+                           type: Int?,
                            hasPromotion: Boolean?) {
         showLoading(true)
 
